@@ -2986,6 +2986,17 @@ def delete_project(project_id):
     return redirect(url_for('projects_management'))
 
 
+
+# ... all your existing code ...
+
+# Remove or modify the development server section
+# This prevents accidentally running in development mode on production
+
+# Only run development server if executed directly AND in development
 if __name__ == '__main__':
-    with app.app_context():
-        app.run(debug=True)
+    if os.environ.get('FLASK_ENV') != 'production':
+        with app.app_context():
+            app.run(debug=True, host='0.0.0.0', port=5000)
+    else:
+        print("Use Gunicorn or a proper WSGI server for production")
+        print("Example: gunicorn --bind 0.0.0.0:5000 wsgi:app")
