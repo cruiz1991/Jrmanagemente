@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Picking List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        :root {
+            --vs-background: #1e1e1e;
+            --vs-editor-background: #007acc;
+            --vs-container-background: #252526;
+            --vs-text-color: #d4d4d4;
+            --vs-accent-blue: #569cd6;
+            --vs-border-color: #3c3c3c;
+            --vs-input-background: #3c3c3c;
+            --vs-input-border: #555;
+            --vs-button-background: #007acc;
+            --vs-button-hover: #005a9e;
+            --vs-green: #4CAF50;
+            --vs-red: #f44336;
+            --vs-blue: #2196F3;
+            --vs-light: #f5f5f5;
+            --vs-selection: #264F78;
+        }
+
+        body {
+            background-color: var(--vs-background);
+            color: var(--vs-text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .container {
+            background-color: var(--vs-container-background);
+            border-radius: 0.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            max-width: 1200px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3 {
+            color: var(--vs-accent-blue);
+        }
+
+        .card {
+            background-color: var(--vs-background);
+            border: 1px solid var(--vs-border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            background-color: var(--vs-container-background);
+            color: var(--vs-accent-blue);
+            border-bottom: 1px solid var(--vs-border-color);
+        }
+
+        .btn-primary {
+            background-color: var(--vs-button-background);
+            border-color: var(--vs-button-background);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--vs-button-hover);
+            border-color: var(--vs-button-hover);
+        }
+
+        .table {
+            color: var(--vs-text-color);
+            margin-bottom: 0;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .badge.tag {
+            background-color: var(--vs-button-background);
+            color: white;
+        }
+
+        .inventory-summary {
+            background-color: var(--vs-background);
+            border: 1px solid var(--vs-border-color);
+            border-radius: 0.25rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .inventory-summary h3 {
+            border-bottom: 1px solid var(--vs-border-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .inventory-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background-color: var(--vs-container-background);
+            border-radius: 0.25rem;
+        }
+
+        .inventory-low {
+            color: var(--vs-red);
+        }
+
+        .inventory-ok {
+            color: var(--vs-green);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="mb-1">📋 Picking List</h1>
+                <p class="mb-0"><strong>🛒 Orders Processed:</strong> {{ selected_order_count }}</p>
+            </div>
+            <div>
+                <a href="{{ url_for('download_picking_list_pdf') }}" 
+                   class="btn btn-primary" 
+                   id="downloadBtn">
+                    Download Picking List (PDF)
+                </a>
+                <a href="{{ url_for('shopify_orders') }}" class="btn btn-secondary ms-2">
+                    ← Back to Orders
+                </a>
+            </div>
+        </div>
+
+        <!-- Inventory Summary Section -->
+        <div class="inventory-summary">
+            <h3>📊 Inventory Levels</h3>
+            <div class="row">
+                {% for product_name, quantity in product_totals.items() %}
+                <div class="col-md-4 mb-2">
+                    <div class="inventory-item">
+                        <span>{{ product_name }}</span>
+                        <span>
+                            <span class="{% if inventory_levels.get(product_name, 0) < quantity %}inventory-low{% else %}inventory-ok{% endif %}">
+                                {{ inventory_levels.get(product_name, 0) }} in stock
+                            </span>
+                            <span class="text-muted">/ {{ quantity }} needed</span>
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Product Totals Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-0">📦 Product Totals (Combined)</h2>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Total Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product_name, quantity in product_totals.items() %}
+                        <tr>
+                            <td>{{ product_name }}</td>
+                            <td><strong>{{ quantity }}</strong> units</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Shipping Addresses Section -->
+        {% for group in address_groups %}
+        <div class="card">
+            <div class="card-header">
+                <h2 class="m-0">
+                    <span>📮 Shipping To:</span> 
+                    <span class="customer-name">{{ group.customer_name }}</span>
+                    <div class="mt-1">
+                        <small class="text-muted">Address: {{ group.address }}</small>
+                    </div>
+                    {% if group.tags %}
+                    <div class="mt-2">
+                        {% for tag in group.tags.split(',') if group.tags %}
+                        <span class="badge tag me-1">{{ tag.strip() }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </h2>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in group.products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.quantity }} units</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const originalText = this.innerHTML;
+                    this.disabled = true;
+                    this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating PDF...';
+                    
+                    fetch(this.href)
+                        .then(response => {
+                            if (response.ok) return response.blob();
+                            throw new Error('Failed to generate PDF');
+                        })
+                        .then(blob => {
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = `picking_list_${new Date().toISOString().slice(0,10)}.pdf`;
+                            document.body.appendChild(a);
+                            a.click();
+                            window.URL.revokeObjectURL(url);
+                            document.body.removeChild(a);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error generating PDF: ' + error.message);
+                        })
+                        .finally(() => {
+                            this.disabled = false;
+                            this.innerHTML = originalText;
+                        });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

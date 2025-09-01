@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-blue-400 mb-6">Project Activity Details</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+            <h2 class="text-xl font-semibold text-white mb-4">Activity Information</h2>
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <p><strong>Project:</strong> {{ record.project_name }}</p>
+                <p><strong>Employee:</strong> {{ record.user.username }}</p>
+                <p><strong>Date:</strong> {{ record.date }}</p>
+                <p><strong>Punch In:</strong> {{ record.punch_in_time }}</p>
+                <p><strong>Punch Out:</strong> {{ record.punch_out_time }}</p>
+                <p><strong>Hours Worked:</strong> {{ record.total_hours_worked }}</p>
+            </div>
+            
+            <h2 class="text-xl font-semibold text-white mt-6 mb-4">Task Description</h2>
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <p>{{ record.task_description }}</p>
+            </div>
+            
+            <h2 class="text-xl font-semibold text-white mt-6 mb-4">Progress Notes</h2>
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <p>{{ record.progress_notes or 'No notes provided' }}</p>
+            </div>
+        </div>
+        
+        <div>
+            <h2 class="text-xl font-semibold text-white mb-4">Progress Photo</h2>
+            {% if record.progress_photo %}
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <img src="{{ url_for('static', filename='uploads/' + record.progress_photo) }}" 
+                     alt="Progress Photo" class="max-w-full h-auto rounded-lg">
+            </div>
+            {% else %}
+            <div class="bg-gray-700 p-4 rounded-lg text-center">
+                <p class="text-gray-400">No photo uploaded</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="mt-6">
+        <a href="{{ url_for('project_reports') }}" 
+           class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded inline-block">
+            Back to Reports
+        </a>
+    </div>
+</div>
+{% endblock %}

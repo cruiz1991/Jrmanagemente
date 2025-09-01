@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-blue-400 mb-6">Production Details</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold text-white mb-4">Basic Information</h2>
+            <div class="space-y-2">
+                <p><span class="text-gray-400">Recipe:</span> <span class="text-white">{{ recipe_name }}</span></p>
+                <p><span class="text-gray-400">User:</span> <span class="text-white">{{ user_name }}</span></p>
+                <p><span class="text-gray-400">Production Date:</span> <span class="text-white">{{ record.production_date }}</span></p>
+                <p><span class="text-gray-400">Room:</span> <span class="text-white">{{ record.room }}</span></p>
+                <p><span class="text-gray-400">Team Members:</span> <span class="text-white">{{ record.team_members }}</span></p>
+                <p><span class="text-gray-400">Location:</span> <span class="text-white">{{ record.location }}</span></p>
+            </div>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold text-white mb-4">Equipment & Status</h2>
+            <div class="space-y-2">
+                <p><span class="text-gray-400">Equipment Cleaned:</span> 
+                    <span class="text-white">{{ record.equipment_cleaned }}</span></p>
+                <p><span class="text-gray-400">Equipment Issues:</span> 
+                    <span class="text-white">{{ record.equipment_issues }}</span></p>
+                <p><span class="text-gray-400">Completed:</span> 
+                    {% if record.completed %}
+                        <span class="text-green-400">Yes</span>
+                    {% else %}
+                        <span class="text-red-400">No</span>
+                    {% endif %}
+                </p>
+                <p><span class="text-gray-400">Yield Before Packaging:</span> 
+                    <span class="text-white">{{ record.yield_before_packaging }}</span></p>
+                <p><span class="text-gray-400">Packaged Amount:</span> 
+                    <span class="text-white">{{ record.packaged_amount }}</span></p>
+                <!-- Added product temperature display -->
+                <p><span class="text-gray-400">Product Temperature:</span> 
+                    <span class="text-white">
+                        {% if product_temperature is not none %}
+                            {{ product_temperature }}°C
+                        {% else %}
+                            Not recorded
+                        {% endif %}
+                    </span></p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-gray-700 p-4 rounded-lg mb-6">
+        <h2 class="text-xl font-semibold text-white mb-4">Ingredients Used</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-gray-600 text-white rounded-lg overflow-hidden">
+                <thead class="bg-gray-500">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Ingredient</th>
+                        <th class="px-6 py-3 text-left">Quantity</th>
+                        <th class="px-6 py-3 text-left">Unit</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-500">
+                    {% for ingredient in ingredients_used %}
+                    <tr>
+                        <td class="px-6 py-4">{{ ingredient[0] }}</td>
+                        <td class="px-6 py-4">{{ ingredient[1] }}</td>
+                        <td class="px-6 py-4">{{ ingredient[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Added Custom Equipment Section -->
+    {% if custom_equipment %}
+    <div class="bg-gray-700 p-4 rounded-lg mb-6">
+        <h2 class="text-xl font-semibold text-white mb-4">Custom Equipment</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-gray-600 text-white rounded-lg overflow-hidden">
+                <thead class="bg-gray-500">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Equipment</th>
+                        <th class="px-6 py-3 text-left">Status</th>
+                        <th class="px-6 py-3 text-left">Parts</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-500">
+                    {% for equipment in custom_equipment %}
+                    <tr>
+                        <td class="px-6 py-4">{{ equipment.name }}</td>
+                        <td class="px-6 py-4">{{ equipment.status }}</td>
+                        <td class="px-6 py-4">
+                            {% if equipment.parts %}
+                                {{ equipment.parts|join(', ') }}
+                            {% else %}
+                                None specified
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if record.notes %}
+    <div class="bg-gray-700 p-4 rounded-lg">
+        <h2 class="text-xl font-semibold text-white mb-4">Notes</h2>
+        <p class="text-gray-300 whitespace-pre-wrap">{{ record.notes }}</p>
+    </div>
+    {% endif %}
+    
+    <div class="mt-6">
+        <a href="{{ url_for('recipe_production_reports') }}" 
+           class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded inline-block">
+            Back to Reports
+        </a>
+
+        {% if current_user.role == 'admin' %}
+        <form action="{{ url_for('delete_production_report', production_id=record.production_id) }}" 
+              method="POST" class="inline-block">
+            <button type="submit" 
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                    onclick="return confirm('Are you sure you want to delete this report?')">
+                Delete Report
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

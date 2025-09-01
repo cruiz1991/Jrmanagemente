@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Grocery Item</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .form-control {
+            background-color: #2d3748;
+            border-color: #4a5568;
+            color: white;
+        }
+        .form-control:focus {
+            background-color: #2d3748;
+            color: white;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 0.2rem rgba(66, 153, 225, 0.25);
+        }
+        .table td, .table th {
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg shadow-gray-700/10">
+        <h1 class="text-blue-400 text-3xl font-bold mb-4">Edit Grocery Item</h1>
+
+        <!-- Form to Edit Grocery -->
+        <form method="POST" action="{{ url_for('edit_grocery', item_id=item.id) }}">
+            <div class="form-group">
+                <label for="brand_name" class="text-white">Brand Name</label>
+                <input type="text" class="form-control" id="brand_name" name="brand_name" value="{{ item.brand_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="product_name" class="text-white">Product Name</label>
+                <input type="text" class="form-control" id="product_name" name="product_name" value="{{ item.product_name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="price" class="text-white">Price</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{ item.price }}" required>
+            </div>
+            <div class="form-group">
+                <label for="stock_quantity" class="text-white">Stock Quantity</label>
+                <input type="number" class="form-control" id="stock_quantity" name="stock_quantity" value="{{ item.stock_quantity }}" required>
+            </div>
+            <div class="form-group">
+                <label for="date" class="text-white">Date</label>
+                <input type="date" class="form-control" id="date" name="date" value="{{ item.date }}" required>
+            </div>
+            <button type="submit" class="btn btn-success mt-4">Update Item</button>
+        </form>
+
+        <!-- Back to Inventory Button -->
+        <a href="{{ url_for('inventory') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mt-4">
+            Back to Inventory
+        </a>
+    </div>
+</body>
+</html>

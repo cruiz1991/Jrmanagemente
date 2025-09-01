@@ -1,0 +1,956 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopify Orders</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .region-header {
+            background-color: #2d3748;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .region-header:hover {
+            background-color: #4a5568;
+        }
+        .region-content {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .active-region {
+            display: block;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25em 0.4em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+        }
+        .route-number {
+            font-weight: bold;
+            color: #fbbf24;
+            padding-right: 8px;
+        }
+        /* Drag and Drop Styles */
+        .draggable-row {
+            cursor: move;
+        }
+        .dragging {
+            opacity: 0.5;
+            background-color: #4a5568;
+        }
+        .drop-target {
+            background-color: #2d374850;
+            border: 2px dashed #4299e1;
+        }
+        .region-content {
+            min-height: 100px;
+        }
+        @media (max-width: 768px) {
+            .table-responsive {
+                display: block;
+                overflow-x: auto;
+            }
+            .region-header h2 {
+                font-size: 1.1rem;
+            }
+            .badge {
+                display: block;
+                margin-top: 0.3rem;
+            }
+            .driver-select {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg shadow-gray-700/10 mt-10">
+        <h1 class="text-blue-400 text-3xl font-bold mb-4">Shopify Orders</h1>
+
+        <!-- Back to Dashboard button -->
+        <div class="mb-4">
+            <a href="{{ url_for('dashboard') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+        <div class="status-summary mb-6 p-4 bg-gray-700 rounded-lg">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="bg-blue-900/50 p-3 rounded-lg text-center">
+                    <div class="text-sm text-blue-300">Total Orders</div>
+                    <div class="text-2xl font-bold">{{ total_orders }}</div>
+                </div>
+                <div class="bg-yellow-900/50 p-3 rounded-lg text-center">
+                    <div class="text-sm text-yellow-300">Unfulfilled</div>
+                    <div class="text-2xl font-bold">{{ unfulfilled_count }}</div>
+                </div>
+                <div class="bg-purple-900/50 p-3 rounded-lg text-center">
+                    <div class="text-sm text-purple-300">Partially Fulfilled</div>
+                    <div class="text-2xl font-bold">{{ partial_count }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form with checkboxes -->
+        <form method="POST" action="{{ url_for('generate_picking_list') }}" id="pickingForm" onsubmit="return validatePickingForm()">
+            <div class="mb-4 flex flex-wrap gap-2">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Generate Picking List
+                </button>
+                <button type="button" onclick="exportAllSelected()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Export Selected
+                </button>
+                <button type="button" onclick="printAllSelected()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                    Print Selected
+                </button>
+            </div>
+
+            <!-- Planned Route (1st & 3rd week) -->
+            <div class="region-header" onclick="toggleRegion('plannedRoute')">
+                <div class="flex items-center">
+                    <h2>Planned Route (1st & 3rd week)</h2>
+                    <span class="badge bg-orange-500 ml-2">Week {{ '1st' if current_week_number % 2 == 1 else '3rd' }}</span>
+                    <span class="badge bg-blue-500 ml-2">{{ planned_route_count }} orders</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select class="driver-select bg-gray-700 text-white p-1 rounded text-sm">
+                        <option value="">Assign driver...</option>
+                        {% for driver in drivers %}
+                        <option value="{{ driver.id }}">{{ driver.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" onclick="planRoute('plannedRoute')" class="bg-green-600 text-white px-2 py-1 rounded text-sm">
+                        Plan Route
+                    </button>
+                </div>
+            </div>
+            <div id="plannedRoute" class="region-content active-region">
+                <div class="table-controls mb-3 flex flex-wrap items-center gap-2">
+                    <input type="text" placeholder="Filter orders..." 
+                           class="filter-input bg-gray-700 text-white p-2 rounded w-64"
+                           onkeyup="filterTable('plannedRoute', this.value)">
+                    <button onclick="showOnlyUnfulfilled('plannedRoute')"
+                            class="bg-yellow-600 text-white px-3 py-2 rounded text-sm">
+                        Show Unfulfilled Only
+                    </button>
+                    <button onclick="exportRegion('plannedRoute')"
+                            class="bg-purple-600 text-white px-3 py-2 rounded text-sm">
+                        Export This Route
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="select-all" data-region="plannedRoute"></th>
+                                <th>#</th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Delivery Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            {% if order[7] in ['Saint Eustache', 'Saint Sauveur', 'LaPlaine', 'Terrebonne', 'Canut', 'Mascouche', 'St-Marthe', 'Sainte-Thérèse', 'Sainte-Julie', 'Granby', 'L\'Île-Perrot', 'Saint-Jerome', 'Saint-Jean-sur-Richelieu', 'Vimont', 'Repentigny'] %}
+                            <tr draggable="true" class="draggable-row" data-order-id="{{ order[0] }}">
+                                <td><input type="checkbox" name="selected_orders" value="{{ order[0] }}" class="order-checkbox" data-region="plannedRoute"></td>
+                                <td class="route-number"></td>
+                                <td>{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>{{ order[2] }}</td>
+                                <td>{{ order[7] }}</td>
+                                <td>{{ order[3] }}</td>
+                                <td>${{ "%.2f"|format(order[4]) }}</td>
+                                <td>
+                                    <span class="badge {% if order[5] == 'unfulfilled' %}bg-yellow-600{% else %}bg-purple-600{% endif %}">
+                                        {{ order[5] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <select class="status-select bg-gray-700 text-white p-1 rounded text-xs"
+                                            onchange="updateDeliveryStatus(this, '{{ order[0] }}')">
+                                        <option value="pending">Pending</option>
+                                        <option value="dispatched">Dispatched</option>
+                                        <option value="delivered">Delivered</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <!-- Change this in your table rows: -->
+<!-- In your table rows: -->
+<!-- Change all View links to use this format: -->
+<td>
+    <a href="{{ url_for('order_details', order_id=order[0]) }}" 
+       class="btn btn-primary btn-sm">View</a>
+</td>                  </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-4 bg-gray-700 rounded-lg">
+                    <div id="map-placeholder-plannedRoute" class="h-64 bg-gray-600 flex items-center justify-center">
+                        <p class="text-gray-400">[Map view coming soon]</p>
+                    </div>
+                    <button onclick="showMapPreview('plannedRoute')" 
+                            class="mt-2 bg-green-600 text-white px-3 py-1 rounded text-sm">
+                        Show Route Map
+                    </button>
+                </div>
+            </div>
+
+            <!-- No Delivery (Special Cases) -->
+            <div class="region-header" onclick="toggleRegion('noDelivery')">
+                <div class="flex items-center">
+                    <h2>No Delivery (Special Cases)</h2>
+                    <span class="badge bg-red-500 ml-2">Contact Customer</span>
+                    <span class="badge bg-blue-500 ml-2">{{ no_delivery_count }} orders</span>
+                </div>
+            </div>
+            <div id="noDelivery" class="region-content">
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="select-all" data-region="noDelivery"></th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            {% if order[7] in ['Trois-Riviere', 'Sherbrooke', 'Berthierville', 'Lachute'] %}
+                            <tr draggable="true" class="draggable-row" data-order-id="{{ order[0] }}">
+                                <td><input type="checkbox" name="selected_orders" value="{{ order[0] }}" class="order-checkbox" data-region="noDelivery"></td>
+                                <td>{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>{{ order[2] }}</td>
+                                <td>{{ order[7] }}</td>
+                                <td>{{ order[3] }}</td>
+                                <td>${{ "%.2f"|format(order[4]) }}</td>
+                                <td>
+                                    <span class="badge {% if order[5] == 'unfulfilled' %}bg-yellow-600{% else %}bg-purple-600{% endif %}">
+                                        {{ order[5] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('order_details', order_id=order[0]) }}" class="btn btn-primary btn-sm">View</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Southshore & Downtown (Thursday & Friday) -->
+            <div class="region-header" onclick="toggleRegion('southshoreDowntown')">
+                <div class="flex items-center">
+                    <h2>Southshore & Downtown</h2>
+                    <span class="badge bg-purple-500 ml-2">Thu/Fri</span>
+                    <span class="badge bg-blue-500 ml-2">{{ southshore_count }} orders</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select class="driver-select bg-gray-700 text-white p-1 rounded text-sm">
+                        <option value="">Assign driver...</option>
+                        {% for driver in drivers %}
+                        <option value="{{ driver.id }}">{{ driver.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" onclick="planRoute('southshoreDowntown')" class="bg-green-600 text-white px-2 py-1 rounded text-sm">
+                        Plan Route
+                    </button>
+                </div>
+            </div>
+            <div id="southshoreDowntown" class="region-content">
+                <div class="table-controls mb-3 flex flex-wrap items-center gap-2">
+                    <input type="text" placeholder="Filter orders..." 
+                           class="filter-input bg-gray-700 text-white p-2 rounded w-64"
+                           onkeyup="filterTable('southshoreDowntown', this.value)">
+                    <button onclick="showOnlyUnfulfilled('southshoreDowntown')"
+                            class="bg-yellow-600 text-white px-3 py-2 rounded text-sm">
+                        Show Unfulfilled Only
+                    </button>
+                    <button onclick="exportRegion('southshoreDowntown')"
+                            class="bg-purple-600 text-white px-3 py-2 rounded text-sm">
+                        Export This Route
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="select-all" data-region="southshoreDowntown"></th>
+                                <th>#</th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Delivery Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            {% if order[7] in ['Châteauguay', 'Pointe-Claire', 'Downtown', 'Centre Ville', 'Montréal', 'Longueuil', 'Brossard', 'Eastend', 'Saint-Jean-Sur-Richelieu'] %}
+                            <tr draggable="true" class="draggable-row" data-order-id="{{ order[0] }}">
+                                <td><input type="checkbox" name="selected_orders" value="{{ order[0] }}" class="order-checkbox" data-region="southshoreDowntown"></td>
+                                <td class="route-number"></td>
+                                <td>{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>{{ order[2] }}</td>
+                                <td>{{ order[7] }}</td>
+                                <td>{{ order[3] }}</td>
+                                <td>${{ "%.2f"|format(order[4]) }}</td>
+                                <td>
+                                    <span class="badge {% if order[5] == 'unfulfilled' %}bg-yellow-600{% else %}bg-purple-600{% endif %}">
+                                        {{ order[5] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <select class="status-select bg-gray-700 text-white p-1 rounded text-xs"
+                                            onchange="updateDeliveryStatus(this, '{{ order[0] }}')">
+                                        <option value="pending">Pending</option>
+                                        <option value="dispatched">Dispatched</option>
+                                        <option value="delivered">Delivered</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('order_details', order_id=order[0]) }}" class="btn btn-primary btn-sm">View</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-4 bg-gray-700 rounded-lg">
+                    <div id="map-placeholder-southshoreDowntown" class="h-64 bg-gray-600 flex items-center justify-center">
+                        <p class="text-gray-400">[Map view coming soon]</p>
+                    </div>
+                    <button onclick="showMapPreview('southshoreDowntown')" 
+                            class="mt-2 bg-green-600 text-white px-3 py-1 rounded text-sm">
+                        Show Route Map
+                    </button>
+                </div>
+            </div>
+
+            <!-- West Island, North of Montreal, Laval (Tuesday & Wednesday) -->
+            <div class="region-header" onclick="toggleRegion('westIslandNorthLaval')">
+                <div class="flex items-center">
+                    <h2>West Island, North of Montreal, Laval</h2>
+                    <span class="badge bg-green-500 ml-2">Tue/Wed</span>
+                    <span class="badge bg-blue-500 ml-2">{{ west_island_count }} orders</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select class="driver-select bg-gray-700 text-white p-1 rounded text-sm">
+                        <option value="">Assign driver...</option>
+                        {% for driver in drivers %}
+                        <option value="{{ driver.id }}">{{ driver.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" onclick="planRoute('westIslandNorthLaval')" class="bg-green-600 text-white px-2 py-1 rounded text-sm">
+                        Plan Route
+                    </button>
+                </div>
+            </div>
+            <div id="westIslandNorthLaval" class="region-content">
+                <div class="table-controls mb-3 flex flex-wrap items-center gap-2">
+                    <input type="text" placeholder="Filter orders..." 
+                           class="filter-input bg-gray-700 text-white p-2 rounded w-64"
+                           onkeyup="filterTable('westIslandNorthLaval', this.value)">
+                    <button onclick="showOnlyUnfulfilled('westIslandNorthLaval')"
+                            class="bg-yellow-600 text-white px-3 py-2 rounded text-sm">
+                        Show Unfulfilled Only
+                    </button>
+                    <button onclick="exportRegion('westIslandNorthLaval')"
+                            class="bg-purple-600 text-white px-3 py-2 rounded text-sm">
+                        Export This Route
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped mt-4">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="select-all" data-region="westIslandNorthLaval"></th>
+                                <th>#</th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Delivery Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            {% if order[7] not in ['Trois-Riviere', 'Sherbrooke', 'Berthierville', 'Lachute', 
+                                                  'Saint Eustache', 'Saint Sauveur', 'LaPlaine', 'Terrebonne', 
+                                                  'Canut', 'Mascouche', 'St-Marthe', 'Sainte-Thérèse', 
+                                                  'Sainte-Julie', 'Granby', 'L\'Île-Perrot', 'Saint-Jerome', 
+                                                  'Saint-Jean-sur-Richelieu', 'Vimont', 'Repentigny',
+                                                  'Châteauguay', 'Pointe-Claire', 'Downtown', 'Centre Ville', 
+                                                  'Montréal', 'Longueuil', 'Brossard', 'Eastend', 'Saint-Jean-Sur-Richelieu'] %}
+                            <tr draggable="true" class="draggable-row" data-order-id="{{ order[0] }}">
+                                <td><input type="checkbox" name="selected_orders" value="{{ order[0] }}" class="order-checkbox" data-region="westIslandNorthLaval"></td>
+                                <td class="route-number"></td>
+                                <td>{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>{{ order[2] }}</td>
+                                <td>{{ order[7] }}</td>
+                                <td>{{ order[3] }}</td>
+                                <td>${{ "%.2f"|format(order[4]) }}</td>
+                                <td>
+                                    <span class="badge {% if order[5] == 'unfulfilled' %}bg-yellow-600{% else %}bg-purple-600{% endif %}">
+                                        {{ order[5] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <select class="status-select bg-gray-700 text-white p-1 rounded text-xs"
+                                            onchange="updateDeliveryStatus(this, '{{ order[0] }}')">
+                                        <option value="pending">Pending</option>
+                                        <option value="dispatched">Dispatched</option>
+                                        <option value="delivered">Delivered</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('order_details', order_id=order[0]) }}" class="btn btn-primary btn-sm">View</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-4 bg-gray-700 rounded-lg">
+                    <div id="map-placeholder-westIslandNorthLaval" class="h-64 bg-gray-600 flex items-center justify-center">
+                        <p class="text-gray-400">[Map view coming soon]</p>
+                    </div>
+                    <button onclick="showMapPreview('westIslandNorthLaval')" 
+                            class="mt-2 bg-green-600 text-white px-3 py-1 rounded text-sm">
+                        Show Route Map
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Pagination -->
+        <div class="mt-4 flex justify-between">
+            <div>
+                {% if prev_page %}
+                    <a href="{{ url_for('shopify_orders', page=prev_page) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Previous</a>
+                {% endif %}
+            </div>
+            <div>
+                {% if next_page %}
+                    <a href="{{ url_for('shopify_orders', page=next_page) }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Next</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for all functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize all regions as collapsed except the first one
+        const regions = document.querySelectorAll('.region-content');
+        if (regions.length > 0) {
+            regions[0].classList.add('active-region');
+        }
+    
+        // Select all functionality for each region
+        document.querySelectorAll('.select-all').forEach(selectAll => {
+            selectAll.addEventListener('change', function(e) {
+                const region = this.getAttribute('data-region');
+                const checkboxes = document.querySelectorAll(`.order-checkbox[data-region="${region}"]`);
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = e.target.checked;
+                });
+            });
+        });
+        // Debug click events
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-primary') && e.target.textContent.trim() === 'View') {
+        console.log('View button clicked:', e.target.href);
+    }
+});
+
+
+
+// Ensure all View links are properly formatted
+document.querySelectorAll('a[href*="order_details"]').forEach(link => {
+    console.log('Order link:', link.href);
+});
+
+    
+        // Ensure select all gets unchecked when individual boxes are unchecked
+        document.querySelectorAll('.order-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (!this.checked) {
+                    const region = this.getAttribute('data-region');
+                    document.querySelector(`.select-all[data-region="${region}"]`).checked = false;
+                }
+            });
+        });
+    
+        // Calculate and display delivery dates
+        calculateDeliveryDates();
+    
+        // Initialize drag and drop functionality
+        setupDragAndDrop();
+    });
+    
+// ==================== DRAG AND DROP FUNCTIONALITY ====================
+function setupDragAndDrop() {
+    // Make all order rows draggable
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        row.draggable = true;
+        row.classList.add('draggable-row');
+        
+        row.addEventListener('dragstart', handleDragStart);
+        row.addEventListener('dragend', handleDragEnd);
+    });
+
+    // Set up drop zones for each region
+    const regions = document.querySelectorAll('.region-content');
+    regions.forEach(region => {
+        const tbody = region.querySelector('tbody');
+        if (tbody) {
+            tbody.addEventListener('dragover', handleDragOver);
+            tbody.addEventListener('dragenter', handleDragEnter);
+            tbody.addEventListener('dragleave', handleDragLeave);
+            tbody.addEventListener('drop', handleDrop);
+        }
+    });
+}
+
+function handleDragStart(e) {
+    this.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', this.innerHTML);
+    e.dataTransfer.setData('text/region', this.closest('.region-content').id);
+    e.dataTransfer.setData('text/order-id', this.getAttribute('data-order-id'));
+    e.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDragEnd() {
+    this.classList.remove('dragging');
+}
+
+function handleDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+}
+
+function handleDragEnter(e) {
+    e.preventDefault();
+    this.classList.add('drop-target');
+}
+
+function handleDragLeave() {
+    this.classList.remove('drop-target');
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    this.classList.remove('drop-target');
+    
+    const sourceRegionId = e.dataTransfer.getData('text/region');
+    const orderId = e.dataTransfer.getData('text/order-id');
+    const targetRegionId = this.closest('.region-content').id;
+    
+    // Don't do anything if dropping in same region
+    if (sourceRegionId === targetRegionId) return;
+    
+    // Find the dragged row
+    const sourceRegion = document.getElementById(sourceRegionId);
+    const draggedRow = sourceRegion.querySelector(`tr[data-order-id="${orderId}"]`);
+    
+    if (draggedRow) {
+        // Remove from source region
+        draggedRow.remove();
+        
+        // Create a new row in target region
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = e.dataTransfer.getData('text/plain');
+        newRow.draggable = true;
+        newRow.classList.add('draggable-row');
+        newRow.setAttribute('data-order-id', orderId);
+        
+        // Add event listeners to new row
+        newRow.addEventListener('dragstart', handleDragStart);
+        newRow.addEventListener('dragend', handleDragEnd);
+        
+        // Add checkbox event listeners
+        const checkbox = newRow.querySelector('.order-checkbox');
+        if (checkbox) {
+            checkbox.setAttribute('data-region', targetRegionId);
+            checkbox.addEventListener('change', function() {
+                if (!this.checked) {
+                    document.querySelector(`.select-all[data-region="${targetRegionId}"]`).checked = false;
+                }
+            });
+        }
+        
+        // Add to target region
+        this.appendChild(newRow);
+        
+        // Update the backend via AJAX
+        updateOrderRegion(orderId, targetRegionId);
+    }
+}
+
+function updateOrderRegion(orderId, newRegionId) {
+    // Map our region IDs to your backend's region identifiers
+    const regionMapping = {
+        'plannedRoute': 'planned_route',
+        'southshoreDowntown': 'southshore_downtown',
+        'westIslandNorthLaval': 'west_island',
+        'noDelivery': 'no_delivery'
+    };
+    
+    const regionName = regionMapping[newRegionId] || newRegionId;
+    
+    fetch('/update_order_region', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            // Removed CSRF token header
+        },
+        body: JSON.stringify({
+            order_id: orderId,
+            region: regionName
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            console.error('Failed to update order region:', data.message);
+            // You might want to revert the UI change here
+        }
+    })
+    .catch(error => {
+        console.error('Error updating order region:', error);
+    });
+}
+    // ==================== EXISTING FUNCTIONALITY ====================
+    function toggleRegion(regionId) {
+        const region = document.getElementById(regionId);
+        region.classList.toggle('active-region');
+    }
+    
+    function validatePickingForm() {
+        const checked = document.querySelectorAll('.order-checkbox:checked');
+        if (checked.length === 0) {
+            alert('Please select at least one order to generate a picking list');
+            return false;
+        }
+        return true;
+    }
+    
+    function planRoute(regionId) {
+        const table = document.querySelector(`#${regionId} table`);
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        
+        // Sort by city (you would implement real geocoding in production)
+        rows.sort((a, b) => {
+            const cityA = a.querySelector('td:nth-child(6)').textContent.toLowerCase();
+            const cityB = b.querySelector('td:nth-child(6)').textContent.toLowerCase();
+            return cityA.localeCompare(cityB);
+        });
+        
+        // Re-insert sorted rows
+        const tbody = table.querySelector('tbody');
+        tbody.innerHTML = '';
+        rows.forEach((row, index) => {
+            // Update route number
+            row.querySelector('.route-number').textContent = index + 1;
+            tbody.appendChild(row);
+        });
+        
+        // Add visual numbering
+        rows.forEach((row, index) => {
+            const numCell = row.querySelector('.route-number');
+            numCell.textContent = index + 1;
+        });
+    }
+    
+    function exportRegion(regionId) {
+        const region = document.getElementById(regionId);
+        const rows = region.querySelectorAll('tbody tr');
+        let csv = 'Route #,Order ID,Customer,Address,City,Amount,Status\n';
+        
+        rows.forEach(row => {
+            if (row.querySelector('.order-checkbox').checked) {
+                const cells = row.querySelectorAll('td');
+                csv += `"${cells[1].textContent}","${cells[2].textContent}","${cells[3].textContent}",` +
+                       `"${cells[4].textContent}","${cells[5].textContent}",` +
+                       `"${cells[7].textContent}","${cells[8].textContent}"\n`;
+            }
+        });
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${regionId}_route_${new Date().toLocaleDateString()}.csv`;
+        a.click();
+    }
+    
+    function exportAllSelected() {
+        let csv = 'Region,Order ID,Customer,Address,City,Amount,Status\n';
+        const regions = ['plannedRoute', 'southshoreDowntown', 'westIslandNorthLaval'];
+        
+        regions.forEach(regionId => {
+            const regionName = document.querySelector(`#${regionId} .region-header h2`).textContent.trim();
+            const rows = document.querySelectorAll(`#${regionId} tbody tr`);
+            
+            rows.forEach(row => {
+                if (row.querySelector('.order-checkbox').checked) {
+                    const cells = row.querySelectorAll('td');
+                    csv += `"${regionName}","${cells[2].textContent}","${cells[3].textContent}",` +
+                           `"${cells[4].textContent}","${cells[5].textContent}",` +
+                           `"${cells[7].textContent}","${cells[8].textContent}"\n`;
+                }
+            });
+        });
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `all_selected_orders_${new Date().toLocaleDateString()}.csv`;
+        a.click();
+    }
+    
+    function printAllSelected() {
+        const printWindow = window.open('', '_blank');
+        let html = `
+            <html>
+            <head>
+                <title>Selected Orders</title>
+                <style>
+                    body { font-family: Arial, sans-serif; }
+                    table { width: 100%; border-collapse: collapse; }
+                    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                    th { background-color: #f2f2f2; }
+                    .region-title { margin-top: 20px; font-weight: bold; }
+                </style>
+            </head>
+            <body>
+                <h1>Selected Orders - ${new Date().toLocaleDateString()}</h1>
+        `;
+        
+        const regions = ['plannedRoute', 'southshoreDowntown', 'westIslandNorthLaval'];
+        
+        regions.forEach(regionId => {
+            const regionName = document.querySelector(`#${regionId} .region-header h2`).textContent.trim();
+            const rows = document.querySelectorAll(`#${regionId} tbody tr`);
+            let hasSelected = false;
+            
+            let regionHtml = `
+                <div class="region-title">${regionName}</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            rows.forEach(row => {
+                if (row.querySelector('.order-checkbox').checked) {
+                    hasSelected = true;
+                    const cells = row.querySelectorAll('td');
+                    regionHtml += `
+                        <tr>
+                            <td>${cells[2].textContent}</td>
+                            <td>${cells[3].textContent}</td>
+                            <td>${cells[4].textContent}</td>
+                            <td>${cells[5].textContent}</td>
+                            <td>${cells[7].textContent}</td>
+                            <td>${cells[8].textContent}</td>
+                        </tr>
+                    `;
+                }
+            });
+            
+            regionHtml += `</tbody></table>`;
+            
+            if (hasSelected) {
+                html += regionHtml;
+            }
+        });
+        
+        html += `</body></html>`;
+        
+        printWindow.document.open();
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.print();
+    }
+    
+    function filterTable(regionId, searchText) {
+        const table = document.querySelector(`#${regionId} table`);
+        const rows = table.querySelectorAll('tbody tr');
+        const search = searchText.toLowerCase();
+        
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let match = false;
+            
+            // Check Order ID, Customer, Address, City
+            for (let i = 2; i <= 5; i++) {
+                if (cells[i].textContent.toLowerCase().includes(search)) {
+                    match = true;
+                    break;
+                }
+            }
+            
+            row.style.display = match ? '' : 'none';
+        });
+    }
+    
+    function showOnlyUnfulfilled(regionId) {
+        const table = document.querySelector(`#${regionId} table`);
+        const rows = table.querySelectorAll('tbody tr');
+        
+        rows.forEach(row => {
+            const statusCell = row.querySelector('td:nth-child(9)');
+            if (statusCell.textContent.includes('unfulfilled')) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+    
+    function calculateDeliveryDates() {
+        const today = new Date();
+        const regions = {
+            'southshoreDowntown': getNextWeekday(today, 4), // Thursday
+            'westIslandNorthLaval': getNextWeekday(today, 2), // Tuesday
+            'plannedRoute': getNextPlannedRouteDate(today)
+        };
+        
+        for (const [regionId, deliveryDate] of Object.entries(regions)) {
+            const dateStr = deliveryDate.toLocaleDateString('en-CA', { weekday: 'long', month: 'short', day: 'numeric' });
+            const rows = document.querySelectorAll(`#${regionId} tbody tr`);
+            
+            rows.forEach(row => {
+                const dateCell = row.querySelector('td:nth-child(7)');
+                const existingBadge = dateCell.querySelector('.delivery-badge');
+                
+                if (existingBadge) {
+                    existingBadge.textContent = dateStr;
+                } else {
+                    const badge = document.createElement('span');
+                    badge.className = 'delivery-badge bg-blue-500 text-white text-xs p-1 rounded ml-2';
+                    badge.textContent = dateStr;
+                    dateCell.appendChild(badge);
+                }
+            });
+        }
+    }
+    
+    function getNextWeekday(date, weekday) {
+        // weekday: 0=Sunday, 1=Monday, etc.
+        const result = new Date(date);
+        result.setDate(date.getDate() + ((7 + weekday - date.getDay()) % 7 || 7));
+        return result;
+    }
+    
+    function getNextPlannedRouteDate(date) {
+        // 1st and 3rd weeks of the month
+        const weekNumber = Math.floor((date.getDate() - 1) / 7) + 1;
+        const nextDate = new Date(date);
+        
+        if (weekNumber === 1 || weekNumber === 3) {
+            // If current week is planned week, use current week's Wednesday
+            return getNextWeekday(date, 3); // Wednesday
+        } else {
+            // Otherwise find next planned week's Wednesday
+            nextDate.setDate(1);
+            if (date.getDate() > 21) {
+                // Next month's 1st week
+                nextDate.setMonth(nextDate.getMonth() + 1);
+                nextDate.setDate(1 + 7); // 2nd week's Wednesday
+            } else {
+                // Current month's 3rd week
+                nextDate.setDate(1 + 14); // 3rd week's Wednesday
+            }
+            return getNextWeekday(nextDate, 3);
+        }
+    }
+    
+    function updateDeliveryStatus(selectElement, orderId) {
+        const status = selectElement.value;
+        // Here you would typically make an AJAX call to update the status in your database
+        console.log(`Updating order ${orderId} to status: ${status}`);
+        
+        // Visual feedback
+        selectElement.className = `status-select text-white p-1 rounded text-xs ${
+            status === 'pending' ? 'bg-gray-600' :
+            status === 'dispatched' ? 'bg-yellow-600' :
+            'bg-green-600'
+        }`;
+    }
+    
+    function showMapPreview(regionId) {
+        // This would be replaced with actual map integration
+        const placeholder = document.getElementById(`map-placeholder-${regionId}`);
+        placeholder.innerHTML = `
+            <div class="text-center p-4">
+                <p class="text-lg font-bold mb-2">Route Map Preview</p>
+                <p class="mb-4">This will show the optimized delivery route for ${regionId}</p>
+                <div class="h-48 bg-gray-500 flex items-center justify-center rounded">
+                    <p>Map integration coming soon</p>
+                </div>
+            </div>
+        `;
+    }
+    </script>
+</body>
+</html>

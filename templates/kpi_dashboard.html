@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Key Performance Indicators</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Profit Margins</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg">Average Gross Margin</h3>
+                    <div class="text-2xl font-bold {% if kpis.avg_gross_margin >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                        {{ "%.1f"|format(kpis.avg_gross_margin) }}%
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg">Average Contribution Margin</h3>
+                    <div class="text-2xl font-bold {% if kpis.avg_contribution_margin >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                        {{ "%.1f"|format(kpis.avg_contribution_margin) }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Financial Returns</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg">Profit per Labor Hour</h3>
+                    <div class="text-2xl font-bold {% if kpis.profit_per_labor_hour >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                        ${{ "%.2f"|format(kpis.profit_per_labor_hour) }}
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg">Return on Assets</h3>
+                    <div class="text-2xl font-bold {% if kpis.return_on_assets >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                        {{ "%.1f"|format(kpis.return_on_assets) }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-gray-700 p-4 rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">Implementation Recommendations</h2>
+        <ul class="list-disc pl-5 space-y-2">
+            <li>Track direct materials, labor hours, and machine time per product</li>
+            <li>Use multiple allocation bases - don't rely solely on sales revenue</li>
+            <li>Update cost allocations monthly and review pricing quarterly</li>
+            <li>Focus on products with highest contribution margins</li>
+            <li>Calculate minimum volumes needed for profitability</li>
+            <li>Prioritize high-margin products in production planning</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

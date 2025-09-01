@@ -1,0 +1,1078 @@
+{
+  "2874 rue masson|montr\u00e9al": {
+    "date": "2025-04-13",
+    "customer_name": "Lilan Do",
+    "customer_address": "2874 rue masson",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 4,
+    "general_tao_14l": 4,
+    "marined_chicken": 0,
+    "total_before_shipping": 595.84,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6642120196387"
+    ]
+  },
+  "250 rue bernard ouest|montr\u00e9al": {
+    "date": "2025-04-13",
+    "customer_name": "Silviu Zarnescu",
+    "customer_address": "250 rue bernard ouest",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 1,
+    "total_before_shipping": 612.07,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6641839636771"
+    ]
+  },
+  "1401 chemin de chambly|longueuil": {
+    "date": "2025-04-13",
+    "customer_name": "Lien Nguyen",
+    "customer_address": "1401 chemin de chambly",
+    "location": "longueuil",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 5,
+    "total_before_shipping": 1166.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6641770889507",
+      "6620731080995"
+    ]
+  },
+  "6606 c\u00f4te saint luc road|montr\u00e9al": {
+    "date": "2025-04-13",
+    "customer_name": "LUKAS WANG",
+    "customer_address": "6606 c\u00f4te saint luc road",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 1,
+    "total_before_shipping": 529.0,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6641687003427"
+    ]
+  },
+  "102 rue saint viateur o.|montreal": {
+    "date": "2025-04-12",
+    "customer_name": "Thanh Kiet Thai",
+    "customer_address": "102 rue saint viateur o.",
+    "location": "montreal",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 1841.7,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6640754032931",
+      "6623215452451",
+      "6596838228259"
+    ]
+  },
+  "5709 chem. de la c\u00f4te-des-neiges|montreal": {
+    "date": "2025-04-11",
+    "customer_name": "Marzan Begum",
+    "customer_address": "5709 chem. de la c\u00f4te-des-neiges",
+    "location": "montreal",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 490.07,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6639561113891"
+    ]
+  },
+  "4351 rue notre-dame ouest|montr\u00e9al": {
+    "date": "2025-04-11",
+    "customer_name": "Omar Sleiman",
+    "customer_address": "4351 rue notre-dame ouest",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 1133.0,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6639315321123",
+      "6616290296099"
+    ]
+  },
+  "547 rue principale|lachute": {
+    "date": "2025-04-11",
+    "customer_name": "Nathan Bringolf",
+    "customer_address": "547 rue principale",
+    "location": "lachute",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 2,
+    "total_before_shipping": 555.96,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6638869938467"
+    ]
+  },
+  "315 rue saint-georges|saint-j\u00e9r\u00f4me": {
+    "date": "2025-04-11",
+    "customer_name": "Sukee Thaya",
+    "customer_address": "315 rue saint-georges",
+    "location": "saint-j\u00e9r\u00f4me",
+    "spicy_mayonnaise_14l": 7,
+    "teriyaki_14l": 4,
+    "general_tao_14l": 2,
+    "marined_chicken": 0,
+    "total_before_shipping": 1223.56,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6638585643299",
+      "6616977539363"
+    ]
+  },
+  "13941 rue saint-simon|mirabel": {
+    "date": "2025-04-11",
+    "customer_name": "Sukee Thaya",
+    "customer_address": "13941 rue saint-simon",
+    "location": "mirabel",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 0,
+    "total_before_shipping": 474.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6638579482915"
+    ]
+  },
+  "168 25e avenue|saint-eustache": {
+    "date": "2025-04-11",
+    "customer_name": "Sukee Thaya",
+    "customer_address": "168 25e avenue",
+    "location": "saint-eustache",
+    "spicy_mayonnaise_14l": 4,
+    "teriyaki_14l": 4,
+    "general_tao_14l": 2,
+    "marined_chicken": 11,
+    "total_before_shipping": 3136.56,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6638576697635",
+      "6616972853539"
+    ]
+  },
+  "8115 avenue marcel-villeneuve|laval": {
+    "date": "2025-04-11",
+    "customer_name": "Sukee Thaya",
+    "customer_address": "8115 avenue marcel-villeneuve",
+    "location": "laval",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 1,
+    "marined_chicken": 0,
+    "total_before_shipping": 557.53,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6638572536099"
+    ]
+  },
+  "15 boulevard don quichotte|ile perrot": {
+    "date": "2025-04-10",
+    "customer_name": "Calvin Perrot",
+    "customer_address": "15 boulevard don quichotte",
+    "location": "ile perrot",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 3,
+    "total_before_shipping": 610.5,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6637426344227"
+    ]
+  },
+  "5538 chemin de la c\u00f4te-des-neiges|montr\u00e9al": {
+    "date": "2025-04-09",
+    "customer_name": "Andrew Nguyen",
+    "customer_address": "5538 chemin de la c\u00f4te-des-neiges",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 546.7,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6636553601315"
+    ]
+  },
+  "8709 boulevard viau|montr\u00e9al": {
+    "date": "2025-04-09",
+    "customer_name": "Jock Tran",
+    "customer_address": "8709 boulevard viau",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 1,
+    "total_before_shipping": 503.57,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6636466241827"
+    ]
+  },
+  "3545 ontario street east|montr\u00e9al": {
+    "date": "2025-04-09",
+    "customer_name": "Meagh\u00e0n Walker",
+    "customer_address": "3545 ontario street east",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 8,
+    "teriyaki_14l": 3,
+    "general_tao_14l": 1,
+    "marined_chicken": 4,
+    "total_before_shipping": 1997.1,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6636352602403",
+      "6620574417187",
+      "6613317550371",
+      "6599618691363"
+    ]
+  },
+  "475 avenue dumont, suite 105|dorval": {
+    "date": "2025-04-09",
+    "customer_name": "S\u00e9bastien Michaud",
+    "customer_address": "475 avenue dumont, suite 105",
+    "location": "dorval",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 1,
+    "marined_chicken": 1,
+    "total_before_shipping": 761.03,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6636014895395"
+    ]
+  },
+  "241 notre-dame street west|montr\u00e9al": {
+    "date": "2025-04-09",
+    "customer_name": "Jin Cui",
+    "customer_address": "241 notre-dame street west",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 0,
+    "marined_chicken": 3,
+    "total_before_shipping": 1102.14,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6635549917475",
+      "6614210117923"
+    ]
+  },
+  "155 rue jean-talon est|montr\u00e9al": {
+    "date": "2025-04-08",
+    "customer_name": "NIKHIL MUNGROOSING",
+    "customer_address": "155 rue jean-talon est",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 1515.4,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6635279909155",
+      "6602554278179"
+    ]
+  },
+  "2153 crescent street|montr\u00e9al": {
+    "date": "2025-04-08",
+    "customer_name": "Hadia Khelassi",
+    "customer_address": "2153 crescent street",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 4,
+    "teriyaki_14l": 6,
+    "general_tao_14l": 2,
+    "marined_chicken": 6,
+    "total_before_shipping": 2285.2,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6635139006755",
+      "6619432255779",
+      "6600283947299",
+      "6596979163427"
+    ]
+  },
+  "605 rue pierre-caisse #30|saint-jean-sur-richelieu": {
+    "date": "2025-04-08",
+    "customer_name": "Dan Mao",
+    "customer_address": "605 rue pierre-caisse #30",
+    "location": "saint-jean-sur-richelieu",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 3,
+    "general_tao_14l": 1,
+    "marined_chicken": 4,
+    "total_before_shipping": 1129.1,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6635003609379",
+      "6611981730083"
+    ]
+  },
+  "3922 rue wellington|montr\u00e9al": {
+    "date": "2025-04-08",
+    "customer_name": "Joshua Richer",
+    "customer_address": "3922 rue wellington",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 1,
+    "marined_chicken": 2,
+    "total_before_shipping": 856.03,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6634661773603"
+    ]
+  },
+  "56 route 132|delson": {
+    "date": "2025-04-07",
+    "customer_name": "Andrew Ngo",
+    "customer_address": "56 route 132",
+    "location": "delson",
+    "spicy_mayonnaise_14l": 8,
+    "teriyaki_14l": 5,
+    "general_tao_14l": 3,
+    "marined_chicken": 9,
+    "total_before_shipping": 3312.5199999999995,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6633782804771",
+      "6616303042851",
+      "6610577817891"
+    ]
+  },
+  "11767 boul de pierrefonds|montreal": {
+    "date": "2025-04-07",
+    "customer_name": "Guangjun Bai",
+    "customer_address": "11767 boul de pierrefonds",
+    "location": "montreal",
+    "spicy_mayonnaise_14l": 5,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 625.57,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6633774547235"
+    ]
+  },
+  "800 rue du square-victoria|montr\u00e9al": {
+    "date": "2025-04-07",
+    "customer_name": "Juan Luna",
+    "customer_address": "800 rue du square-victoria",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 2,
+    "marined_chicken": 3,
+    "total_before_shipping": 1233.92,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6633240592675",
+      "6621372186915",
+      "6595252158755"
+    ]
+  },
+  "1005 boulevard du quartier|brossard": {
+    "date": "2025-04-07",
+    "customer_name": "WENYING JIANG",
+    "customer_address": "1005 boulevard du quartier",
+    "location": "brossard",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 4979.68,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6633215492387",
+      "6616760189219"
+    ]
+  },
+  "5050 cote de liesse|mont-royal": {
+    "date": "2025-04-06",
+    "customer_name": "Jia",
+    "customer_address": "5050 cote de liesse",
+    "location": "mont-royal",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 7,
+    "marined_chicken": 0,
+    "total_before_shipping": 461.23,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6632248934691",
+      "6599256408355"
+    ]
+  },
+  "3496 boulevard des sources|dollard-des-ormeaux": {
+    "date": "2025-04-05",
+    "customer_name": "renuka robinson",
+    "customer_address": "3496 boulevard des sources",
+    "location": "dollard-des-ormeaux",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 1,
+    "marined_chicken": 2,
+    "total_before_shipping": 714.03,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6630695108899",
+      "6613642150179"
+    ]
+  },
+  "8 boulevard de bromont #102|bromont": {
+    "date": "2025-04-04",
+    "customer_name": "Louis-delson Romeus",
+    "customer_address": "8 boulevard de bromont #102",
+    "location": "bromont",
+    "spicy_mayonnaise_14l": 4,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 2,
+    "marined_chicken": 3,
+    "total_before_shipping": 1342.42,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6629565202723"
+    ]
+  },
+  "1216 rue fleury est|montr\u00e9al": {
+    "date": "2025-04-04",
+    "customer_name": "Andrew Ngo",
+    "customer_address": "1216 rue fleury est",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 1,
+    "total_before_shipping": 503.57,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6629394481443"
+    ]
+  },
+  "6185 taschereau|brossard": {
+    "date": "2025-04-04",
+    "customer_name": "John Loaiza",
+    "customer_address": "6185 taschereau",
+    "location": "brossard",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 3,
+    "general_tao_14l": 1,
+    "marined_chicken": 3,
+    "total_before_shipping": 925.6,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6629348802851"
+    ]
+  },
+  "5790 sherbrooke street east|montr\u00e9al": {
+    "date": "2025-04-03",
+    "customer_name": "Thuan Nguyen",
+    "customer_address": "5790 sherbrooke street east",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 1,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 515.5,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6626976825635"
+    ]
+  },
+  "12325 avenue primat-par\u00e9|montr\u00e9al": {
+    "date": "2025-04-03",
+    "customer_name": "Kevinson Servius",
+    "customer_address": "12325 avenue primat-par\u00e9",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 1691.1,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6626333360419"
+    ]
+  },
+  "210 rue notre-dame ouest|montr\u00e9al": {
+    "date": "2025-04-02",
+    "customer_name": "Sarah S",
+    "customer_address": "210 rue notre-dame ouest",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 1,
+    "total_before_shipping": 529.0,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6625227899171"
+    ]
+  },
+  "6370 r. sherbrooke e|montr\u00e9al": {
+    "date": "2025-04-02",
+    "customer_name": "Alex Luu",
+    "customer_address": "6370 r. sherbrooke e",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 3,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 466.21,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6625188512035"
+    ]
+  },
+  "5574 rue jean-talon est|montr\u00e9al": {
+    "date": "2025-04-02",
+    "customer_name": "Josh Richer",
+    "customer_address": "5574 rue jean-talon est",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 1,
+    "total_before_shipping": 569.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6624869843235"
+    ]
+  },
+  "5200a boul de la c\u00f4te des neiges|montr\u00e9al": {
+    "date": "2025-04-02",
+    "customer_name": "Truc Do",
+    "customer_address": "5200a boul de la c\u00f4te des neiges",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 1,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 598.57,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6624830161187"
+    ]
+  },
+  "333 boulevard brien|repentigny": {
+    "date": "2025-04-01",
+    "customer_name": "Virginia Repentigny",
+    "customer_address": "333 boulevard brien",
+    "location": "repentigny",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 3,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 466.21,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6623391908131"
+    ]
+  },
+  "5982 boulevard cousineau|saint-hubert": {
+    "date": "2025-03-31",
+    "customer_name": "Ganadara St-Hubert zhang",
+    "customer_address": "5982 boulevard cousineau",
+    "location": "saint-hubert",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 1996.37,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6622206918947"
+    ]
+  },
+  "31 boulevard de la seigneurie est|blainville": {
+    "date": "2025-03-31",
+    "customer_name": "Peng",
+    "customer_address": "31 boulevard de la seigneurie est",
+    "location": "blainville",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 3,
+    "total_before_shipping": 610.5,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621978493219"
+    ]
+  },
+  "191 blvd. sir-wilfrid-laurier #110|saint-basile-le-grand": {
+    "date": "2025-03-31",
+    "customer_name": "Yu/Raya",
+    "customer_address": "191 blvd. sir-wilfrid-laurier #110",
+    "location": "saint-basile-le-grand",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 1,
+    "total_before_shipping": 569.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621941694755"
+    ]
+  },
+  "12860 sherbrooke street east|montr\u00e9al": {
+    "date": "2025-03-31",
+    "customer_name": "Zhu Hong Gang",
+    "customer_address": "12860 sherbrooke street east",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 1,
+    "total_before_shipping": 352.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621939597603"
+    ]
+  },
+  "12860 rue sherbrooke est|montr\u00e9al": {
+    "date": "2025-03-31",
+    "customer_name": "Bo Yong",
+    "customer_address": "12860 rue sherbrooke est",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 1,
+    "total_before_shipping": 352.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621858038051"
+    ]
+  },
+  "77 boulevard d'anjou|ch\u00e2teauguay": {
+    "date": "2025-03-31",
+    "customer_name": "Mike Chen",
+    "customer_address": "77 boulevard d'anjou",
+    "location": "ch\u00e2teauguay",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 3,
+    "total_before_shipping": 1084.96,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621499064611",
+      "6596505436451"
+    ]
+  },
+  "12866 sherbrooke street east|montr\u00e9al": {
+    "date": "2025-03-31",
+    "customer_name": "Steven Costa Medeiros",
+    "customer_address": "12866 sherbrooke street east",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 0,
+    "marined_chicken": 4,
+    "total_before_shipping": 980.14,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621349871907"
+    ]
+  },
+  "94 rue sainte c\u00e9cile|salaberry-de-valleyfield": {
+    "date": "2025-03-31",
+    "customer_name": "Jose Antoni",
+    "customer_address": "94 rue sainte c\u00e9cile",
+    "location": "salaberry-de-valleyfield",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 1,
+    "marined_chicken": 4,
+    "total_before_shipping": 1046.03,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621348856099"
+    ]
+  },
+  "1613 saint denis street|montr\u00e9al": {
+    "date": "2025-03-30",
+    "customer_name": "Farshid Khajehzadeh",
+    "customer_address": "1613 saint denis street",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 385.6,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6621023633699"
+    ]
+  },
+  "6075 ch. de chambly|saint-hubert": {
+    "date": "2025-03-30",
+    "customer_name": "Yan Daphne",
+    "customer_address": "6075 ch. de chambly",
+    "location": "saint-hubert",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 5,
+    "general_tao_14l": 2,
+    "marined_chicken": 0,
+    "total_before_shipping": 547.13,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6620894134563"
+    ]
+  },
+  "472 rue principale|saint-basile-le-grand": {
+    "date": "2025-03-30",
+    "customer_name": "Dai Lingchen",
+    "customer_address": "472 rue principale",
+    "location": "saint-basile-le-grand",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 4,
+    "general_tao_14l": 2,
+    "marined_chicken": 0,
+    "total_before_shipping": 464.06,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6620758311203"
+    ]
+  },
+  "1476 college street|montr\u00e9al": {
+    "date": "2025-03-28",
+    "customer_name": "Gao Ncl",
+    "customer_address": "1476 college street",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 4,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 517.07,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6617650200867"
+    ]
+  },
+  "4436 rue wellington|montr\u00e9al": {
+    "date": "2025-03-26",
+    "customer_name": "Kevinson Servius",
+    "customer_address": "4436 rue wellington",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 2814.1900000000005,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6614979772707",
+      "6600415543587",
+      "6595045327139"
+    ]
+  },
+  "1 riverheights drive|brandon": {
+    "date": "2025-03-26",
+    "customer_name": "ZOE ZHANG",
+    "customer_address": "1 riverheights drive",
+    "location": "brandon",
+    "spicy_mayonnaise_14l": 10,
+    "teriyaki_14l": 3,
+    "general_tao_14l": 0,
+    "marined_chicken": 3,
+    "total_before_shipping": 1944.71,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6614645637411",
+      "6595176202531"
+    ]
+  },
+  "2077 boulevard robert-bourassa|montr\u00e9al": {
+    "date": "2025-03-26",
+    "customer_name": "Heng li",
+    "customer_address": "2077 boulevard robert-bourassa",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 831.99,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6614586655011"
+    ]
+  },
+  "550 rue lucien-paiement|laval": {
+    "date": "2025-03-26",
+    "customer_name": "Zhaoyang Li",
+    "customer_address": "550 rue lucien-paiement",
+    "location": "laval",
+    "spicy_mayonnaise_14l": 1,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 515.5,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6614505718051"
+    ]
+  },
+  "4857 boulevard bourque #28|sherbrooke": {
+    "date": "2025-03-26",
+    "customer_name": "Pok\u00e9 Station Rock Forest 9514-8474 Quebec inc",
+    "customer_address": "4857 boulevard bourque #28",
+    "location": "sherbrooke",
+    "spicy_mayonnaise_14l": 5,
+    "teriyaki_14l": 3,
+    "general_tao_14l": 0,
+    "marined_chicken": 3,
+    "total_before_shipping": 1402.21,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6614224961827"
+    ]
+  },
+  "1601 boulevard roland-therrien|longueuil": {
+    "date": "2025-03-25",
+    "customer_name": "Rui Yang",
+    "customer_address": "1601 boulevard roland-therrien",
+    "location": "longueuil",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 802.59,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6613548761379"
+    ]
+  },
+  "7683a taschereau boulevard|brossard": {
+    "date": "2025-03-24",
+    "customer_name": "Li Ci",
+    "customer_address": "7683a taschereau boulevard",
+    "location": "brossard",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 0,
+    "total_before_shipping": 474.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6611928187171"
+    ]
+  },
+  "5709 chemin de la c\u00f4te-des-neiges|montr\u00e9al": {
+    "date": "2025-03-24",
+    "customer_name": "Marzan Begum",
+    "customer_address": "5709 chemin de la c\u00f4te-des-neiges",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 1,
+    "total_before_shipping": 569.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6611674005795"
+    ]
+  },
+  "15 boulevard don-quichotte|ile perrot": {
+    "date": "2025-03-24",
+    "customer_name": "Calvin Perrot",
+    "customer_address": "15 boulevard don-quichotte",
+    "location": "ile perrot",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 573.14,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6611665092899"
+    ]
+  },
+  "29 notre-dame st w|montr\u00e9al": {
+    "date": "2025-03-24",
+    "customer_name": "Easy Ganadara",
+    "customer_address": "29 notre-dame st w",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 743.95,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6611277087011"
+    ]
+  },
+  "3822 wellington street|montr\u00e9al": {
+    "date": "2025-03-23",
+    "customer_name": "Joshua Richer",
+    "customer_address": "3822 wellington street",
+    "location": "montr\u00e9al",
+    "spicy_mayonnaise_14l": 2,
+    "teriyaki_14l": 2,
+    "general_tao_14l": 1,
+    "marined_chicken": 2,
+    "total_before_shipping": 856.03,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6610609864995"
+    ]
+  },
+  "5174 boulevard cousineau|longueuil": {
+    "date": "2025-03-22",
+    "customer_name": "dengfeng Li",
+    "customer_address": "5174 boulevard cousineau",
+    "location": "longueuil",
+    "spicy_mayonnaise_14l": 3,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 408.57,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6607107195171"
+    ]
+  },
+  "3282 boulevard saint-martin ouest|laval": {
+    "date": "2025-03-22",
+    "customer_name": "Kevin P",
+    "customer_address": "3282 boulevard saint-martin ouest",
+    "location": "laval",
+    "spicy_mayonnaise_14l": 1,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 1,
+    "total_before_shipping": 460.96,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6606778204451"
+    ]
+  },
+  "20 bd de mortagne|boucherville": {
+    "date": "2025-03-20",
+    "customer_name": "Larry Sama",
+    "customer_address": "20 bd de mortagne",
+    "location": "boucherville",
+    "spicy_mayonnaise_14l": 4,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 924.07,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6599212007715"
+    ]
+  },
+  "5687 boulevard jean-xxiii|trois-rivi\u00e8res": {
+    "date": "2025-03-19",
+    "customer_name": "Alex/Richard Bourdages",
+    "customer_address": "5687 boulevard jean-xxiii",
+    "location": "trois-rivi\u00e8res",
+    "spicy_mayonnaise_14l": 6,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 3,
+    "marined_chicken": 2,
+    "total_before_shipping": 1255.67,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6598083019043"
+    ]
+  },
+  "3873a boul. st-martin ouest|laval": {
+    "date": "2025-03-18",
+    "customer_name": "Truc DO",
+    "customer_address": "3873a boul. st-martin ouest",
+    "location": "laval",
+    "spicy_mayonnaise_14l": 1,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 1,
+    "marined_chicken": 2,
+    "total_before_shipping": 664.46,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6597065572643"
+    ]
+  },
+  "6_1005, bd du s\u00e9minaire n|saint-jean-sur-richelieu": {
+    "date": "2025-03-18",
+    "customer_name": "Tony Song",
+    "customer_address": "6_1005, bd du s\u00e9minaire n",
+    "location": "saint-jean-sur-richelieu",
+    "spicy_mayonnaise_14l": 4,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 0,
+    "total_before_shipping": 434.0,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6596749033763"
+    ]
+  },
+  "1 rue dufferin suite 108|salaberry-de-valleyfield": {
+    "date": "2025-03-18",
+    "customer_name": "Bo Yong",
+    "customer_address": "1 rue dufferin suite 108",
+    "location": "salaberry-de-valleyfield",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 0,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 407.0,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6596748017955"
+    ]
+  },
+  "1711 boulevard des laurentides|laval": {
+    "date": "2025-03-17",
+    "customer_name": "Amgad Abdalshaheed",
+    "customer_address": "1711 boulevard des laurentides",
+    "location": "laval",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 2,
+    "total_before_shipping": 490.07,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6595571450147"
+    ]
+  },
+  "168 25 avenue|saint-eustache": {
+    "date": "2025-03-16",
+    "customer_name": "Sukee Thaya",
+    "customer_address": "168 25 avenue",
+    "location": "saint-eustache",
+    "spicy_mayonnaise_14l": 0,
+    "teriyaki_14l": 1,
+    "general_tao_14l": 0,
+    "marined_chicken": 5,
+    "total_before_shipping": 1100.57,
+    "notes": "Aggregated orders from 2025-03-17 to 2025-04-14",
+    "order_ids": [
+      "6594479685923"
+    ]
+  }
+}

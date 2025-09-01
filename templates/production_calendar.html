@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-blue-400 mb-6">🏗️ Project Calendar</h1>
+    <!-- Add this near the top of your template, under the main heading -->
+<div class="mb-6">
+    <a href="{{ url_for('production_calendar_view') }}" 
+       class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded">
+        📅 Switch to Calendar View
+    </a>
+</div>
+
+    <!-- Add Event Form -->
+    <div class="bg-gray-700 p-4 rounded-lg mb-6">
+        <h2 class="text-xl font-semibold text-white mb-4">Schedule New Project Event</h2>
+        <form method="POST" action="{{ url_for('production_calendar') }}">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-gray-400 mb-1">Project Name</label>
+                    <select name="project_name" class="w-full bg-gray-600 text-white p-2 rounded" required>
+                        <option value="">Select Project</option>
+                        <option value="Rosyln">Rosyln</option>
+                        <option value="Sabin">Sabin</option>
+                        <option value="Ceasars">Ceasars</option>
+                        <option value="Other">Other (specify in description)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Date</label>
+                    <input type="date" name="date" class="w-full bg-gray-600 text-white p-2 rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Start Time (optional)</label>
+                    <input type="time" name="start_time" class="w-full bg-gray-600 text-white p-2 rounded">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">End Time (optional)</label>
+                    <input type="time" name="end_time" class="w-full bg-gray-600 text-white p-2 rounded">
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-400 mb-1">Team Members</label>
+                <select name="team_members" class="w-full bg-gray-600 text-white p-2 rounded" multiple size="3">
+                    {% for user in all_users %}
+                    <option value="{{ user.username }}">{{ user.username }}</option>
+                    {% endfor %}
+                </select>
+                <small class="text-gray-400">Hold Ctrl/Cmd to select multiple</small>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-400 mb-1">Description</label>
+                <textarea name="description" class="w-full bg-gray-600 text-white p-2 rounded" rows="3" 
+                          placeholder="Describe the work to be done..."></textarea>
+            </div>
+            
+            <button type="submit" class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded">
+                Schedule Event
+            </button>
+        </form>
+    </div>
+
+    <!-- Calendar Events -->
+    <div class="bg-gray-700 p-4 rounded-lg">
+        <h2 class="text-xl font-semibold text-white mb-4">Scheduled Events</h2>
+        
+        {% if events %}
+        <div class="overflow-x-auto">
+            <table class="w-full bg-gray-600 rounded-lg">
+                <thead class="bg-gray-800">
+                    <tr>
+                        <th class="px-4 py-2 text-left">Date</th>
+                        <th class="px-4 py-2 text-left">Project</th>
+                        <th class="px-4 py-2 text-left">Time</th>
+                        <th class="px-4 py-2 text-left">Team</th>
+                        <th class="px-4 py-2 text-left">Status</th>
+                        <th class="px-4 py-2 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in events %}
+                    <tr class="border-t border-gray-500 hover:bg-gray-600">
+                        <td class="px-4 py-2">{{ event.date.strftime('%Y-%m-%d') }}</td>
+                        <td class="px-4 py-2 font-semibold">{{ event.project_name }}</td>
+                        <td class="px-4 py-2">
+                            {% if event.start_time and event.end_time %}
+                            {{ event.start_time.strftime('%H:%M') }} - {{ event.end_time.strftime('%H:%M') }}
+                            {% else %}
+                            All day
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">{{ event.team_members or 'Not assigned' }}</td>
+                        <td class="px-4 py-2">
+                            <span class="{% if event.status == 'completed' %}text-green-400
+                                       {% elif event.status == 'in-progress' %}text-yellow-400
+                                       {% else %}text-blue-400{% endif %}">
+                                {{ event.status }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-2">
+                            <button onclick="requestMaterials({{ event.id }})" 
+                                    class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-sm">
+                                📦 Request Materials
+                            </button>
+                            {% if current_user.role == 'admin' or event.created_by == current_user.user_id %}
+                            <form action="{{ url_for('delete_calendar_event', event_id=event.id) }}" method="POST" class="inline">
+                                <button type="submit" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm ml-2"
+                                        onclick="return confirm('Delete this event?')">
+                                    Delete
+                                </button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if event.description %}
+                    <tr class="border-t border-gray-500 bg-gray-600">
+                        <td colspan="6" class="px-4 py-2 text-sm text-gray-300">
+                            📝 {{ event.description }}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-gray-400 text-center p-4">
+            No events scheduled yet.
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Export Options -->
+    <div class="mt-6">
+        <a href="{{ url_for('production_calendar_ical') }}" 
+           class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded">
+            📅 Export to Calendar (.ics)
+        </a>
+    </div>
+</div>
+
+<!-- Materials Request Modal -->
+<div class="modal fade" id="materialsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-gray-800 text-gray-100">
+            <div class="modal-header border-gray-700">
+                <h5 class="modal-title text-xl font-bold">Request Materials</h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="materialsForm">
+                    <!-- Materials form will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function requestMaterials(eventId) {
+    // Load materials request form
+    fetch(`/production_calendar/materials_form/${eventId}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('materialsForm').innerHTML = html;
+            new bootstrap.Modal(document.getElementById('materialsModal')).show();
+        });
+}
+</script>
+{% endblock %}

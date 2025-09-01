@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-blue-400 mb-6">Production Form: {{ recipe_name }}</h1>
+    
+    <form method="POST" class="space-y-6">
+        <!-- 1. Team Information Section -->
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold text-white mb-4">1. Team Information</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-300 mb-2">Team Leader*</label>
+                    <select name="team_leader" class="w-full bg-gray-600 text-white rounded p-2" required>
+                        <option value="">Select Team Leader</option>
+                        {% for user_id, username in users %}
+                        <option value="{{ user_id }}">{{ username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">Room*</label>
+                    <select name="room" class="w-full bg-gray-600 text-white rounded p-2" required>
+                        <option value="">Select Room</option>
+                        <option value="Production Room 1">Production Room 1</option>
+                        <option value="Production Room 2">Production Room 2</option>
+                        <option value="Packing Room">Packing Room</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-2">Location*</label>
+                    <select name="location" class="w-full bg-gray-600 text-white rounded p-2" required>
+                        <option value="">Select Location</option>
+                        <option value="Main Kitchen">Main Kitchen</option>
+                        <option value="Secondary Kitchen">Secondary Kitchen</option>
+                        <option value="Warehouse">Warehouse</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Equipment Check - Modified Section -->
+<div class="bg-gray-700 p-4 rounded-lg">
+    <h2 class="text-xl font-semibold text-white mb-4">2. Equipment Check</h2>
+    
+    <div class="space-y-4">
+        <h3 class="text-lg font-medium text-gray-300">Is the equipment cleaned?</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for equipment in all_equipment %}
+            <div class="flex items-center">
+                <input type="checkbox" id="{{ equipment|lower|replace(' ', '_') }}" 
+                       name="equipment_cleaned" value="{{ equipment }}" 
+                       class="mr-2">
+                <label for="{{ equipment|lower|replace(' ', '_') }}" class="text-gray-300">{{ equipment }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Add New Equipment Button -->
+        <button type="button" onclick="addNewEquipment()" 
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mt-2">
+            + Add Custom Equipment
+        </button>
+        
+        <div id="custom-equipment-container" class="space-y-4"></div>
+        
+        <div class="mt-4">
+            <label class="block text-gray-300 mb-2">Are any parts missing/defective?</label>
+            <select name="equipment_issues" class="w-full bg-gray-600 text-white rounded p-2">
+                <option value="All OK">All OK</option>
+                <option value="Part missing">Part missing</option>
+                <option value="Partly defective but usable">Partly defective but usable</option>
+            </select>
+        </div>
+        
+        <!-- Product Temperature -->
+        <div class="mt-4">
+            <label class="block text-gray-300 mb-2">Product Holding Temperature (°C)</label>
+            <input type="number" step="0.1" name="product_temperature" 
+                   class="w-full bg-gray-600 text-white rounded p-2">
+        </div>
+    </div>
+</div>
+        
+        <!-- 3. Ingredients Used -->
+<div class="bg-gray-700 p-4 rounded-lg">
+    <h2 class="text-xl font-semibold text-white mb-4">3. Ingredients Used</h2>
+    
+    <div id="ingredients-container">
+        <div class="ingredient-entry grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div>
+                <label class="block text-gray-300 mb-2">Ingredient</label>
+                <select name="ingredient_id[]" class="w-full bg-gray-600 text-white rounded p-2" required>
+                    <option value="">Select Ingredient</option>
+                    {% for id, name in ingredients %}
+                    <option value="{{ id }}">{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-gray-300 mb-2">Quantity</label>
+                <input type="number" step="0.01" name="quantity[]" 
+                       class="w-full bg-gray-600 text-white rounded p-2" required>
+            </div>
+            
+            <div>
+                <label class="block text-gray-300 mb-2">Unit</label>
+                <select name="unit[]" class="w-full bg-gray-600 text-white rounded p-2" required>
+                    <option value="kg">kg</option>
+                    <option value="g">g</option>
+                    <option value="L">L</option>
+                    <option value="ml">ml</option>
+                    <option value="unit">unit</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <button type="button" onclick="addIngredientField()" 
+            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        + Add Another Ingredient
+    </button>
+</div>
+        
+        <!-- 4. Production Completion -->
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold text-white mb-4">4. Production Completion</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-gray-300 mb-2">Was recipe fully completed and packaged?</label>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="completed" value="yes" class="mr-2" required>
+                            <span class="text-gray-300">Yes</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="completed" value="no" class="mr-2" required>
+                            <span class="text-gray-300">No</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-300 mb-2">Yield of recipe before packaging (kg/L)</label>
+                        <input type="number" step="0.01" name="yield_before" 
+                               class="w-full bg-gray-600 text-white rounded p-2">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-300 mb-2">Amount of packaged product (units)</label>
+                        <input type="number" step="1" name="packaged_amount" 
+                               class="w-full bg-gray-600 text-white rounded p-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 5. Equipment Inspection -->
+        <div class="bg-gray-700 p-4 rounded-lg mb-4">
+            <h2 class="text-xl font-semibold text-white mb-4">5. Equipment Inspection</h2>
+            
+            <!-- Equipment Selection -->
+            <div class="mb-4">
+                <label class="block text-gray-300 mb-2">Select Equipment Used:</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    {% for equipment in ['Hopper', 'Oven', 'Fryer', 'Sealer machine', 'Kettle', 'Skillet', 'Cryovac', 'Tumbler'] %}
+                    <label class="flex items-center">
+                        <input type="checkbox" name="equipment_used" value="{{ equipment }}" 
+                               class="mr-2 equipment-used-checkbox" 
+                               onchange="toggleEquipmentDetails('{{ equipment|lower|replace(' ', '-') }}')">
+                        <span class="text-gray-300">{{ equipment }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Equipment Details Sections (hidden by default) -->
+            {% for equipment in ['Hopper', 'Oven', 'Fryer', 'Sealer machine', 'Kettle', 'Skillet', 'Cryovac', 'Tumbler'] %}
+            <div id="{{ equipment|lower|replace(' ', '-') }}-details" class="hidden border border-gray-600 rounded-lg p-4 mb-4">
+                <h3 class="text-lg font-medium text-white mb-3">{{ equipment }} Inspection</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-3">
+                    <label class="flex items-center">
+                        <input type="checkbox" name="inspected_{{ equipment|lower|replace(' ', '_') }}" class="mr-2">
+                        <span class="text-gray-300">Inspected</span>
+                    </label>
+                    
+                    <label class="flex items-center">
+                        <input type="checkbox" name="cleaned_{{ equipment|lower|replace(' ', '_') }}" class="mr-2">
+                        <span class="text-gray-300">Cleaned</span>
+                    </label>
+                    
+                    <label class="flex items-center">
+                        <input type="checkbox" name="defective_{{ equipment|lower|replace(' ', '_') }}" class="mr-2">
+                        <span class="text-gray-300">Defective</span>
+                    </label>
+                    
+                    <label class="flex items-center">
+                        <input type="checkbox" name="dirty_{{ equipment|lower|replace(' ', '_') }}" class="mr-2">
+                        <span class="text-gray-300">Was Dirty</span>
+                    </label>
+                </div>
+                
+                <div>
+                    <label class="block text-gray-300 mb-1">Notes (missing pieces, issues, etc.)</label>
+                    <textarea name="notes_{{ equipment|lower|replace(' ', '_') }}" rows="2"
+                              class="w-full bg-gray-600 text-white rounded p-2"></textarea>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="flex justify-end space-x-4 mt-6">
+            <a href="{{ url_for('recipe_tracking') }}" 
+               class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded">
+                Cancel
+            </a>
+            <button type="submit" 
+                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded">
+                Submit Production
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+let ingredientCount = 1;
+
+function addIngredientField() {
+    const container = document.getElementById('ingredients-container');
+    const newEntry = document.createElement('div');
+    newEntry.className = 'ingredient-entry grid grid-cols-1 md:grid-cols-3 gap-4 mb-4';
+    newEntry.innerHTML = `
+        <div>
+            <label class="block text-gray-300 mb-2">Ingredient</label>
+            <select name="ingredient_id[]" class="w-full bg-gray-600 text-white rounded p-2">
+                <option value="">Select Ingredient</option>
+                {% for id, name in ingredients %}
+                <option value="{{ id }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <label class="block text-gray-300 mb-2">Quantity</label>
+            <input type="number" step="0.01" name="quantity[]" 
+                   class="w-full bg-gray-600 text-white rounded p-2">
+        </div>
+        
+        <div>
+            <label class="block text-gray-300 mb-2">Unit</label>
+            <select name="unit[]" class="w-full bg-gray-600 text-white rounded p-2">
+                <option value="kg">kg</option>
+                <option value="g">g</option>
+                <option value="L">L</option>
+                <option value="ml">ml</option>
+                <option value="unit">unit</option>
+            </select>
+        </div>
+    `;
+    container.appendChild(newEntry);
+    ingredientCount++;
+}
+
+function toggleEquipmentDetails(equipmentId) {
+    // Convert the equipmentId back to the original format (with spaces)
+    const equipmentName = equipmentId.replace('-', ' ');
+    const checkbox = document.querySelector(`input[name="equipment_used"][value="${equipmentName}"]`);
+    const detailsSection = document.getElementById(`${equipmentId}-details`);
+    
+    if (checkbox && detailsSection) {
+        if (checkbox.checked) {
+            detailsSection.classList.remove('hidden');
+        } else {
+            detailsSection.classList.add('hidden');
+            // Reset all inputs in this section
+            const inputs = detailsSection.querySelectorAll('input[type="checkbox"], textarea');
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                } else {
+                    input.value = '';
+                }
+            });
+        }
+    }
+}
+let customEquipmentCount = 0;
+
+function addNewEquipment() {
+    const container = document.getElementById('custom-equipment-container');
+    const newEquipmentDiv = document.createElement('div');
+    newEquipmentDiv.className = 'border border-gray-500 p-4 rounded-lg';
+    newEquipmentDiv.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+                <label class="block text-gray-300 mb-2">Equipment Name</label>
+                <input type="text" name="custom_equipment[${customEquipmentCount}][name]" 
+                       class="w-full bg-gray-600 text-white rounded p-2">
+            </div>
+            <div>
+                <label class="block text-gray-300 mb-2">Status</label>
+                <select name="custom_equipment[${customEquipmentCount}][status]" 
+                        class="w-full bg-gray-600 text-white rounded p-2">
+                    <option value="Clean">Clean</option>
+                    <option value="Needs Cleaning">Needs Cleaning</option>
+                    <option value="Defective">Defective</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <label class="block text-gray-300 mb-2">Parts (comma separated)</label>
+            <input type="text" name="custom_equipment[${customEquipmentCount}][parts]" 
+                   class="w-full bg-gray-600 text-white rounded p-2" 
+                   placeholder="e.g., Blade, Motor, Belt">
+        </div>
+        <button type="button" onclick="this.parentNode.remove()" 
+                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded mt-2">
+            Remove
+        </button>
+    `;
+    container.appendChild(newEquipmentDiv);
+    customEquipmentCount++;
+}
+function validateForm() {
+    // Validate ingredient fields
+    const ingredientSelects = document.querySelectorAll('select[name="ingredient_id[]"]');
+    let isValid = true;
+    
+    ingredientSelects.forEach(select => {
+        if (!select.value) {
+            alert('Please select an ingredient for all entries');
+            select.focus();
+            isValid = false;
+            return false;
+        }
+    });
+    
+    return isValid;
+}
+</script>
+{% endblock %}

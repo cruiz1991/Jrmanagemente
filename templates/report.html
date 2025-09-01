@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+
+{% block title %}Construction Time Report{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-blue-400 text-3xl font-bold mb-6">Construction Time Report</h2>
+    
+    <!-- Control Buttons and Filters -->
+    <div class="mb-6 flex flex-wrap gap-3 items-center">
+        <a href="{{ url_for('add_manual_record') }}" class="btn btn-info">Add Manual Record</a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+        
+        <!-- Project Filter -->
+        <div class="ml-auto">
+            <label for="projectFilter" class="text-gray-400 mr-2">Filter by Project:</label>
+            <select id="projectFilter" class="bg-gray-700 text-white px-3 py-1 rounded border border-gray-600">
+                <option value="">All Projects</option>
+                {% for project in all_projects %}
+                <option value="{{ project }}">{{ project }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <!-- Summary Statistics -->
+    <div class="bg-gray-800 p-4 rounded-lg mb-6">
+        <h3 class="text-xl font-semibold text-white mb-3">Summary</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-gray-700 p-3 rounded text-center">
+                <div class="text-2xl font-bold text-blue-400">{{ total_employees }}</div>
+                <div class="text-gray-300 text-sm">Total Employees</div>
+            </div>
+            <div class="bg-gray-700 p-3 rounded text-center">
+                <div class="text-2xl font-bold text-green-400">{{ "%.2f"|format(total_hours_all) }}</div>
+                <div class="text-gray-300 text-sm">Total Hours</div>
+            </div>
+            <div class="bg-gray-700 p-3 rounded text-center">
+                <div class="text-2xl font-bold text-yellow-400">{{ total_records }}</div>
+                <div class="text-gray-300 text-sm">Total Records</div>
+            </div>
+            <div class="bg-gray-700 p-3 rounded text-center">
+                <div class="text-2xl font-bold text-purple-400">{{ active_punches }}</div>
+                <div class="text-gray-300 text-sm">Active Punches</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Employee Records -->
+    {% for user_id, user_data in user_records.items() %}
+    <div class="mb-8 employee-section" data-user-id="{{ user_id }}">
+        <div class="bg-blue-600 text-white px-4 py-2 rounded-t-lg flex justify-between items-center">
+            <span class="text-lg font-bold">
+                {{ user_data.info.username }} ({{ user_data.info.role }})
+            </span>
+            <span class="font-bold">
+                Total Hours: {{ "%.2f"|format(user_data.total_hours) if user_data.total_hours is number else "0.00" }}
+            </span>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="w-full bg-gray-800 border border-gray-700">
+                <thead class="bg-gray-700">
+                    <tr>
+                        <th class="px-4 py-2">Date</th>
+                        <th class="px-4 py-2">Project</th>
+                        <th class="px-4 py-2">Task</th>
+                        <th class="px-4 py-2">Punch In</th>
+                        <th class="px-4 py-2">Punch Out</th>
+                        <th class="px-4 py-2">Hours Worked</th>
+                        <th class="px-4 py-2">Location & Photos</th>
+                        <th class="px-4 py-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in user_data.records %}
+                    <tr class="border-b border-gray-700 hover:bg-gray-700 record-row" data-project="{{ record.project_name or 'N/A' }}">
+                        <td class="px-4 py-2">{{ record.date.strftime('%Y-%m-%d') if record.date else '' }}</td>
+                        <td class="px-4 py-2">{{ record.project_name or 'N/A' }}</td>
+                        <td class="px-4 py-2">{{ record.task_description or 'N/A' }}</td>
+                        <td class="px-4 py-2">
+                            {% if record.punch_in_time %}
+                                {{ record.punch_in_time.strftime('%H:%M') }}
+                                {% if record.is_manual %}<span class="ml-1 badge bg-yellow-400 text-black">Manual</span>{% endif %}
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">
+                            {% if record.punch_out_time %}
+                                {{ record.punch_out_time.strftime('%H:%M') }}
+                            {% else %}
+                                <span class="badge bg-blue-400">Active</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2 hours-cell">
+                            {% if record.total_hours_worked %}
+                                {{ "%.2f"|format(record.total_hours_worked) }}
+                            {% else %}
+                                0.00
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">
+    <div class="flex flex-col space-y-2">
+        <!-- Punch In Location -->
+        {% if record.latitude and record.longitude %}
+        <div class="mb-2 p-2 bg-blue-900 rounded">
+            <span class="text-blue-300 text-sm font-semibold">PUNCH IN LOCATION:</span>
+            <a href="https://www.google.com/maps?q={{ record.latitude }},{{ record.longitude }}" 
+               target="_blank" class="text-blue-400 hover:text-blue-300 text-sm block">
+                📍 View on Map
+            </a>
+            {% if record.location_address %}
+            <span class="text-xs text-gray-300 block mt-1">{{ record.location_address }}</span>
+            {% endif %}
+            
+            <!-- Punch In Photo -->
+            {% if record.progress_photo %}
+            <div class="mt-2">
+                <a href="{{ url_for('static', filename='uploads/' + record.progress_photo) }}" 
+                   target="_blank" class="text-green-400 hover:text-green-300 text-sm">
+                    📸 Punch In Photo
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Punch Out Location -->
+        {% if record.latitude_out and record.longitude_out %}
+        <div class="mb-2 p-2 bg-red-900 rounded">
+            <span class="text-red-300 text-sm font-semibold">PUNCH OUT LOCATION:</span>
+            <a href="https://www.google.com/maps?q={{ record.latitude_out }},{{ record.longitude_out }}" 
+               target="_blank" class="text-red-400 hover:text-red-300 text-sm block">
+                📍 View on Map
+            </a>
+            {% if record.location_address_out %}
+            <span class="text-xs text-gray-300 block mt-1">{{ record.location_address_out }}</span>
+            {% endif %}
+            
+            <!-- Punch Out Photo -->
+            {% if record.progress_photo_out %}
+            <div class="mt-2">
+                <a href="{{ url_for('static', filename='uploads/' + record.progress_photo_out) }}" 
+                   target="_blank" class="text-green-400 hover:text-green-300 text-sm">
+                    📸 Punch Out Photo
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- No location data message -->
+        {% if not record.latitude and not record.latitude_out %}
+        <span class="text-gray-400 text-sm">No location data recorded</span>
+        {% endif %}
+    </div>
+</td>
+                        <td class="px-4 py-2 flex gap-2">
+                            <a href="{{ url_for('edit_record', record_id=record.punch_id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ url_for('delete_record', record_id=record.punch_id) }}" method="POST">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Project Hours Summary -->
+    <div class="bg-gray-800 p-4 rounded-lg mt-8">
+        <h3 class="text-xl font-semibold text-white mb-4">Project Hours Summary</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {% for project, hours in project_hours.items() %}
+            <div class="bg-gray-700 p-3 rounded">
+                <div class="text-lg font-semibold text-white">{{ project or 'No Project' }}</div>
+                <div class="text-2xl font-bold text-green-400">{{ "%.2f"|format(hours) }}</div>
+                <div class="text-gray-300 text-sm">Total Hours</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Project filter functionality
+document.getElementById('projectFilter').addEventListener('change', function() {
+    const selectedProject = this.value;
+    const allRows = document.querySelectorAll('.record-row');
+    
+    allRows.forEach(row => {
+        const rowProject = row.getAttribute('data-project');
+        if (!selectedProject || rowProject === selectedProject) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+    
+    // Update visible totals
+    updateVisibleTotals();
+});
+
+// Calculate totals for visible records
+function updateVisibleTotals() {
+    const employeeSections = document.querySelectorAll('.employee-section');
+    
+    employeeSections.forEach(section => {
+        const userId = section.getAttribute('data-user-id');
+        const visibleRows = section.querySelectorAll('.record-row:not([style*="display: none"])');
+        let visibleTotal = 0;
+        
+        visibleRows.forEach(row => {
+            const hoursCell = row.querySelector('.hours-cell');
+            if (hoursCell) {
+                const hoursText = hoursCell.textContent.trim();
+                const hours = parseFloat(hoursText) || 0;
+                visibleTotal += hours;
+            }
+        });
+        
+        // Update the total display for this employee
+        const totalElement = section.querySelector('.text-lg.font-bold + .font-bold');
+        if (totalElement) {
+            totalElement.textContent = `Total Hours: ${visibleTotal.toFixed(2)}`;
+        }
+    });
+}
+
+// Export to CSV function
+function exportToCSV() {
+    const rows = [];
+    const headers = ['Employee', 'Date', 'Project', 'Task', 'Punch In', 'Punch Out', 'Hours Worked', 'Location In', 'Location Out'];
+    
+    rows.push(headers.join(','));
+    
+    document.querySelectorAll('.record-row:not([style*="display: none"])').forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const rowData = [
+            row.closest('.employee-section').querySelector('.text-lg.font-bold').textContent.split(' (')[0],
+            cells[0].textContent.trim(),
+            cells[1].textContent.trim(),
+            cells[2].textContent.trim(),
+            cells[3].textContent.trim(),
+            cells[4].textContent.trim(),
+            cells[5].textContent.trim(),
+            cells[6].querySelector('.text-blue-400') ? 'Yes' : 'No',
+            cells[6].querySelector('.text-red-400') ? 'Yes' : 'No'
+        ];
+        rows.push(rowData.join(','));
+    });
+    
+    const csvContent = "data:text/csv;charset=utf-8," + rows.join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "construction_time_report.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Add export button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Add export button
+    const exportBtn = document.createElement('button');
+    exportBtn.textContent = 'Export to CSV';
+    exportBtn.className = 'btn btn-success ml-2';
+    exportBtn.onclick = exportToCSV;
+    document.querySelector('.mb-6.flex').appendChild(exportBtn);
+    
+    // Initialize filter
+    updateVisibleTotals();
+});
+
+// Print report function
+function printReport() {
+    window.print();
+}
+
+// Add print button
+document.addEventListener('DOMContentLoaded', function() {
+    const printBtn = document.createElement('button');
+    printBtn.textContent = 'Print Report';
+    printBtn.className = 'btn btn-secondary ml-2';
+    printBtn.onclick = printReport;
+    document.querySelector('.mb-6.flex').appendChild(printBtn);
+});
+</script>
+{% endblock %}

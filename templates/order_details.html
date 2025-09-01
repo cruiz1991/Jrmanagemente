@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .inventory-warning {
+            color: #f87171;
+            font-weight: bold;
+        }
+        .fulfillment-form {
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg shadow-gray-700/10 mt-10">
+        <h1 class="text-blue-400 text-3xl font-bold mb-4">Order Details</h1>
+
+        <!-- Order Details -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <p><strong>Order ID:</strong> {{ order_details[0] }}</p>
+                <p><strong>Customer Name:</strong> {{ order_details[1] }}</p>
+                <p><strong>Address:</strong> {{ order_details[2] }}</p>
+            </div>
+            <div>
+                <p><strong>Order Date:</strong> {{ order_details[3] }}</p>
+                <p><strong>Total Amount:</strong> ${{ "%.2f"|format(order_details[4]) }}</p>
+                <p><strong>Fulfillment Status:</strong> 
+                    <span class="badge {% if order_details[5] == 'fulfilled' %}bg-green-600{% elif order_details[5] == 'partially_fulfilled' %}bg-purple-600{% else %}bg-yellow-600{% endif %}">
+                        {{ order_details[5] }}
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Ordered Items -->
+        <h2 class="text-blue-400 text-2xl mt-6 mb-4">Ordered Items</h2>
+        <div class="table-responsive">
+            <table class="table table-dark table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Ordered</th>
+                        <th>Fulfilled</th>
+                        <th>Remaining</th>
+                        <th>Available</th>
+                        <th>Status</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.product_name }}</td>
+                            <td>{{ item.ordered }}</td>
+                            <td>{{ item.fulfilled }}</td>
+                            <td>{{ item.remaining }}</td>
+                            <td class="{% if item.available < item.remaining %}text-red-400{% else %}text-green-400{% endif %}">
+                                {{ item.available }}
+                            </td>
+                            <td>
+                                <span class="badge 
+                                    {% if item.remaining == 0 %}bg-green-600
+                                    {% elif item.fulfilled > 0 %}bg-purple-600
+                                    {% else %}bg-yellow-600{% endif %}">
+                                    {% if item.remaining == 0 %}fulfilled
+                                    {% elif item.fulfilled > 0 %}partial
+                                    {% else %}unfulfilled{% endif %}
+                                </span>
+                            </td>
+                            <td>${{ "%.2f"|format(item.price) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Fulfillment Form -->
+        {% if outstanding_items %}
+        <form id="fulfillmentForm" class="fulfillment-form" method="POST" action="{{ url_for('fulfill_order', order_id=order_details[0]) }}">
+            <h2 class="text-blue-400 text-2xl mb-4">Fulfill Items</h2>
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Remaining</th>
+                            <th>Available</th>
+                            <th>Fulfill Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in outstanding_items %}
+                        <tr>
+                            <td>{{ item.product_name }}</td>
+                            <td>{{ item.owed_quantity }}</td>
+                            <td class="{% if item.available < item.owed_quantity %}inventory-warning{% endif %}">
+                                {{ item.available }}
+                            </td>
+                            <td>
+                                <input type="number" 
+                                       name="fulfill_qty_{{ item.product_name }}" 
+                                       min="0" 
+                                       max="{{ [item.owed_quantity, item.available]|min }}" 
+                                       value="{{ [item.owed_quantity, item.available]|min }}"
+                                       class="form-control bg-gray-700 text-white">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Process Fulfillment
+                </button>
+            </div>
+        </form>
+        {% endif %}
+
+        <!-- Outstanding Items -->
+        {% if outstanding_items %}
+        <h2 class="text-red-400 text-2xl mt-6">Outstanding Items</h2>
+        <div class="table-responsive">
+            <table class="table table-dark table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Quantity Owed</th>
+                        <th>Price Each</th>
+                        <th>Total Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in outstanding_items %}
+                        <tr>
+                            <td>{{ item.product_name }}</td>
+                            <td>{{ item.owed_quantity }}</td>
+                            <td>${{ "%.2f"|format(item.price) }}</td>
+                            <td>${{ "%.2f"|format(item.total_value) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+        <!-- Back to Orders -->
+        <div class="mt-6">
+            <a href="{{ url_for('shopify_orders') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Back to Orders
+            </a>
+        </div>
+    </div>
+
+    <!-- Simple form validation -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('fulfillmentForm');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const inputs = form.querySelectorAll('input[type="number"]');
+                let hasQuantity = false;
+                
+                inputs.forEach(input => {
+                    if (parseInt(input.value) > 0) {
+                        hasQuantity = true;
+                    }
+                });
+                
+                if (!hasQuantity) {
+                    e.preventDefault();
+                    alert('Please enter quantities to fulfill for at least one item');
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

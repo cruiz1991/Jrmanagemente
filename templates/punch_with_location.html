@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Punch In/Out with Location{% endblock %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h2 class="text-2xl font-bold text-blue-400 mb-6">
+        Punch {% if is_punched_in %}Out{% else %}In{% endif %} with Location
+    </h2>
+
+    <form id="punchForm" method="POST" enctype="multipart/form-data" 
+          action="{% if is_punched_in %}{{ url_for('punch_out_with_location') }}{% else %}{{ url_for('punch_with_location') }}{% endif %}" 
+          class="space-y-4">
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+        <input type="hidden" name="location_address" id="location_address">
+
+        <div class="form-group">
+            <label for="project_id" class="block text-gray-400 mb-1">Select Project:</label>
+            <select name="project_id" id="project_id" class="form-control bg-gray-700 text-gray-100 border-gray-600" required>
+                <option value="">-- Select Project --</option>
+                <!-- Filled by JS -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="progress_photo" class="block text-gray-400 mb-1">Take Photo of Job Site:</label>
+            <input type="file" name="progress_photo" id="progress_photo" class="form-control bg-gray-700 text-gray-100 border-gray-600" accept="image/*" capture="camera" {% if not is_punched_in %}required{% endif %}>
+            <img id="photoPreview" class="photo-preview mt-2 rounded-lg max-w-full max-h-48" src="#" alt="Photo preview" style="display:none;">
+        </div>
+
+        {% if is_punched_in %}
+        <div class="form-group">
+            <label for="task_description" class="block text-gray-400 mb-1">Task Description:</label>
+            <textarea name="task_description" id="task_description" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="progress_notes" class="block text-gray-400 mb-1">Progress Notes:</label>
+            <textarea name="progress_notes" id="progress_notes" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="progress_photo_out" class="block text-gray-400 mb-1">Take Completion Photo:</label>
+            <input type="file" name="progress_photo_out" id="progress_photo_out" class="form-control bg-gray-700 text-gray-100 border-gray-600" accept="image/*" capture="camera">
+            <img id="photoPreviewOut" class="photo-preview mt-2 rounded-lg max-w-full max-h-48" src="#" alt="Photo preview" style="display:none;">
+        </div>
+        {% endif %}
+
+        <button type="submit" id="punchButton" class="btn {% if is_punched_in %}btn-warning{% else %}btn-success{% endif %} w-full py-3">
+            Punch {% if is_punched_in %}Out{% else %}In{% endif %}
+        </button>
+    </form>
+
+   
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Get projects for dropdown
+    fetch('/get_projects_json')
+        .then(response => response.json())
+        .then(projects => {
+            const select = document.getElementById('project_id');
+            projects.forEach(project => {
+                const option = document.createElement('option');
+                option.value = project.id;
+                option.textContent = project.name;
+                select.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading projects:', error);
+        });
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = lng;
+
+                    getAddressFromLatLng(lat, lng);
+                },
+                error => {
+                    document.getElementById('locationStatus').textContent =
+                        'Error getting location: ' + error.message;
+                    document.getElementById('locationStatus').classList.add('text-red-400');
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+            );
+        } else {
+            document.getElementById('locationStatus').textContent =
+                'Geolocation is not supported by this browser.';
+            document.getElementById('locationStatus').classList.add('text-red-400');
+        }
+    }
+
+    function getAddressFromLatLng(lat, lng) {
+        const geocoder = new google.maps.Geocoder();
+        const latlng = { lat, lng };
+
+        geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === 'OK') {
+                if (results[0]) {
+                    const address = results[0].formatted_address;
+                    document.getElementById('location_address').value = address;
+                    document.getElementById('locationStatus').textContent =
+                        '📍 Location recorded: ' + address;
+                    document.getElementById('locationStatus').classList.remove('text-red-400');
+                    document.getElementById('locationStatus').classList.add('text-green-400');
+                } else {
+                    document.getElementById('locationStatus').textContent = 'No address found for this location';
+                    document.getElementById('locationStatus').classList.add('text-yellow-400');
+                }
+            } else {
+                document.getElementById('locationStatus').textContent =
+                    'Geocoder failed due to: ' + status;
+                document.getElementById('locationStatus').classList.add('text-red-400');
+            }
+        });
+    }
+
+    // Photo preview functionality
+    document.getElementById('progress_photo').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('photoPreview').src = e.target.result;
+                document.getElementById('photoPreview').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    {% if is_punched_in %}
+    document.getElementById('progress_photo_out').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('photoPreviewOut').src = e.target.result;
+                document.getElementById('photoPreviewOut').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+    {% endif %}
+
+    // Get location when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load Google Maps API first
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places`;
+        script.defer = true;
+        script.async = true;
+        script.onload = getLocation;
+        document.head.appendChild(script);
+    });
+</script>
+{% endblock %}

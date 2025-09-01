@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Cost Allocation Methods</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Standard Allocation Methods</h2>
+            <ul class="space-y-2">
+                <li>⏱ Labor Hours - Direct labor time per product</li>
+                <li>⚙ Machine Hours - Production line time</li>
+                <li>📦 Production Volume - Units produced</li>
+                <li>💰 Revenue Share - Sales revenue proportion</li>
+            </ul>
+        </div>
+        
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Current Allocation Setup</h2>
+            <form method="POST" action="{{ url_for('update_allocation') }}">
+                {% for method in methods %}
+                <div class="mb-4">
+                    <label class="block mb-2">{{ method.cost_type }} Allocation</label>
+                    <select name="{{ method.cost_type }}_method" class="w-full bg-gray-600 p-2 rounded">
+                        <option value="labor_hours" {% if method.allocation_method == 'labor_hours' %}selected{% endif %}>
+                            Labor Hours
+                        </option>
+                        <option value="machine_hours" {% if method.allocation_method == 'machine_hours' %}selected{% endif %}>
+                            Machine Hours
+                        </option>
+                        <option value="production_volume" {% if method.allocation_method == 'production_volume' %}selected{% endif %}>
+                            Production Volume
+                        </option>
+                        <option value="revenue_share" {% if method.allocation_method == 'revenue_share' %}selected{% endif %}>
+                            Revenue Share
+                        </option>
+                    </select>
+                </div>
+                {% endfor %}
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Update Allocation Methods
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

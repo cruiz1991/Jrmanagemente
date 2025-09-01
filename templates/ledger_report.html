@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ledger Report</title>
+    <style>
+        :root {
+            /* VS Code Dark+ theme colors */
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #252526;
+            --bg-tertiary: #2d2d2d;
+            --bg-quaternary: #3e3e42;
+            --text-primary: #d4d4d4;
+            --text-secondary: #9cdcfe;
+            --text-accent: #569cd6;
+            --text-warning: #d7ba7d;
+            --text-error: #f14c4c;
+            --border-primary: #3e3e42;
+            --border-secondary: #454545;
+            --button-primary: #0e639c;
+            --button-primary-hover: #1177bb;
+            --button-secondary: #3a3d41;
+            --button-secondary-hover: #45494e;
+            --button-danger: #a1260d;
+            --button-danger-hover: #c42b1c;
+            --button-success: #388a34;
+            --button-success-hover: #3e9e3a;
+            --icon-primary: #c5c5c5;
+            --scrollbar: #3e3e42;
+            --scrollbar-hover: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Consolas', 'Courier New', monospace;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 95%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--bg-secondary);
+            border-radius: 3px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        h2, h3 {
+            color: var(--text-accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            border-bottom: 1px solid var(--border-primary);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            margin-top: 24px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            color: var(--text-primary);
+            border-radius: 3px;
+            font-family: inherit;
+        }
+
+        .form-control:focus {
+            outline: 1px solid var(--text-accent);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--button-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--button-primary-hover);
+        }
+
+        .btn-sync {
+            background-color: var(--button-success);
+            color: white;
+        }
+
+        .btn-sync:hover {
+            background-color: var(--button-success-hover);
+        }
+
+        .btn-danger {
+            background-color: var(--button-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: var(--button-danger-hover);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            max-height: 70vh;
+            overflow-y: auto;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-primary);
+            border-radius: 3px;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-primary);
+        }
+
+        th {
+            background-color: var(--bg-quaternary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .numeric {
+            text-align: right;
+        }
+
+        tr:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .alert {
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border-radius: 3px;
+        }
+
+        .alert-danger {
+            background-color: rgba(241, 76, 76, 0.2);
+            border-left: 3px solid var(--text-error);
+            color: var(--text-error);
+        }
+
+        .alert-success {
+            background-color: rgba(56, 138, 52, 0.2);
+            border-left: 3px solid var(--button-success);
+            color: var(--text-primary);
+        }
+
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-quaternary);
+            color: var(--text-primary);
+            padding: 6px 12px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            border-top: 1px solid var(--border-primary);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-hover);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .form-col {
+                min-width: 100%;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <h2>Ledger Report</h2>
+        
+        <form method="POST" action="{{ url_for('ledger_report') }}">
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="start_date" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date" required
+                           value="{{ start_date }}">
+                </div>
+                <div class="form-col">
+                    <label for="end_date" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date" required
+                           value="{{ end_date }}">
+                </div>
+                <div class="form-col">
+                    <label for="collection_filter" class="form-label">Filter by Collection</label>
+                    <select class="form-control" id="collection_filter" name="collection_filter">
+                        <option value="all">All Collections</option>
+                        {% for collection in collections %}
+                            <option value="{{ collection }}" {% if request.form.get('collection_filter') == collection %}selected{% endif %}>
+                                {{ collection }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <form method="POST" action="{{ url_for('sync_ledger_orders') }}">
+                <div class="form-actions">
+                    <button type="submit" name="action" value="generate" class="btn btn-primary" formaction="{{ url_for('ledger_report') }}">
+                        Generate Report
+                    </button>
+                    <button type="submit" name="action" value="sync" class="btn btn-sync">
+                        Sync & Generate
+                    </button>
+                    {% if current_user.role == 'admin' %}
+                    <button type="button" class="btn btn-danger" onclick="confirmClearLedger()">
+                        Clear Ledger
+                    </button>
+                    {% endif %}
+                </div>
+            </form>
+
+        <!-- Main Products Table -->
+        <h3>Product Ledger</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Address</th>
+                        <th>Location</th>
+                        <th>Collection</th>
+                        <!-- Dynamic product headers -->
+                        {% if ledger_data %}
+                            {% for key in ledger_data[0].keys() %}
+                                {% if key not in ['Date', 'Customer Name', 'Customer Address', 'Location', 'Notes', 'Collection', 'Total Before Shipping'] %}
+                                    <th>{{ key }}</th>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in ledger_data %}
+                    <tr>
+                        <td>{{ entry.Date }}</td>
+                        <td>{{ entry['Customer Name'] }}</td>
+                        <td>{{ entry['Customer Address'] }}</td>
+                        <td>{{ entry.Location }}</td>
+                        <td>{{ entry.Collection if 'Collection' in entry else '' }}</td>
+                        
+                        <!-- Dynamic product values -->
+                        {% for key, value in entry.items() %}
+                            {% if key not in ['Date', 'Customer Name', 'Customer Address', 'Location', 'Notes', 'Collection', 'Total Before Shipping'] %}
+                                <td class="numeric">
+                                    {% if value and value != 0 %}
+                                        {{ "{:,.0f}".format(value) if value == value|round(0) else "{:,.2f}".format(value) }}
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        <td class="numeric">
+                            {% if entry['Total Before Shipping'] and entry['Total Before Shipping'] != 0 %}
+                                {{ "${:,.2f}".format(entry['Total Before Shipping']) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="100" style="text-align: center;">No data found for selected date range</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <div>Ready</div>
+        <div>Ledger Report</div>
+    </div>
+
+    <script>
+    function confirmClearLedger() {
+        if (confirm('Are you sure you want to clear the entire ledger? This action cannot be undone.')) {
+            fetch("{{ url_for('clear_ledger') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Ledger cleared successfully!');
+                    window.location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('button[value="sync"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = this.closest('form');
+            form.action = "{{ url_for('sync_ledger_orders') }}";
+            form.submit();
+        });
+    });
+    </script>
+</body>
+</html>

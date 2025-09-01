@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-blue-400 mb-6">Construction Materials</h1>
+    
+    <!-- Add Material Form -->
+    <div class="bg-gray-700 p-4 rounded-lg mb-6">
+        <h2 class="text-xl font-semibold mb-4">Add New Material</h2>
+        <form method="POST" action="{{ url_for('add_material') }}">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-400 mb-1">Material Name</label>
+                    <input type="text" name="material_name" class="w-full bg-gray-600 text-white p-2 rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Category</label>
+                    <select name="category" class="w-full bg-gray-600 text-white p-2 rounded">
+                        <option value="">Select Category</option>
+                        <option value="Lumber">Lumber</option>
+                        <option value="Concrete">Concrete</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Finishing">Finishing</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Supplier</label>
+                    <input type="text" name="supplier" class="w-full bg-gray-600 text-white p-2 rounded">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Unit Price</label>
+                    <input type="number" step="0.01" name="unit_price" class="w-full bg-gray-600 text-white p-2 rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Quantity</label>
+                    <input type="number" name="quantity" class="w-full bg-gray-600 text-white p-2 rounded" required>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Min Stock Level</label>
+                    <input type="number" name="min_stock" class="w-full bg-gray-600 text-white p-2 rounded" value="0">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Project</label>
+                    <select name="project_name" class="w-full bg-gray-600 text-white p-2 rounded">
+                        <option value="">General Stock</option>
+                        <option value="Rosyln">Rosyln</option>
+                        <option value="Sabin">Sabin</option>
+                        <option value="Ceasars">Ceasars</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-1">Notes</label>
+                    <textarea name="notes" class="w-full bg-gray-600 text-white p-2 rounded"></textarea>
+                </div>
+            </div>
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded mt-4">Add Material</button>
+        </form>
+    </div>
+    
+    <!-- Materials Table -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-gray-700 text-white rounded-lg">
+            <thead class="bg-gray-600">
+                <tr>
+                    <th class="px-4 py-2">Material</th>
+                    <th class="px-4 py-2">Category</th>
+                    <th class="px-4 py-2">Supplier</th>
+                    <th class="px-4 py-2">Unit Price</th>
+                    <th class="px-4 py-2">Quantity</th>
+                    <th class="px-4 py-2">Project</th>
+                    <th class="px-4 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for material in materials %}
+                <tr class="border-t border-gray-600 hover:bg-gray-600">
+                    <td class="px-4 py-2">{{ material['material_name'] }}</td>
+                    <td class="px-4 py-2">{{ material['category'] or 'N/A' }}</td>
+                    <td class="px-4 py-2">{{ material['supplier'] or 'N/A' }}</td>
+                    <td class="px-4 py-2">${{ "%.2f"|format(material['unit_price']) }}</td>
+                    <td class="px-4 py-2">{{ material['quantity_in_stock'] }}</td>
+                    <td class="px-4 py-2">{{ material['project_name'] or 'General' }}</td>
+                    <td class="px-4 py-2">
+                        <button class="bg-blue-500 text-white px-2 py-1 rounded">Edit</button>
+                        <button class="bg-red-500 text-white px-2 py-1 rounded ml-2">Delete</button>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="7" class="px-4 py-2 text-center">No materials found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('dashboard') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
+            Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

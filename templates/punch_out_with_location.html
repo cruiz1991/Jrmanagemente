@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Punch Out{% endblock %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h2 class="text-2xl font-bold text-red-400 mb-6">Punch Out</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        <div class="form-group">
+            <label for="task_description" class="block text-gray-400 mb-1">Task Description:</label>
+            <textarea name="task_description" id="task_description" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="progress_notes" class="block text-gray-400 mb-1">Progress Notes:</label>
+            <textarea name="progress_notes" id="progress_notes" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="progress_photo_out" class="block text-gray-400 mb-1">Take Completion Photo:</label>
+            <input type="file" name="progress_photo_out" id="progress_photo_out" class="form-control bg-gray-700 text-gray-100 border-gray-600" accept="image/*" capture="camera">
+            <img id="photoPreviewOut" class="photo-preview mt-2 rounded-lg max-w-full max-h-48" src="#" alt="Photo preview" style="display:none;">
+        </div>
+
+        <button type="submit" class="btn btn-danger w-full py-3">Punch Out</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Photo preview functionality
+    document.getElementById('progress_photo_out').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('photoPreviewOut').src = e.target.result;
+                document.getElementById('photoPreviewOut').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Create New Purchase Order</h1>
+    
+    <div class="bg-gray-700 p-6 rounded-lg">
+        <form method="POST">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block mb-2">Distributor</label>
+                    <select name="distributor_id" id="distributor-select" class="w-full bg-gray-600 p-2 rounded" required>
+                        <option value="">Select Distributor</option>
+                        {% for distributor in distributors %}
+                        <option value="{{ distributor.id }}">{{ distributor.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="text-center my-2">OR</p>
+                    <div id="new-distributor-fields" class="hidden">
+                        <input type="text" name="new_distributor_name" placeholder="Distributor Name" 
+                               class="w-full bg-gray-600 p-2 rounded mb-2" required>
+                        <input type="text" name="new_distributor_contact" placeholder="Contact Info (Optional)" 
+                               class="w-full bg-gray-600 p-2 rounded">
+                    </div>
+                    <button type="button" id="toggle-distributor" class="mt-2 text-blue-400 hover:text-blue-300">
+                        + Add New Distributor
+                    </button>
+                </div>
+                
+                <div>
+                    <label for="order_date" class="block mb-2">Order Date</label>
+                    <input type="date" name="order_date" id="order_date" 
+                           class="w-full bg-gray-600 p-2 rounded" 
+                           value="{{ datetime.now().strftime('%Y-%m-%d') }}" required>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="expected_delivery_date" class="block mb-2">Expected Delivery Date (Optional)</label>
+                    <input type="date" name="expected_delivery_date" id="expected_delivery_date" 
+                           class="w-full bg-gray-600 p-2 rounded">
+                </div>
+                
+                <div>
+                    <label for="notes" class="block mb-2">Notes (Optional)</label>
+                    <textarea name="notes" id="notes" class="w-full bg-gray-600 p-2 rounded"></textarea>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4">
+                <button type="submit" name="create_po" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Create PO
+                </button>
+                <a href="{{ url_for('purchase_orders') }}" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('toggle-distributor').addEventListener('click', function() {
+    const distributorSelect = document.getElementById('distributor-select');
+    const newDistributorFields = document.getElementById('new-distributor-fields');
+    
+    if (newDistributorFields.classList.contains('hidden')) {
+        newDistributorFields.classList.remove('hidden');
+        distributorSelect.disabled = true;
+        distributorSelect.required = false;
+        document.querySelector('input[name="new_distributor_name"]').required = true;
+        this.textContent = '← Select Existing Distributor';
+    } else {
+        newDistributorFields.classList.add('hidden');
+        distributorSelect.disabled = false;
+        distributorSelect.required = true;
+        document.querySelector('input[name="new_distributor_name"]').required = false;
+        this.textContent = '+ Add New Distributor';
+    }
+});
+</script>
+{% endblock %}

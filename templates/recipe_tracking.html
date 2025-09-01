@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <h1 class="text-3xl font-bold text-blue-400 mb-6">Recipe Production Tracking</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for recipe in recipes %}
+        <a href="{{ url_for('recipe_production_form', recipe_id=recipe[0]) }}" 
+           class="bg-gray-700 hover:bg-gray-600 p-4 rounded-lg transition duration-200">
+            <h2 class="text-xl font-semibold text-white">{{ recipe[1] }}</h2>
+            <p class="text-gray-400 mt-2">Click to log production</p>
+        </a>
+        {% endfor %}
+    </div>
+    
+    {% if current_user.role == 'admin' %}
+    <div class="mt-8">
+        <a href="{{ url_for('recipe_production_reports') }}" 
+           class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg inline-block">
+            View Production Reports
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

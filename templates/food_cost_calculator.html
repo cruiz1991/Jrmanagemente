@@ -1,0 +1,673 @@
+{% extends "base.html" %}
+{% block title %}Food Cost Calculator{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <div class="container mx-auto bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg shadow-gray-700/10 mt-10">
+        <h1 class="text-blue-400 text-3xl font-bold mb-6">Food Cost Calculator</h1>
+        
+       <!-- Replace the Saved Items Section with this version -->
+{% if saved_items %}
+<div class="mb-8 bg-gray-700 p-4 rounded-lg">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 gap-4">
+        <h2 class="text-xl font-semibold text-blue-300">Saved Items</h2>
+        <div class="flex items-center gap-4">
+            <!-- Search Bar -->
+            <div class="relative w-full md:w-64">
+                <input type="text" id="searchInput" 
+                       class="w-full bg-gray-600 text-white p-2 rounded pl-10" 
+                       placeholder="Search by name..."
+                       onkeyup="filterItems()">
+                <svg class="absolute left-3 top-3 h-4 w-4 text-gray-400" 
+                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <!-- Add New Button -->
+            <button onclick="resetForm()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded whitespace-nowrap">
+                Add New Item
+            </button>
+            <!-- Export Button -->
+            <form method="POST" action="{{ url_for('export_food_cost_items') }}" id="export-form">
+                <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded whitespace-nowrap">
+                    Export Selected to Excel
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Group items by brand -->
+    {% set grouped_items = {} %}
+    {% for item in saved_items %}
+        {% set brand = item[22] if item[22] else 'Other' %}
+        {% if brand not in grouped_items %}
+            {% set _ = grouped_items.update({brand: []}) %}
+        {% endif %}
+        {% set _ = grouped_items[brand].append(item) %}
+    {% endfor %}
+    
+    {% for brand, items in grouped_items.items() %}
+    <div class="brand-group mb-6" data-brand="{{ brand }}">
+        <h3 class="text-lg font-semibold mb-2 text-blue-200">{{ brand }}</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-600">
+                <thead class="bg-gray-600">
+                    <tr>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Select</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Name</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Code</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Price/Unit</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Format</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">8% Fee</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Margin</th>
+                        <th class="px-4 py-2 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-gray-700 divide-y divide-gray-600">
+                    {% for item in items %}
+                    <tr class="saved-item hover:bg-gray-600 transition-colors" data-id="{{ item[0] }}">
+                        <td class="px-4 py-2 text-center">
+                            <input type="checkbox" name="selected_items" value="{{ item[0] }}" 
+                                   class="rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                        </td>
+                        <td class="px-4 py-2">{{ item[2] }}</td>
+                        <td class="px-4 py-2">{{ item[3] }}</td>
+                        <td class="px-4 py-2">${{ "%.2f"|format(item[4]) }}/{{ item[15] if item[15] else 'kg' }}</td>
+                        <td class="px-4 py-2">
+                            {{ "%.2f"|format(item[4] * item[21]) }}/{{ item[21] }}{{ item[15] if item[15] else 'kg' }}
+                        </td>
+                        <td class="px-4 py-2">{{ "Yes" if item[13] else "No" }}</td>
+                        <td class="px-4 py-2 {% if item[20] >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                            {{ "%.1f"|format(item[20]) }}%
+                        </td>
+                        <td class="px-4 py-2 whitespace-nowrap">
+                            <button onclick="loadItem({{ item[0] }})" 
+                                    class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded mr-1 text-sm">
+                                Edit
+                            </button>
+                            <form method="POST" action="{{ url_for('food_cost_calculator') }}" class="inline">
+                                <input type="hidden" name="item_id" value="{{ item[0] }}">
+                                <button type="submit" name="delete_item" 
+                                        class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm"
+                                        onclick="return confirm('Are you sure you want to delete this item?')">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+        <!-- Calculator Form -->
+        <form method="POST" class="space-y-4" id="calculator-form">
+            <input type="hidden" name="item_id" id="item_id" value="">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Product Info -->
+                <div class="bg-gray-700 p-4 rounded-lg">
+                    <h2 class="text-xl font-semibold mb-3 text-blue-300">Product Information</h2>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Brand</label>
+                        <input type="text" name="brand" id="brand" class="w-full bg-gray-600 text-white p-2 rounded" 
+                               value="{{ brand if calculated else '' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Product Name</label>
+                        <input type="text" name="product_name" id="product_name" class="w-full bg-gray-600 text-white p-2 rounded" 
+                               value="{{ product_name if calculated else '' }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Product Code</label>
+                        <input type="text" name="product_code" id="product_code" class="w-full bg-gray-600 text-white p-2 rounded" 
+                               value="{{ product_code if calculated else '' }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Price per Unit ($)</label>
+                        <div class="flex">
+                            <input type="number" step="0.01" name="price_per_unit" id="price_per_unit" class="flex-1 bg-gray-600 text-white p-2 rounded" 
+                                   value="{{ price_per_unit if calculated else '' }}" required>
+                            <select name="unit_type" id="unit_type" class="ml-2 bg-gray-600 text-white p-2 rounded">
+                                <option value="kg" {% if unit_type == 'kg' %}selected{% endif %}>kg</option>
+                                <option value="L" {% if unit_type == 'L' %}selected{% endif %}>L</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Costs -->
+                <div class="bg-gray-700 p-4 rounded-lg">
+                    <h2 class="text-xl font-semibold mb-3 text-blue-300">Cost Breakdown</h2>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Raw Material Cost ($)</label>
+                        <input type="number" step="0.01" name="raw_material_cost" id="raw_material_cost" class="w-full bg-gray-600 text-white p-2 rounded" 
+                               value="{{ raw_material_cost if calculated else '' }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Waste</label>
+                        <div class="flex">
+                            <input type="number" step="0.01" name="waste_value" id="waste_value" class="flex-1 bg-gray-600 text-white p-2 rounded" 
+                                   value="{{ waste_value if calculated else '' }}" required>
+                            <select name="waste_type" id="waste_type" class="ml-2 bg-gray-600 text-white p-2 rounded">
+                                <option value="dollar" {% if waste_type == 'dollar' %}selected{% endif %}>$</option>
+                                <option value="percentage" {% if waste_type == 'percentage' %}selected{% endif %}>%</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Labor Cost ($)</label>
+                        <input type="number" step="0.01" name="labor_cost" id="labor_cost" class="w-full bg-gray-600 text-white p-2 rounded" 
+                               value="{{ labor_cost if calculated else '' }}" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Fixed Cost</label>
+                        <div class="flex">
+                            <input type="number" step="0.01" name="fixed_cost" id="fixed_cost" 
+                                   class="flex-1 bg-gray-600 text-white p-2 rounded" 
+                                   value="{{ fixed_cost if calculated else '' }}" 
+                                   required
+                                   min="0"
+                                   oninput="validateFixedCost()">
+                            <select name="fixed_cost_type" id="fixed_cost_type" 
+                                    class="ml-2 bg-gray-600 text-white p-2 rounded"
+                                    onchange="validateFixedCost()">
+                                <option value="dollar" {% if fixed_cost_type == 'dollar' %}selected{% endif %}>$</option>
+                                <option value="percentage" {% if fixed_cost_type == 'percentage' %}selected{% endif %}>%</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">Kickback Percentage (%)</label>
+                        <input type="number" step="0.01" name="kickback_percentage" id="kickback_percentage" class="w-full bg-gray-600 text-white p-2 rounded" 
+                               value="{{ kickback_percentage if calculated else '0' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="block text-gray-300 mb-1">8% Fee Applies</label>
+                        <select name="fee_applies" id="fee_applies" class="w-full bg-gray-600 text-white p-2 rounded">
+                            <option value="1" {% if fee_applies|default(1) %}selected{% endif %}>Yes</option>
+                            <option value="0" {% if not fee_applies|default(1) %}selected{% endif %}>No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quantity Multiplier Section -->
+            <div class="bg-gray-700 p-4 rounded-lg">
+                <h2 class="text-xl font-semibold mb-3 text-blue-300">Quantity Calculation</h2>
+                <div class="mb-3">
+                    <label class="block text-gray-300 mb-1">Quantity (Number of Units)</label>
+                    <input type="number" step="1" name="quantity" id="quantity" class="w-full bg-gray-600 text-white p-2 rounded" 
+                           value="{{ quantity if calculated else '1' }}" min="1">
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-4">
+                <button type="submit" name="calculate" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    Calculate Profit
+                </button>
+                
+                {% if calculated %}
+                <button type="submit" name="save_item" id="save-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                    Save Item
+                </button>
+                
+                <button type="submit" name="update_item" id="update-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded" style="display: none;">
+                    Update Item
+                </button>
+                {% endif %}
+                
+                <a href="/dashboard" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">
+                    Back to Dashboard
+                </a>
+            </div>
+        </form>
+        
+        {% if calculated %}
+        <div class="mt-8 bg-gray-700 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4 text-green-300">Profit Calculation Results</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Product Info Column -->
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-300 border-b border-gray-600 pb-2">Product Details</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Name:</span>
+                            <span class="font-medium">{{ product_name }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Code:</span>
+                            <span class="font-medium">{{ product_code }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Price:</span>
+                            <span class="font-medium">${{ "%.2f"|format(price_per_unit) }}/{{ unit_type }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Quantity:</span>
+                            <span class="font-medium">{{ quantity }} units</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cost Breakdown Column -->
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-300 border-b border-gray-600 pb-2">Cost Breakdown</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Raw Materials:</span>
+                            <span class="font-medium">${{ "%.2f"|format(raw_material_cost) }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Waste ({{ waste_type }}):</span>
+                            <span class="font-medium">{{ waste_display }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Labor:</span>
+                            <span class="font-medium">${{ "%.2f"|format(labor_cost) }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Fixed Cost ({{ fixed_cost_type }}):</span>
+                            <span class="font-medium">{{ fixed_cost_display }}</span>
+                        </div>
+                        <div class="flex justify-between border-t border-gray-600 pt-2">
+                            <span class="text-gray-300 font-semibold">Total Cost:</span>
+                            <span class="font-bold">${{ "%.2f"|format(total_cost) }}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profit Summary Column -->
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-300 border-b border-gray-600 pb-2">Profit Calculation</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">Revenue:</span>
+                            <span class="font-medium">${{ "%.2f"|format(price_per_unit) }}</span>
+                        </div>
+                        {% if fee_applies %}
+                        <div class="flex justify-between">
+                            <span class="text-gray-300">8% Fee:</span>
+                            <span class="font-medium text-red-400">- ${{ "%.2f"|format(fee_amount) }}</span>
+                        </div>
+                        {% endif %}
+                        <div class="flex justify-between border-b border-gray-600 pb-2">
+                            <span class="text-gray-300">After Fees:</span>
+                            <span class="font-medium">${{ "%.2f"|format(revenue_after_fees) }}</span>
+                        </div>
+                        
+                        <div class="bg-gray-700 p-3 rounded-lg mt-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-300">After Fees:</span>
+                                <span class="font-medium">${{ "%.2f"|format(revenue_after_fees) }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-300">Total Costs:</span>
+                                <span class="font-medium text-red-400">- ${{ "%.2f"|format(total_cost) }}</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-600 pt-2 mt-1">
+                                <span class="text-gray-300 font-semibold">Profit:</span>
+                                <span class="font-bold {% if profit >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                                    ${{ "%.2f"|format(profit) }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between pt-2">
+                            <span class="text-gray-300">Margin:</span>
+                            <span class="font-bold {% if profit_margin >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                                {{ "%.2f"|format(profit_margin) }}%
+                            </span>
+                        </div>
+                        <div class="flex justify-between border-t border-gray-600 pt-2">
+                            <span class="text-gray-300 font-semibold">Total ({{ quantity }} units):</span>
+                            <span class="font-bold {% if profit >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                                ${{ "%.2f"|format(profit * quantity) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cost Breakdown Chart -->
+            <div class="mt-6 bg-gray-800 p-4 rounded-lg">
+                <h3 class="text-lg font-semibold mb-3 text-blue-300">Cost Visualization</h3>
+                <div class="h-64">
+                    <canvas id="costChart"></canvas>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Food Cost Calculator Application Script
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the application
+    initApplication();
+    
+    // Set up form validation
+    setupFormValidation();
+    
+    // Initialize chart if needed
+    initCostChart();
+});
+
+// ==================== CORE FUNCTIONS ====================
+
+function initApplication() {
+    validateFixedCost();
+    setupRowClickHandlers();
+    setupExportForm();
+}
+
+function setupFormValidation() {
+    const form = document.getElementById('calculator-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (!validateCalculatorForm()) {
+                e.preventDefault();
+            }
+        });
+    }
+}
+
+// ==================== FORM HANDLING ====================
+
+function validateCalculatorForm() {
+    const requiredFields = [
+        'product_name', 'product_code', 'price_per_unit',
+        'raw_material_cost', 'labor_cost', 'fixed_cost'
+    ];
+    
+    let isValid = true;
+    
+    requiredFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (!field.value.trim()) {
+            alert(`Please fill in the ${field.placeholder || fieldId.replace('_', ' ')} field`);
+            field.focus();
+            isValid = false;
+            return false;
+        }
+        
+        if (field.type === 'number' && isNaN(parseFloat(field.value))) {
+            alert(`Please enter a valid number for ${field.placeholder || fieldId.replace('_', ' ')}`);
+            field.focus();
+            isValid = false;
+            return false;
+        }
+    });
+    
+    return isValid;
+}
+
+function resetForm() {
+    const form = document.getElementById('calculator-form');
+    if (form) {
+        form.reset();
+        document.getElementById('item_id').value = '';
+        document.getElementById('fee_applies').value = '1';
+        document.getElementById('unit_type').value = 'kg';
+        document.getElementById('waste_type').value = 'dollar';
+        document.getElementById('fixed_cost_type').value = 'dollar';
+        
+        // Toggle buttons
+        document.getElementById('save-btn').style.display = 'inline-block';
+        document.getElementById('update-btn').style.display = 'none';
+        
+        // Scroll to form
+        form.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function validateFixedCost() {
+    const fixedCostType = document.getElementById('fixed_cost_type')?.value;
+    const fixedCostInput = document.getElementById('fixed_cost');
+    
+    if (fixedCostInput && fixedCostType) {
+        if (fixedCostType === 'percentage') {
+            fixedCostInput.step = '0.1';
+            fixedCostInput.max = '100';
+            fixedCostInput.min = '0';
+            fixedCostInput.placeholder = 'Enter percentage (0-100)';
+        } else {
+            fixedCostInput.step = '0.01';
+            fixedCostInput.max = '';
+            fixedCostInput.min = '0';
+            fixedCostInput.placeholder = 'Enter dollar amount';
+        }
+    }
+}
+
+// ==================== ITEM MANAGEMENT ====================
+
+async function loadItem(itemId) {
+    if (!itemId) return;
+    
+    try {
+        showLoadingIndicator(true);
+        
+        const response = await fetch(`/load_food_cost_item/${itemId}`);
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
+        
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+        
+        populateFormWithItemData(data);
+        
+        // Toggle buttons
+        document.getElementById('save-btn').style.display = 'none';
+        document.getElementById('update-btn').style.display = 'inline-block';
+        
+        document.getElementById('calculator-form').scrollIntoView({ behavior: 'smooth' });
+        
+    } catch (error) {
+        console.error('Error loading item:', error);
+        showAlert(`Failed to load item: ${error.message}`, 'error');
+    } finally {
+        showLoadingIndicator(false);
+    }
+}
+
+function populateFormWithItemData(data) {
+    const fieldMap = {
+        'product_name': data.product_name || '',
+        'product_code': data.product_code || '',
+        'price_per_unit': data.price_per_unit || 0,
+        'unit_type': data.unit_type || 'kg',
+        'raw_material_cost': data.raw_material_cost || 0,
+        'waste_value': data.waste_value || 0,
+        'waste_type': data.waste_type || 'dollar',
+        'labor_cost': data.labor_cost || 0,
+        'fixed_cost': data.fixed_cost || 0,
+        'fixed_cost_type': data.fixed_cost_type || 'dollar',
+        'kickback_percentage': data.kickback_percentage || 0,
+        'fee_applies': data.fee_applies ? '1' : '0',
+        'brand': data.brand || '',
+        'quantity': data.saved_quantity || 1
+    };
+
+    Object.entries(fieldMap).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) {
+            if (element.tagName === 'SELECT') {
+                const option = element.querySelector(`option[value="${value}"]`);
+                if (option) option.selected = true;
+            } else {
+                element.value = value;
+            }
+        }
+    });
+
+    document.getElementById('item_id').value = data.id || '';
+    validateFixedCost();
+}
+
+// ==================== TABLE FUNCTIONS ====================
+
+function setupRowClickHandlers() {
+    document.querySelectorAll('.saved-item').forEach(row => {
+        row.addEventListener('click', function(e) {
+            if (!e.target.closest('button') && !e.target.closest('form')) {
+                const itemId = this.getAttribute('data-id');
+                if (itemId) loadItem(itemId);
+            }
+        });
+    });
+}
+
+function filterItems() {
+    const searchTerm = document.getElementById('searchInput').value.trim().toUpperCase();
+    const rows = document.querySelectorAll('.saved-item');
+    
+    rows.forEach(row => {
+        const nameCell = row.querySelector('td:nth-child(2)'); // Assuming name is in second column
+        if (nameCell) {
+            const txtValue = nameCell.textContent || nameCell.innerText;
+            row.style.display = txtValue.toUpperCase().includes(searchTerm) ? '' : 'none';
+        }
+    });
+}
+
+// ==================== EXPORT FUNCTIONALITY ====================
+
+function setupExportForm() {
+    const exportForm = document.getElementById('export-form');
+    if (exportForm) {
+        exportForm.addEventListener('submit', function(e) {
+            const checkboxes = document.querySelectorAll('input[name="selected_items"]:checked');
+            
+            if (checkboxes.length === 0) {
+                e.preventDefault();
+                showAlert('Please select at least one item to export', 'warning');
+                return false;
+            }
+            
+            checkboxes.forEach(checkbox => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'selected_items';
+                input.value = checkbox.value;
+                this.appendChild(input);
+            });
+            
+            return true;
+        });
+    }
+}
+
+// ==================== CHART FUNCTIONS ====================
+
+function initCostChart() {
+    {% if calculated %}
+    const ctx = document.getElementById('costChart')?.getContext('2d');
+    if (ctx) {
+        const chartData = {
+            labels: [
+                'Raw Materials', 
+                'Waste', 
+                'Labor', 
+                'Fixed Cost',
+                {% if fee_applies %}'8% Fee',{% endif %}
+                'Profit'
+            ],
+            datasets: [{
+                data: [
+                    {{ raw_material_cost|default(0) }},
+                    {{ waste_cost|default(0) }},
+                    {{ labor_cost|default(0) }},
+                    {{ fixed_cost|default(0) }},
+                    {% if fee_applies %}{{ fee_amount|default(0) }},{% endif %}
+                    {{ (profit|default(0)) if (profit|default(0)) > 0 else 0 }}
+                ],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    {% if fee_applies %}'rgba(153, 102, 255, 0.7)',{% endif %}
+                    'rgba(40, 167, 69, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    {% if fee_applies %}'rgba(153, 102, 255, 1)',{% endif %}
+                    'rgba(40, 167, 69, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+        
+        new Chart(ctx, {
+            type: 'pie',
+            data: chartData,
+            options: getChartOptions()
+        });
+    }
+    {% endif %}
+}
+
+function getChartOptions() {
+    return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right',
+                labels: {
+                    color: '#fff',
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const label = context.label || '';
+                        const value = context.raw || 0;
+                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                        const percentage = Math.round((value / total) * 100);
+                        return `${label}: $${value.toFixed(2)} (${percentage}%)`;
+                    }
+                }
+            }
+        }
+    };
+}
+
+// ==================== UTILITY FUNCTIONS ====================
+
+function showLoadingIndicator(show) {
+    // Implement your loading indicator logic here
+    console.log(show ? 'Loading...' : 'Done loading');
+}
+
+function showAlert(message, type = 'info') {
+    // Replace with your preferred alert/notification system
+    alert(`${type.toUpperCase()}: ${message}`);
+}
+</script>
+{% endblock %}

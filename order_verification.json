@@ -1,0 +1,3028 @@
+{
+  "6642120196387": {
+    "date": "2025-04-13",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 4,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 4,
+        "price": 83.07
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6641839636771": {
+    "date": "2025-04-13",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6641770889507": {
+    "date": "2025-04-13",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6641687003427": {
+    "date": "2025-04-13",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6640754032931": {
+    "date": "2025-04-12",
+    "line_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ]
+  },
+  "6639561113891": {
+    "date": "2025-04-11",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6639315321123": {
+    "date": "2025-04-11",
+    "line_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ]
+  },
+  "6638869938467": {
+    "date": "2025-04-11",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6638585643299": {
+    "date": "2025-04-11",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6638579482915": {
+    "date": "2025-04-11",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6638576697635": {
+    "date": "2025-04-11",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 6,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6638572536099": {
+    "date": "2025-04-11",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6637426344227": {
+    "date": "2025-04-10",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6636553601315": {
+    "date": "2025-04-09",
+    "line_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      }
+    ]
+  },
+  "6636466241827": {
+    "date": "2025-04-09",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6636352602403": {
+    "date": "2025-04-09",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6636014895395": {
+    "date": "2025-04-09",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6635549917475": {
+    "date": "2025-04-09",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6635279909155": {
+    "date": "2025-04-08",
+    "line_items": [
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 3,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 3,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 3,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 3,
+        "price": 152.2
+      }
+    ]
+  },
+  "6635139006755": {
+    "date": "2025-04-08",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6635003609379": {
+    "date": "2025-04-08",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6634661773603": {
+    "date": "2025-04-08",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6633782804771": {
+    "date": "2025-04-07",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 4,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6633774547235": {
+    "date": "2025-04-07",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 5,
+        "price": 108.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6633240592675": {
+    "date": "2025-04-07",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6633215492387": {
+    "date": "2025-04-07",
+    "line_items": [
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 4,
+        "price": 173.89
+      },
+      {
+        "product": "pepper chicken",
+        "sku": "848454",
+        "quantity": 3,
+        "price": 180.89
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 2,
+        "price": 203.06
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 2,
+        "price": 113.99
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 3,
+        "price": 318.98
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 4,
+        "price": 173.89
+      },
+      {
+        "product": "pepper chicken",
+        "sku": "848454",
+        "quantity": 3,
+        "price": 180.89
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 2,
+        "price": 203.06
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 2,
+        "price": 113.99
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 3,
+        "price": 318.98
+      }
+    ]
+  },
+  "6632248934691": {
+    "date": "2025-04-06",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 5,
+        "price": 65.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6630695108899": {
+    "date": "2025-04-05",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "delivery fee",
+        "sku": "",
+        "quantity": 1,
+        "price": 75.0
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "delivery fee",
+        "sku": "",
+        "quantity": 1,
+        "price": 75.0
+      }
+    ]
+  },
+  "6629565202723": {
+    "date": "2025-04-04",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 2,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 4,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6629394481443": {
+    "date": "2025-04-04",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6629348802851": {
+    "date": "2025-04-04",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6626976825635": {
+    "date": "2025-04-03",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6626333360419": {
+    "date": "2025-04-03",
+    "line_items": [
+      {
+        "product": "red pepper sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 158.76
+      },
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 1,
+        "price": 173.89
+      },
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "spicy mayo ganadara 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 113.57
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 1,
+        "price": 128.89
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 1,
+        "price": 318.98
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "red pepper sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 158.76
+      },
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 1,
+        "price": 173.89
+      },
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "spicy mayo ganadara 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 113.57
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 1,
+        "price": 128.89
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 1,
+        "price": 318.98
+      }
+    ]
+  },
+  "6625227899171": {
+    "date": "2025-04-02",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6625188512035": {
+    "date": "2025-04-02",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6624869843235": {
+    "date": "2025-04-02",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6624830161187": {
+    "date": "2025-04-02",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6623391908131": {
+    "date": "2025-04-01",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6623215452451": {
+    "date": "2025-04-01",
+    "line_items": [
+      {
+        "product": "yuzu vinaigrette 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 162.0
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "yuzu vinaigrette 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 162.0
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      }
+    ]
+  },
+  "6622206918947": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 1,
+        "price": 318.98
+      },
+      {
+        "product": "red pepper sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 158.76
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 1,
+        "price": 173.89
+      },
+      {
+        "product": "pepper chicken",
+        "sku": "848454",
+        "quantity": 1,
+        "price": 180.89
+      },
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "spicy mayo ganadara 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 113.57
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 1,
+        "price": 63.98
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      },
+      {
+        "product": "bibimbap sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 189.29
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 1,
+        "price": 318.98
+      },
+      {
+        "product": "red pepper sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 158.76
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 1,
+        "price": 173.89
+      },
+      {
+        "product": "pepper chicken",
+        "sku": "848454",
+        "quantity": 1,
+        "price": 180.89
+      },
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "spicy mayo ganadara 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 113.57
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 1,
+        "price": 63.98
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      },
+      {
+        "product": "bibimbap sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 189.29
+      }
+    ]
+  },
+  "6621978493219": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621941694755": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621939597603": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621858038051": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621499064611": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621372186915": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621349871907": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 4,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621348856099": {
+    "date": "2025-03-31",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 4,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6621023633699": {
+    "date": "2025-03-30",
+    "line_items": [
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      }
+    ]
+  },
+  "6620894134563": {
+    "date": "2025-03-30",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 2,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 5,
+        "price": 83.07
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6620758311203": {
+    "date": "2025-03-30",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 4,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 2,
+        "price": 65.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6620731080995": {
+    "date": "2025-03-30",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6620574417187": {
+    "date": "2025-03-30",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6619432255779": {
+    "date": "2025-03-29",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6617650200867": {
+    "date": "2025-03-28",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 4,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6616977539363": {
+    "date": "2025-03-28",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 4,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6616972853539": {
+    "date": "2025-03-28",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 5,
+        "price": 203.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6616760189219": {
+    "date": "2025-03-27",
+    "line_items": [
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 2,
+        "price": 173.89
+      },
+      {
+        "product": "pepper chicken",
+        "sku": "848454",
+        "quantity": 2,
+        "price": 180.89
+      },
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 1,
+        "price": 318.98
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 1,
+        "price": 63.98
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 2,
+        "price": 113.99
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "chicken soy",
+        "sku": "154154",
+        "quantity": 1,
+        "price": 172.89
+      },
+      {
+        "product": "pork pepper",
+        "sku": "48484",
+        "quantity": 2,
+        "price": 173.89
+      },
+      {
+        "product": "pepper chicken",
+        "sku": "848454",
+        "quantity": 2,
+        "price": 180.89
+      },
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 1,
+        "price": 318.98
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 1,
+        "price": 63.98
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 1,
+        "price": 67.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 2,
+        "price": 113.99
+      }
+    ]
+  },
+  "6616303042851": {
+    "date": "2025-03-27",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 2,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6616290296099": {
+    "date": "2025-03-27",
+    "line_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ]
+  },
+  "6614979772707": {
+    "date": "2025-03-26",
+    "line_items": [
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 2,
+        "price": 318.98
+      },
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 2,
+        "price": 128.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "beef soy",
+        "sku": "4848484",
+        "quantity": 2,
+        "price": 318.98
+      },
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 2,
+        "price": 128.89
+      }
+    ]
+  },
+  "6614645637411": {
+    "date": "2025-03-26",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6614586655011": {
+    "date": "2025-03-26",
+    "line_items": [
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 1,
+        "price": 63.98
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "dak galbi chicken",
+        "sku": "",
+        "quantity": 1,
+        "price": 189.99
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 2,
+        "price": 67.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "tteokboki sauce 14l",
+        "sku": "6456464",
+        "quantity": 1,
+        "price": 145.29
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 1,
+        "price": 63.98
+      },
+      {
+        "product": "pork soy",
+        "sku": "419746459",
+        "quantity": 1,
+        "price": 203.06
+      },
+      {
+        "product": "dak galbi chicken",
+        "sku": "",
+        "quantity": 1,
+        "price": 189.99
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 2,
+        "price": 67.89
+      }
+    ]
+  },
+  "6614505718051": {
+    "date": "2025-03-26",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6614224961827": {
+    "date": "2025-03-26",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 5,
+        "price": 108.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 83.07
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6614210117923": {
+    "date": "2025-03-26",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6613642150179": {
+    "date": "2025-03-25",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6613548761379": {
+    "date": "2025-03-25",
+    "line_items": [
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "yuzu vinaigrette 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 162.0
+      },
+      {
+        "product": "onigiri soy base sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 93.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "yuzu vinaigrette 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 162.0
+      },
+      {
+        "product": "onigiri soy base sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 93.89
+      }
+    ]
+  },
+  "6613317550371": {
+    "date": "2025-03-25",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6611981730083": {
+    "date": "2025-03-24",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6611928187171": {
+    "date": "2025-03-24",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6611674005795": {
+    "date": "2025-03-24",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6611665092899": {
+    "date": "2025-03-24",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6611277087011": {
+    "date": "2025-03-24",
+    "line_items": [
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      },
+      {
+        "product": "red pepper sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 158.76
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 2,
+        "price": 63.98
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 2,
+        "price": 67.89
+      },
+      {
+        "product": "spicy mayo ganadara 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 113.57
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      },
+      {
+        "product": "red pepper sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 158.76
+      },
+      {
+        "product": "soy based sauce 14l",
+        "sku": "41815484",
+        "quantity": 1,
+        "price": 93.89
+      },
+      {
+        "product": "soondubu paste 4l lp",
+        "sku": "",
+        "quantity": 2,
+        "price": 63.98
+      },
+      {
+        "product": "ramyum paste 4l",
+        "sku": "4848489",
+        "quantity": 2,
+        "price": 67.89
+      },
+      {
+        "product": "spicy mayo ganadara 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 113.57
+      }
+    ]
+  },
+  "6610609864995": {
+    "date": "2025-03-23",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6610577817891": {
+    "date": "2025-03-23",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 5,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6607107195171": {
+    "date": "2025-03-22",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6606778204451": {
+    "date": "2025-03-22",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      },
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6602554278179": {
+    "date": "2025-03-21",
+    "line_items": [
+      {
+        "product": "yuzu vinaigrette 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 162.0
+      },
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "yuzu vinaigrette 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 162.0
+      },
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "miso beef sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 132.4
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 152.2
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      }
+    ]
+  },
+  "6600415543587": {
+    "date": "2025-03-20",
+    "line_items": [
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 10,
+        "price": 128.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 10,
+        "price": 128.89
+      }
+    ]
+  },
+  "6600283947299": {
+    "date": "2025-03-20",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 3,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6599618691363": {
+    "date": "2025-03-20",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6599256408355": {
+    "date": "2025-03-20",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 2,
+        "price": 65.89
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6599212007715": {
+    "date": "2025-03-20",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 4,
+        "price": 108.5
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6598083019043": {
+    "date": "2025-03-19",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 3,
+        "price": 65.89
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 6,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6597065572643": {
+    "date": "2025-03-18",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6596979163427": {
+    "date": "2025-03-18",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 2,
+        "price": 83.07
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6596838228259": {
+    "date": "2025-03-18",
+    "line_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "korean sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 145.4
+      },
+      {
+        "product": "egg sauce 14l",
+        "sku": "",
+        "quantity": 1,
+        "price": 116.7
+      },
+      {
+        "product": "onigiri spicy mayonaise 14l",
+        "sku": "",
+        "quantity": 2,
+        "price": 152.2
+      }
+    ]
+  },
+  "6596749033763": {
+    "date": "2025-03-18",
+    "line_items": [
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 4,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6596748017955": {
+    "date": "2025-03-18",
+    "line_items": [
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6596505436451": {
+    "date": "2025-03-18",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6595571450147": {
+    "date": "2025-03-17",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 2,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6595252158755": {
+    "date": "2025-03-17",
+    "line_items": [
+      {
+        "product": "general tao sauce 14l",
+        "sku": "3.64115E+14",
+        "quantity": 1,
+        "price": 65.89
+      },
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 108.5
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 1,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6595176202531": {
+    "date": "2025-03-17",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 3,
+        "price": 83.07
+      },
+      {
+        "product": "spicy mayo 14l",
+        "sku": "3.64215E+14",
+        "quantity": 10,
+        "price": 108.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  },
+  "6595045327139": {
+    "date": "2025-03-17",
+    "line_items": [
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 4,
+        "price": 128.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": [
+      {
+        "product": "salt & pepper chicken thighs (cubed)",
+        "sku": "94597494",
+        "quantity": 4,
+        "price": 128.89
+      },
+      {
+        "product": "dak ball sauce 14l",
+        "sku": "455641521",
+        "quantity": 1,
+        "price": 113.99
+      }
+    ]
+  },
+  "6594479685923": {
+    "date": "2025-03-16",
+    "line_items": [
+      {
+        "product": "teriyaki sauce 14l",
+        "sku": "3.64215E+14",
+        "quantity": 1,
+        "price": 83.07
+      },
+      {
+        "product": "chicken (marinated) unit",
+        "sku": "454541564",
+        "quantity": 5,
+        "price": 203.5
+      }
+    ],
+    "matched_items": {},
+    "unmatched_items": []
+  }
+}

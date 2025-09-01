@@ -1,0 +1,19 @@
+<!-- templates/add_inventory.html -->
+{% extends "base.html" %}  <!-- If you have a base template -->
+{% block content %}
+<div class="container">
+    <h1>Add Inventory Item</h1>
+    <form method="POST" action="{{ url_for('add_inventory_item') }}">
+        <!-- Copy your form fields from inventory.html here -->
+        <div class="form-group">
+            <label for="item_type">Item Type</label>
+            <select class="form-control" id="item_type" name="item_type" required>
+                <option value="inventory">Inventory</option>
+                <option value="grocery">Grocery</option>
+            </select>
+        </div>
+        <!-- Include all other form fields -->
+        <button type="submit" class="btn btn-primary">Add Item</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold text-blue-400 mb-6">Project Management</h1>
+        
+        <div class="mb-6">
+            <a href="{{ url_for('add_project') }}" class="btn btn-primary">Add New Project</a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+        
+        <div class="bg-gray-800 p-6 rounded-lg">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Client</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                    <tr>
+                        <td>{{ project.project_name }}</td>
+                        <td>{{ project.client_name or 'N/A' }}</td>
+                        <td>
+                            <span class="badge bg-{% if project.status == 'active' %}success{% else %}secondary{% endif %}">
+                                {{ project.status }}
+                            </span>
+                        </td>
+                        <td>{{ project.start_date.strftime('%Y-%m-%d') if project.start_date else 'N/A' }}</td>
+                        <td>{{ project.estimated_end_date.strftime('%Y-%m-%d') if project.estimated_end_date else 'N/A' }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_project', project_id=project.project_id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ url_for('delete_project', project_id=project.project_id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4">No projects found. <a href="{{ url_for('add_project') }}">Add a project</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

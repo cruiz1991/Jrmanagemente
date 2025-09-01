@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-blue-400">📅 {{ current_month }}</h1>
+        <a href="{{ url_for('production_calendar') }}" 
+           class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded">
+            ← Back to List View
+        </a>
+    </div>
+
+    <div class="bg-gray-700 p-4 rounded-lg">
+        <div class="grid grid-cols-7 gap-2 mb-2 text-center font-semibold text-white">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+        </div>
+
+        {% for week in calendar %}
+        <div class="grid grid-cols-7 gap-2 mb-2">
+            {% for day in week %}
+            <div class="bg-gray-600 p-2 rounded min-h-24 {% if not day.day %}opacity-50{% endif %}">
+                {% if day.day %}
+                <div class="text-right font-semibold text-white mb-1">{{ day.day }}</div>
+                <div class="space-y-1">
+                    {% for event in day.events %}
+                    <div class="bg-blue-700 text-white p-1 rounded text-xs">
+                        <div class="font-semibold">{{ event.project_name }}</div>
+                        {% if event.start_time %}
+                        <div>{{ event.start_time }} - {{ event.end_time }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

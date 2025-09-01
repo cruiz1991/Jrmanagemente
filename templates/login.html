@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center justify-center min-h-screen">
+    <!-- Logo centered -->
+    <div class="mb-6">
+        <img src="{{ url_for('static', filename='jrmanagment_logo.png') }}" 
+             alt="Logo" 
+             class="mx-auto w-32 h-32 object-contain">
+    </div>
+
+    <!-- Login container -->
+    <div class="w-full max-w-md bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg">
+        <h2 class="text-blue-400 text-2xl font-bold text-center mb-4">Login</h2>
+
+        <form method="post" action="{{ url_for('login') }}">
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-100">Email</label>
+                <input type="email" name="email" id="email" 
+                       class="form-control bg-gray-700 text-gray-100 border-gray-600 w-full mt-1" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-100">Password</label>
+                <input type="password" name="password" id="password" 
+                       class="form-control bg-gray-700 text-gray-100 border-gray-600 w-full mt-1" required>
+            </div>
+            <button type="submit" 
+                    class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Login
+            </button>
+        </form>
+
+        <p class="text-center text-gray-300 mt-4">
+            Don’t have an account? 
+            <a href="{{ url_for('register') }}" class="text-blue-400 hover:underline">
+                Register here
+            </a>.
+        </p>
+    </div>
+</div>
+{% endblock %}

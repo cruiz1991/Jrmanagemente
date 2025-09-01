@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Profiles</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .recipe-card {
+            background-color: #2d3748;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s;
+        }
+        .recipe-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .recipe-header {
+            border-bottom: 1px solid #4a5568;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .ingredient-row {
+            border-bottom: 1px solid #4a5568;
+            padding: 0.5rem 0;
+        }
+        .ingredient-row:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+    <div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg shadow-gray-700/10 mt-10">
+        <h1 class="text-blue-400 text-3xl font-bold mb-6">Recipe Profiles</h1>
+        
+        <div class="mb-4">
+            <a href="{{ url_for('dashboard') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                ← Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Search and Filter -->
+        <div class="mb-6 bg-gray-700 p-4 rounded-lg">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <input type="text" id="recipeSearch" placeholder="Search recipes..." 
+                           class="w-full bg-gray-600 text-white p-2 rounded">
+                </div>
+                <div>
+                    <select id="categoryFilter" class="w-full bg-gray-600 text-white p-2 rounded">
+                        <option value="">All Categories</option>
+                        <option value="Sauce">Sauces</option>
+                        <option value="Marinade">Marinades</option>
+                        <option value="Dressing">Dressings</option>
+                        <option value="Base">Bases</option>
+                    </select>
+                </div>
+                <div>
+                    <button onclick="filterRecipes()" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
+                        Filter
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recipe Cards -->
+        <div id="recipeContainer">
+            {% for recipe in recipes %}
+            <div class="recipe-card" data-category="{{ recipe.category }}">
+                <div class="recipe-header flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-blue-300">{{ recipe.name }}</h2>
+                    <span class="bg-purple-600 text-white px-2 py-1 rounded text-sm">
+                        {{ recipe.category }}
+                    </span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p><strong>Batch Size:</strong> {{ recipe.batch_size }} {{ recipe.unit }}</p>
+                        <p><strong>Cost:</strong> ${{ "%.2f"|format(recipe.cost) }}</p>
+                        <p><strong>Yield:</strong> {{ recipe.yield }}</p>
+                    </div>
+                    <div>
+                        <p><strong>Last Updated:</strong> {{ recipe.last_updated }}</p>
+                        <p><strong>Created By:</strong> {{ recipe.created_by }}</p>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h3 class="text-lg font-semibold mb-2">Ingredients:</h3>
+                    <div class="bg-gray-700 p-3 rounded-lg">
+                        {% for ingredient in recipe.ingredients %}
+                        <div class="ingredient-row">
+                            <div class="flex justify-between">
+                                <span>{{ ingredient.name }}</span>
+                                <span>{{ ingredient.quantity }} {{ ingredient.unit }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="mt-4 flex space-x-2">
+                    <button class="bg-green-600 text-white px-3 py-1 rounded text-sm">
+                        View Details
+                    </button>
+                    <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                        Edit
+                    </button>
+                    <button class="bg-red-600 text-white px-3 py-1 rounded text-sm">
+                        Delete
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+    function filterRecipes() {
+        const searchTerm = document.getElementById('recipeSearch').value.toLowerCase();
+        const category = document.getElementById('categoryFilter').value;
+        
+        document.querySelectorAll('.recipe-card').forEach(card => {
+            const name = card.querySelector('h2').textContent.toLowerCase();
+            const cardCategory = card.getAttribute('data-category');
+            
+            const nameMatch = name.includes(searchTerm);
+            const categoryMatch = category === '' || cardCategory === category;
+            
+            if (nameMatch && categoryMatch) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+    
+    // Initialize filter on page load
+    document.addEventListener('DOMContentLoaded', filterRecipes);
+    </script>
+</body>
+</html>

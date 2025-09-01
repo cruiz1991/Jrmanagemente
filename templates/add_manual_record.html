@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Manual Record</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .container {
+            background-color: #252526;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            margin-top: 5rem;
+        }
+        h2 {
+            color: #569cd6;
+        }
+        .form-label {
+            color: #d4d4d4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-blue-400 text-3xl font-bold mb-4">Add Manual Shift Record</h2>
+        
+        <form method="POST" action="{{ url_for('add_manual_record') }}">
+            <div class="mb-3">
+                <label for="user_id" class="form-label">Employee</label>
+                <select class="form-select bg-dark text-light" id="user_id" name="user_id" required>
+                    <option value="">Select Employee</option>
+                    {% for user in users %}
+                    <option value="{{ user.user_id }}">{{ user.username }} ({{ user.role }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control bg-dark text-light" id="date" name="date" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="punch_in" class="form-label">Punch In Time</label>
+                <input type="time" class="form-control bg-dark text-light" id="punch_in" name="punch_in" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="punch_out" class="form-label">Punch Out Time (leave empty if still working)</label>
+                <input type="time" class="form-control bg-dark text-light" id="punch_out" name="punch_out">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add Record</button>
+            <a href="{{ url_for('report') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+    
+    <script>
+        // Set default date to today
+        document.getElementById('date').valueAsDate = new Date();
+    </script>
+</body>
+</html>

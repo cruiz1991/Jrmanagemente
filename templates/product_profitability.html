@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-6">Product Profitability Analysis</h1>
+    
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-700">
+                <th class="p-3 text-left">Product</th>
+                <th class="p-3 text-right">Selling Price</th>
+                <th class="p-3 text-right">Direct Costs</th>
+                <th class="p-3 text-right">Indirect Costs</th>
+                <th class="p-3 text-right">Profit</th>
+                <th class="p-3 text-right">Margin %</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in cost_data %}
+            <tr class="border-b border-gray-600 hover:bg-gray-700">
+                <td class="p-3">{{ product.product_name }}</td>
+                <td class="p-3 text-right">${{ "%.2f"|format(product.selling_price) }}</td>
+                <td class="p-3 text-right">${{ "%.2f"|format(product.direct_costs) }}</td>
+                <td class="p-3 text-right">${{ "%.2f"|format(product.indirect_costs) }}</td>
+                <td class="p-3 text-right {% if product.profit >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                    ${{ "%.2f"|format(product.profit) }}
+                </td>
+                <td class="p-3 text-right {% if product.margin >= 0 %}text-green-400{% else %}text-red-400{% endif %}">
+                    {{ "%.1f"|format(product.margin) }}%
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
