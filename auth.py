@@ -885,7 +885,11 @@ def punch_with_location():
     latitude = request.form.get('latitude')
     longitude = request.form.get('longitude')
     location_address = request.form.get('location_address')
-    
+
+  # FIX: Convert empty strings to None
+    if latitude == '': latitude = None
+    if longitude == '': longitude = None
+
     # Handle file upload
     progress_photo = None
     if 'progress_photo' in request.files:
@@ -951,6 +955,10 @@ def punch_out_with_location():
         latitude = request.form.get('latitude')
         longitude = request.form.get('longitude')
         location_address = request.form.get('location_address')
+
+       # FIX: Convert empty strings to None
+        if latitude == '': latitude = None
+        if longitude == '': longitude = None
         
         print(f"DEBUG: Location data - lat: {latitude}, long: {longitude}, address: {location_address}")
         
