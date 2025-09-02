@@ -930,6 +930,8 @@ def punch_out_with_location():
                              google_maps_api_key=GOOGLE_MAPS_API_KEY)
     
     try:
+        print("DEBUG: Punch out route called via POST")
+        
         active_punch = PunchRecord.query.filter_by(
             user_id=current_user.user_id,
             punch_out_time=None
@@ -939,53 +941,132 @@ def punch_out_with_location():
             flash('No active punch in record found', 'danger')
             return redirect(url_for('dashboard'))
         
+        print(f"DEBUG: Found active punch ID: {active_punch.punch_id}")
+        
+        # Check if form data is being received
+        print(f"DEBUG: Form data: {request.form}")
+        print(f"DEBUG: Files received: {request.files}")
+        
         # Get location data from form
         latitude = request.form.get('latitude')
         longitude = request.form.get('longitude')
         location_address = request.form.get('location_address')
         
+        print(f"DEBUG: Location data - lat: {latitude}, long: {longitude}, address: {location_address}")
+        
         # Get project data from form
         task_description = request.form.get('task_description')
         progress_notes = request.form.get('progress_notes')
         
-        # Handle file upload for punch out
+        print(f"DEBUG: Task: {task_description}, Notes: {progress_notes}")
+        
+        # Handle file upload for punch out - EXTENSIVE DEBUGGING
         progress_photo_out = None
         if 'progress_photo_out' in request.files:
             file = request.files['progress_photo_out']
-            if file and file.filename != '' and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                unique_filename = f"{current_user.user_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}_out_{filename}"
-                file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-                file.save(file_path)
-                progress_photo_out = unique_filename
+            print(f"DEBUG: File object found: {file}")
+            print(f"DEBUG: File filename: {file.filename}")
+            print(f"DEBUG: File content type: {file.content_type}")
+            print(f"DEBUG: File content length: {file.content_length}")
+            
+            if file and file.filename != '':
+                print("DEBUG: File is not empty")
+                if allowed_file(file.filename):
+                    print("DEBUG: File type is allowed")
+                    filename = secure_filename(file.filename)
+                    unique_filename = f"punch_out_{current_user.user_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{filename}"
+                    file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+                    
+                    print(f"DEBUG: Attempting to save to: {file_path}")
+                    
+                    # Create uploads directory if it doesn't exist
+                    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+                    
+                    # Check directory permissions
+                    upload_dir = app.config['UPLOAD_FOLDER']
+                    print(f"DEBUG: Upload directory: {upload_dir}")
+                    print(f"DEBUG: Directory exists: {os.path.exists(upload_dir)}")
+                    print(f"DEBUG: Directory writable: {os.access(upload_dir, os.W_OK)}")
+                    
+                    try:
+                        file.save(file_path)
+                        print(f"DEBUG: File save attempted")
+                        
+                        # Verify file was actually saved
+                        if os.path.exists(file_path):
+                            file_size = os.path.getsize(file_path)
+                            print(f"DEBUG: File successfully saved! Size: {file_size} bytes")
+                            progress_photo_out = unique_filename
+                        else:
+                            print("DEBUG: ERROR: File save failed - file doesn't exist after save")
+                    except Exception as save_error:
+                        print(f"DEBUG: ERROR during file save: {str(save_error)}")
+                else:
+                    print(f"DEBUG: File type not allowed: {file.filename}")
+            else:
+                print("DEBUG: No file or empty filename received")
+        else:
+            print("DEBUG: No 'progress_photo_out' in request.files")
         
-        # Update punch record - THIS IS THE CRITICAL PART!
-        active_punch.punch_out_time = datetime.utcnow()
+        print(f"DEBUG: Final progress_photo_out value: {progress_photo_out}")
         
-        # Save location data for punch out
+        # Update punch record
+        active_punch.punch_out_time = datetime.utcnow().replace(tzinfo=None)
         active_punch.latitude_out = latitude
         active_punch.longitude_out = longitude
         active_punch.location_address_out = location_address
-        
-        # Save other punch out data
         active_punch.task_description = task_description
         active_punch.progress_notes = progress_notes
-        active_punch.progress_photo_out = progress_photo_out
+        active_punch.progress_photo_out = progress_photo_out  # CRITICAL
+        
+        print(f"DEBUG: Setting progress_photo_out to: {progress_photo_out}")
         
         # Calculate hours worked
         if active_punch.punch_in_time and active_punch.punch_out_time:
-            time_difference = active_punch.punch_out_time - active_punch.punch_in_time
+            punch_in_naive = active_punch.punch_in_time.replace(tzinfo=None) if active_punch.punch_in_time.tzinfo else active_punch.punch_in_time
+            punch_out_naive = active_punch.punch_out_time.replace(tzinfo=None) if active_punch.punch_out_time.tzinfo else active_punch.punch_out_time
+            
+            time_difference = punch_out_naive - punch_in_naive
             active_punch.total_hours_worked = round(time_difference.total_seconds() / 3600, 2)
         
+        # Show what we're about to commit
+        print(f"DEBUG: About to commit - progress_photo_out: {active_punch.progress_photo_out}")
+        
         db.session.commit()
-        flash('Project Stopped', 'success')
+        print("DEBUG: Database commit successful")
+        
+        # Verify the data was actually saved
+        updated_record = PunchRecord.query.get(active_punch.punch_id)
+        print(f"DEBUG: AFTER COMMIT - progress_photo_out in DB: {updated_record.progress_photo_out}")
+        
+        flash('Project Stopped successfully with photo!', 'success')
         return redirect(url_for('dashboard'))
         
     except Exception as e:
         db.session.rollback()
         app.logger.error(f"Error during punch out: {str(e)}")
+        print(f"DEBUG: ERROR: {str(e)}")
         flash(f'Error during punch out: {str(e)}', 'danger')
         return redirect(url_for('dashboard'))
+    
+@app.route('/debug_photos')
+@login_required
+def debug_photos():
+    """Debug route to check photo data in database"""
+    records = PunchRecord.query.filter_by(user_id=current_user.user_id).order_by(PunchRecord.punch_id.desc()).limit(5).all()
+    
+    debug_info = []
+    for record in records:
+        debug_info.append({
+            'punch_id': record.punch_id,
+            'punch_in_time': record.punch_in_time,
+            'punch_out_time': record.punch_out_time,
+            'progress_photo': record.progress_photo,
+            'progress_photo_out': record.progress_photo_out,
+            'has_punch_out_photo': bool(record.progress_photo_out)
+        })
+    
+    return jsonify(debug_info)
     
 @app.route('/debug_punch_data/<int:punch_id>')
 @login_required
