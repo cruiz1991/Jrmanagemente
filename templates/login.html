@@ -1,43 +1,99 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - JR Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .logo-placeholder {
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(45deg, #3b82f6 0%, #1e40af 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-md">
+        <!-- Logo section with fallback -->
+        <div class="mb-8 text-center">
+            <div id="logo-container">
+                <img src="{{ url_for('static', filename='jrmanagment_logo.png') }}" 
+                     alt="JR Management Logo" 
+                     class="mx-auto w-40 h-40 object-contain"
+                     onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+                <div id="logo-fallback" class="logo-placeholder mx-auto" style="display: none;">
+                    JR Management
+                </div>
+            </div>
+            <h1 class="text-2xl font-bold text-white mt-4"></h1>
+        </div>
 
-{% block title %}Login{% endblock %}
+        <!-- Login container -->
+        <div class="bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg">
+            <h2 class="text-blue-400 text-2xl font-bold text-center mb-6">Login to Your Account</h2>
 
-{% block content %}
-<div class="flex flex-col items-center justify-center min-h-screen">
-    <!-- Logo centered -->
-    <div class="mb-6">
-        <img src="{{ url_for('static', filename='jrmanagment_logo.png') }}" 
-             alt="Logo" 
-             class="mx-auto w-32 h-32 object-contain">
+            <form method="post" action="{{ url_for('login') }}">
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-100 mb-2">Email Address</label>
+                    <input type="email" name="email" id="email" 
+                           class="form-control bg-gray-700 text-gray-100 border border-gray-600 rounded w-full px-4 py-2 focus:outline-none focus:border-blue-500 transition-colors" 
+                           placeholder="Enter your email" required>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-medium text-gray-100 mb-2">Password</label>
+                    <input type="password" name="password" id="password" 
+                           class="form-control bg-gray-700 text-gray-100 border border-gray-600 rounded w-full px-4 py-2 focus:outline-none focus:border-blue-500 transition-colors" 
+                           placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" 
+                        class="w-full bg-blue-500 text-white font-medium px-4 py-2 rounded hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Sign In
+                </button>
+            </form>
+
+    
+
+        <!-- Debug information -->
+        <div class="mt-6 p-4 bg-gray-900 rounded-lg text-xs text-gray-400">
+            <p class="font-medium mb-2">Troubleshooting Steps:</p>
+            <ol class="list-decimal list-inside ml-2 mt-1 space-y-1">
+                <li>Check if file exists at: <code class="bg-gray-700 p-1 rounded">C:\Users\User\Desktop\jrmanagment\static\jrmanagment_logo.png</code></li>
+                <li>Verify filename spelling and case</li>
+                <li>Restart Flask after adding the file</li>
+                <li>Try placing the image in your Flask app's default static folder</li>
+            </ol>
+        </div>
     </div>
 
-    <!-- Login container -->
-    <div class="w-full max-w-md bg-gray-800 bg-opacity-90 p-6 rounded-lg shadow-lg">
-        <h2 class="text-blue-400 text-2xl font-bold text-center mb-4">Login</h2>
-
-        <form method="post" action="{{ url_for('login') }}">
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-100">Email</label>
-                <input type="email" name="email" id="email" 
-                       class="form-control bg-gray-700 text-gray-100 border-gray-600 w-full mt-1" required>
-            </div>
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-100">Password</label>
-                <input type="password" name="password" id="password" 
-                       class="form-control bg-gray-700 text-gray-100 border-gray-600 w-full mt-1" required>
-            </div>
-            <button type="submit" 
-                    class="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Login
-            </button>
-        </form>
-
-        <p class="text-center text-gray-300 mt-4">
-            Don’t have an account? 
-            <a href="{{ url_for('register') }}" class="text-blue-400 hover:underline">
-                Register here
-            </a>.
-        </p>
-    </div>
-</div>
-{% endblock %}
+    <script>
+        // Log debug info
+        console.log("Expected logo path:", "{{ url_for('static', filename='jrmanagment_logo.png') }}");
+        
+        // Check if image loaded successfully
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('img');
+            logo.addEventListener('error', function() {
+                console.error("Logo failed to load. Please check the file exists at the correct path.");
+            });
+        });
+    </script>
+</body>
+</html>
