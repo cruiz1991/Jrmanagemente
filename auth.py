@@ -1067,27 +1067,6 @@ def debug_photos():
         })
     
     return jsonify(debug_info)
-    
-@app.route('/debug_punch_data/<int:punch_id>')
-@login_required
-@admin_required
-def debug_punch_data(punch_id):
-    """Debug route to check punch data"""
-    record = PunchRecord.query.get_or_404(punch_id)
-    
-    return jsonify({
-        'punch_id': record.punch_id,
-        'punch_in_time': record.punch_in_time.isoformat() if record.punch_in_time else None,
-        'punch_out_time': record.punch_out_time.isoformat() if record.punch_out_time else None,
-        'latitude': record.latitude,
-        'longitude': record.longitude,
-        'location_address': record.location_address,
-        'latitude_out': record.latitude_out,
-        'longitude_out': record.longitude_out,
-        'location_address_out': record.location_address_out,
-        'progress_photo': record.progress_photo,
-        'progress_photo_out': record.progress_photo_out
-    })
         
 @app.route('/punch_in', methods=['POST'])
 @login_required
