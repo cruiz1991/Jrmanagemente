@@ -100,57 +100,60 @@
                         </td>
                         <td class="px-4 py-2">
     <div class="flex flex-col space-y-2">
-        <!-- Punch In Location -->
-        {% if record.latitude and record.longitude %}
+        <!-- Punch In Data -->
+        {% if record.latitude or record.progress_photo %}
         <div class="mb-2 p-2 bg-blue-900 rounded">
-            <span class="text-blue-300 text-sm font-semibold">PUNCH IN LOCATION:</span>
+            <span class="text-blue-300 text-sm font-semibold">PUNCH IN:</span>
+            
+            {% if record.latitude and record.longitude %}
             <a href="https://www.google.com/maps?q={{ record.latitude }},{{ record.longitude }}" 
                target="_blank" class="text-blue-400 hover:text-blue-300 text-sm block">
-                📍 View on Map
+                📍 View Map
             </a>
             {% if record.location_address %}
             <span class="text-xs text-gray-300 block mt-1">{{ record.location_address }}</span>
             {% endif %}
+            {% endif %}
             
-            <!-- Punch In Photo -->
             {% if record.progress_photo %}
             <div class="mt-2">
                 <a href="{{ url_for('static', filename='uploads/' + record.progress_photo) }}" 
                    target="_blank" class="text-green-400 hover:text-green-300 text-sm">
-                    📸 Punch In Photo
+                    📸 View Photo
                 </a>
             </div>
             {% endif %}
         </div>
         {% endif %}
         
-        <!-- Punch Out Location -->
-        {% if record.latitude_out and record.longitude_out %}
-        <div class="mb-2 p-2 bg-red-900 rounded">
-            <span class="text-red-300 text-sm font-semibold">PUNCH OUT LOCATION:</span>
+        <!-- Punch Out Data -->
+        {% if record.latitude_out or record.progress_photo_out %}
+        <div class="mb-2 p-2 bg-green-900 rounded">
+            <span class="text-green-300 text-sm font-semibold">PUNCH OUT:</span>
+            
+            {% if record.latitude_out and record.longitude_out %}
             <a href="https://www.google.com/maps?q={{ record.latitude_out }},{{ record.longitude_out }}" 
-               target="_blank" class="text-red-400 hover:text-red-300 text-sm block">
-                📍 View on Map
+               target="_blank" class="text-green-400 hover:text-green-300 text-sm block">
+                📍 View Map
             </a>
             {% if record.location_address_out %}
             <span class="text-xs text-gray-300 block mt-1">{{ record.location_address_out }}</span>
             {% endif %}
+            {% endif %}
             
-            <!-- Punch Out Photo -->
             {% if record.progress_photo_out %}
             <div class="mt-2">
                 <a href="{{ url_for('static', filename='uploads/' + record.progress_photo_out) }}" 
                    target="_blank" class="text-green-400 hover:text-green-300 text-sm">
-                    📸 Punch Out Photo
+                    📸 View Photo
                 </a>
             </div>
             {% endif %}
         </div>
         {% endif %}
         
-        <!-- No location data message -->
-        {% if not record.latitude and not record.latitude_out %}
-        <span class="text-gray-400 text-sm">No location data recorded</span>
+        {% if not record.latitude and not record.latitude_out and not record.progress_photo and not record.progress_photo_out %}
+        <span class="text-gray-400 text-sm">No additional data</span>
         {% endif %}
     </div>
 </td>
