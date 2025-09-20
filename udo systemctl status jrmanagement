@@ -1,0 +1,17 @@
+[0;1;31m×[0m jrmanagement.service - Gunicorn instance to serve JR Management App
+     Loaded: loaded (/etc/systemd/system/jrmanagement.service; enabled; vendor preset: enabled)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Tue 2025-09-02 01:06:35 UTC; 18min ago
+    Process: 1643 ExecStart=/home/deploy/jrmanagement/venv/bin/gunicorn --workers 3 --bind unix:/home/deploy/jrmanagement/jrmanagement.sock -m 007 app:app [0;1;31m(code=exited, status=1/FAILURE)[0m
+   Main PID: 1643 (code=exited, status=1/FAILURE)
+        CPU: 531ms
+
+Sep 02 01:06:35 localhost gunicorn[1643]:     self.stop()
+Sep 02 01:06:35 localhost gunicorn[1643]:   File "/home/deploy/jrmanagement/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 395, in stop
+Sep 02 01:06:35 localhost gunicorn[1643]:     time.sleep(0.1)
+Sep 02 01:06:35 localhost gunicorn[1643]:   File "/home/deploy/jrmanagement/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 241, in handle_chld
+Sep 02 01:06:35 localhost gunicorn[1643]:     self.reap_workers()
+Sep 02 01:06:35 localhost gunicorn[1643]:   File "/home/deploy/jrmanagement/venv/lib/python3.10/site-packages/gunicorn/arbiter.py", line 529, in reap_workers
+Sep 02 01:06:35 localhost gunicorn[1643]:     raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+Sep 02 01:06:35 localhost gunicorn[1643]: gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+Sep 02 01:06:35 localhost systemd[1]: [0;1;39m[0;1;31m[0;1;39mjrmanagement.service: Main process exited, code=exited, status=1/FAILURE[0m
+Sep 02 01:06:35 localhost systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mjrmanagement.service: Failed with result 'exit-code'.[0m

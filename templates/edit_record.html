@@ -11,23 +11,29 @@
             <div>
                 <label class="block mb-2">Punch In Time</label>
                 <input type="datetime-local" name="punch_in_time" 
-                       value="{{ record.punch_in_time.strftime('%Y-%m-%dT%H:%M') if record.punch_in_time else '' }}"
+                       value="{{ punch_in_formatted }}"
                        class="form-control w-full">
             </div>
             <div>
                 <label class="block mb-2">Punch Out Time</label>
                 <input type="datetime-local" name="punch_out_time" 
-                       value="{{ record.punch_out_time.strftime('%Y-%m-%dT%H:%M') if record.punch_out_time else '' }}"
+                       value="{{ punch_out_formatted }}"
                        class="form-control w-full">
             </div>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-                <label class="block mb-2">Project Name</label>
-                <input type="text" name="project_name" 
-                       value="{{ record.project_name or '' }}"
-                       class="form-control w-full" placeholder="Project name">
+                <label class="block mb-2">Project</label>
+                <select name="project_id" class="form-control w-full">
+                    <option value="">-- No Project --</option>
+                    {% for project in projects %}
+                    <option value="{{ project.project_id }}" 
+                            {% if record.project_id == project.project_id %}selected{% endif %}>
+                        {{ project.project_name }} - {{ project.client_name }}
+                    </option>
+                    {% endfor %}
+                </select>
             </div>
             <div>
                 <label class="block mb-2">Task Description</label>

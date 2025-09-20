@@ -4,32 +4,88 @@
 
 {% block content %}
 <div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
-    <h2 class="text-2xl font-bold text-red-400 mb-6">Punch Out</h2>
+    <h2 class="text-2xl font-bold text-red-400 mb-6">Project Out</h2>
 
-    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mb-4 p-3 rounded-md {% if category == 'success' %}bg-green-900 text-green-300{% elif category == 'danger' %}bg-red-900 text-red-300{% else %}bg-yellow-900 text-yellow-300{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form id="punchOutForm" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <!-- Hidden location fields (will be auto-filled in background) -->
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+        <input type="hidden" name="location_address" id="location_address">
+        <input type="hidden" name="project_id" value="{{ active_punch.project_id if active_punch }}">
+        
         <div class="form-group">
             <label for="task_description" class="block text-gray-400 mb-1">Task Description:</label>
-            <textarea name="task_description" id="task_description" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3" required></textarea>
+            <textarea name="task_description" id="task_description" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3" required placeholder="Describe the work completed"></textarea>
         </div>
 
         <div class="form-group">
             <label for="progress_notes" class="block text-gray-400 mb-1">Progress Notes:</label>
-            <textarea name="progress_notes" id="progress_notes" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3"></textarea>
+            <textarea name="progress_notes" id="progress_notes" class="form-control bg-gray-700 text-gray-100 border-gray-600" rows="3" placeholder="Additional notes about the progress (optional)"></textarea>
         </div>
 
         <div class="form-group">
             <label for="progress_photo_out" class="block text-gray-400 mb-1">Take Completion Photo:</label>
-            <input type="file" name="progress_photo_out" id="progress_photo_out" class="form-control bg-gray-700 text-gray-100 border-gray-600" accept="image/*" capture="camera">
+            <input type="file" name="progress_photo_out" id="progress_photo_out" class="form-control bg-gray-700 text-gray-100 border-gray-600" accept="image/*" capture="camera" required>
             <img id="photoPreviewOut" class="photo-preview mt-2 rounded-lg max-w-full max-h-48" src="#" alt="Photo preview" style="display:none;">
         </div>
 
-        <button type="submit" class="btn btn-danger w-full py-3">Punch Out</button>
+        <button type="submit" class="btn btn-danger w-full py-3" id="submitButton">Project Out</button>
     </form>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
+    // Location handling (runs in background, hidden from user)
+    let hasLocation = false;
+    
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = lng;
+                    hasLocation = true;
+
+                    getAddressFromLatLng(lat, lng);
+                },
+                error => {
+                    console.log('Location error:', error);
+                    // Silently retry after a delay
+                    setTimeout(getLocation, 3000);
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
+        }
+    }
+
+    function getAddressFromLatLng(lat, lng) {
+        const geocoder = new google.maps.Geocoder();
+        const latlng = { lat, lng };
+
+        geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === 'OK' && results[0]) {
+                const address = results[0].formatted_address;
+                document.getElementById('location_address').value = address;
+                console.log('Location recorded:', address);
+            }
+        });
+    }
+
     // Photo preview functionality
     document.getElementById('progress_photo_out').addEventListener('change', function(e) {
         const file = e.target.files[0];
@@ -42,5 +98,52 @@
             reader.readAsDataURL(file);
         }
     });
+    
+    // Form validation to ensure location is captured
+    document.getElementById('punchOutForm').addEventListener('submit', function(e) {
+        const lat = document.getElementById('latitude').value;
+        const lng = document.getElementById('longitude').value;
+        
+        if (!lat || !lng) {
+            e.preventDefault();
+            alert('Please wait a moment while we capture your location. This is required for punching out.');
+            getLocation(); // Try to get location again
+        }
+    });
+
+    // Load Google Maps API and get location when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load Google Maps API first
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&libraries=places`;
+        script.defer = true;
+        script.async = true;
+        script.onload = getLocation;
+        document.head.appendChild(script);
+        
+        // Set up periodic location updates (every 3 seconds until we have location)
+        const locationInterval = setInterval(() => {
+            if (!hasLocation) {
+                getLocation();
+            } else {
+                clearInterval(locationInterval);
+            }
+        }, 3000);
+    });
+// Add to your existing scripts for both pages
+function requestLocationPeriodically() {
+    // Request location every 15 seconds if not already captured
+    setInterval(() => {
+        const lat = document.getElementById('latitude').value;
+        const lng = document.getElementById('longitude').value;
+        
+        if (!lat || !lng) {
+            console.log('Periodic location request');
+            getLocation();
+        }
+    }, 15000);
+}
+
+// Call this after DOMContentLoaded
 </script>
 {% endblock %}

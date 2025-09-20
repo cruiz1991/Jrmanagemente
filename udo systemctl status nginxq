@@ -1,0 +1,23 @@
+[0;1;32m●[0m nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Tue 2025-09-02 02:31:53 UTC; 55min ago
+       Docs: man:nginx(8)
+    Process: 4565 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 4566 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 4777 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload (code=exited, status=0/SUCCESS)
+   Main PID: 4567 (nginx)
+      Tasks: 2 (limit: 1012)
+     Memory: 2.5M
+        CPU: 136ms
+     CGroup: /system.slice/nginx.service
+             ├─4567 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             └─5833 "nginx: worker process" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+
+Sep 02 02:31:53 localhost systemd[1]: Starting A high performance web server and a reverse proxy server...
+Sep 02 02:31:53 localhost nginx[4565]: nginx: [warn] could not build optimal proxy_headers_hash, you should increase either proxy_headers_hash_max_size: 512 or proxy_headers_hash_bucket_size: 64; ignoring proxy_headers_hash_bucket_size
+Sep 02 02:31:53 localhost nginx[4566]: nginx: [warn] could not build optimal proxy_headers_hash, you should increase either proxy_headers_hash_max_size: 512 or proxy_headers_hash_bucket_size: 64; ignoring proxy_headers_hash_bucket_size
+Sep 02 02:31:53 localhost systemd[1]: Started A high performance web server and a reverse proxy server.
+Sep 02 02:36:21 localhost systemd[1]: Reloading A high performance web server and a reverse proxy server...
+Sep 02 02:36:21 localhost systemd[1]: Reloaded A high performance web server and a reverse proxy server.
+Sep 02 02:36:36 localhost systemd[1]: Reloading A high performance web server and a reverse proxy server...
+Sep 02 02:36:36 localhost systemd[1]: Reloaded A high performance web server and a reverse proxy server.

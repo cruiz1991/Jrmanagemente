@@ -22,6 +22,11 @@
         .form-label {
             color: #d4d4d4;
         }
+        .form-select, .form-control {
+            background-color: #2d2d2d !important;
+            color: #d4d4d4 !important;
+            border: 1px solid #404040;
+        }
     </style>
 </head>
 <body>
@@ -31,7 +36,7 @@
         <form method="POST" action="{{ url_for('add_manual_record') }}">
             <div class="mb-3">
                 <label for="user_id" class="form-label">Employee</label>
-                <select class="form-select bg-dark text-light" id="user_id" name="user_id" required>
+                <select class="form-select" id="user_id" name="user_id" required>
                     <option value="">Select Employee</option>
                     {% for user in users %}
                     <option value="{{ user.user_id }}">{{ user.username }} ({{ user.role }})</option>
@@ -39,19 +44,35 @@
                 </select>
             </div>
             
+            <!-- NEW: Project Selection Dropdown -->
+            <div class="mb-3">
+                <label for="project_id" class="form-label">Project</label>
+                <select class="form-select" id="project_id" name="project_id">
+                    <option value="">-- No Project --</option>
+                    {% for project in projects %}
+                    <option value="{{ project.project_id }}">{{ project.project_name }} - {{ project.client_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
             <div class="mb-3">
                 <label for="date" class="form-label">Date</label>
-                <input type="date" class="form-control bg-dark text-light" id="date" name="date" required>
+                <input type="date" class="form-control" id="date" name="date" required>
             </div>
             
             <div class="mb-3">
                 <label for="punch_in" class="form-label">Punch In Time</label>
-                <input type="time" class="form-control bg-dark text-light" id="punch_in" name="punch_in" required>
+                <input type="time" class="form-control" id="punch_in" name="punch_in" required>
             </div>
             
             <div class="mb-3">
                 <label for="punch_out" class="form-label">Punch Out Time (leave empty if still working)</label>
-                <input type="time" class="form-control bg-dark text-light" id="punch_out" name="punch_out">
+                <input type="time" class="form-control" id="punch_out" name="punch_out">
+            </div>
+            
+            <div class="mb-3">
+                <label for="task_description" class="form-label">Task Description</label>
+                <textarea class="form-control" id="task_description" name="task_description" rows="3" placeholder="Describe the work performed"></textarea>
             </div>
             
             <button type="submit" class="btn btn-primary">Add Record</button>

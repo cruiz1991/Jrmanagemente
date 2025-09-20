@@ -494,6 +494,12 @@ def test_db():
     except Exception as e:
         return f"Error: {e}"
 
+
+
+
+
+
+
 @app.route('/report')
 @login_required
 @admin_required
@@ -522,19 +528,43 @@ def report():
             if record.punch_out_time is None:
                 active_punches += 1
             
-            # Track project hours
-            project_name = record.project_name or 'No Project'
-            project_hours[project_name] += record.total_hours_worked or 0
-            all_projects.add(project_name)
-            
-            local_punch_in = record.punch_in_time.replace(tzinfo=timezone.utc).astimezone(local_tz) if record.punch_in_time else None
-            local_punch_out = record.punch_out_time.replace(tzinfo=timezone.utc).astimezone(local_tz) if record.punch_out_time else None
-            
-            # Get project name from Project table if available
+            # Get project name - prefer project_id lookup over project_name field
+            project_name = 'No Project'
             if record.project_id:
                 project = Project.query.get(record.project_id)
                 if project:
                     project_name = project.project_name
+            elif record.project_name:
+                project_name = record.project_name
+            
+            # Track project hours
+            project_hours[project_name] += record.total_hours_worked or 0
+            all_projects.add(project_name)
+            
+            # Convert UTC times to local time for display
+            if record.punch_in_time:
+                if record.punch_in_time.tzinfo is None:
+                    # If time is naive (no timezone), assume UTC
+                    local_punch_in = pytz.utc.localize(record.punch_in_time).astimezone(local_tz)
+                else:
+                    # If time is aware, convert to local time
+                    local_punch_in = record.punch_in_time.astimezone(local_tz)
+            else:
+                local_punch_in = None
+                
+            if record.punch_out_time:
+                if record.punch_out_time.tzinfo is None:
+                    # If time is naive (no timezone), assume UTC
+                    local_punch_out = pytz.utc.localize(record.punch_out_time).astimezone(local_tz)
+                else:
+                    # If time is aware, convert to local time
+                    local_punch_out = record.punch_out_time.astimezone(local_tz)
+            else:
+                local_punch_out = None
+            
+            # Format times for display
+            punch_in_display = local_punch_in.strftime('%Y-%m-%d %I:%M %p') if local_punch_in else 'N/A'
+            punch_out_display = local_punch_out.strftime('%Y-%m-%d %I:%M %p') if local_punch_out else 'Still working'
             
             formatted_records.append({
                 'punch_id': record.punch_id,
@@ -543,6 +573,8 @@ def report():
                 'task_description': record.task_description,
                 'punch_in_time': local_punch_in,
                 'punch_out_time': local_punch_out,
+                'punch_in_display': punch_in_display,
+                'punch_out_display': punch_out_display,
                 'total_hours_worked': record.total_hours_worked,
                 'is_manual': record.is_manual,
                 'latitude': record.latitude,
@@ -579,23 +611,39 @@ def edit_record(record_id):
         return redirect(url_for('dashboard'))
 
     record = PunchRecord.query.get_or_404(record_id)
+    projects = Project.query.filter_by(status='active').order_by(Project.project_name).all()
+    
+    local_tz = pytz.timezone('America/Toronto')
 
     if request.method == 'POST':
-        punch_in_time = request.form.get('punch_in_time')
-        punch_out_time = request.form.get('punch_out_time')
-        project_name = request.form.get('project_name')
+        punch_in_time_str = request.form.get('punch_in_time')
+        punch_out_time_str = request.form.get('punch_out_time')
+        project_id = request.form.get('project_id')
         task_description = request.form.get('task_description')
 
-        if punch_in_time:
-            record.punch_in_time = datetime.strptime(punch_in_time, '%Y-%m-%dT%H:%M')
+        if punch_in_time_str:
+            # Parse and convert to UTC
+            punch_in_naive = datetime.strptime(punch_in_time_str, '%Y-%m-%dT%H:%M')
+            punch_in_local = local_tz.localize(punch_in_naive)
+            record.punch_in_time = punch_in_local.astimezone(pytz.utc)
 
-        if punch_out_time and punch_out_time.strip():
-            record.punch_out_time = datetime.strptime(punch_out_time, '%Y-%m-%dT%H:%M')
+        if punch_out_time_str and punch_out_time_str.strip():
+            # Parse and convert to UTC
+            punch_out_naive = datetime.strptime(punch_out_time_str, '%Y-%m-%dT%H:%M')
+            punch_out_local = local_tz.localize(punch_out_naive)
+            record.punch_out_time = punch_out_local.astimezone(pytz.utc)
         else:
             record.punch_out_time = None
 
-        if project_name:
-            record.project_name = project_name
+        if project_id:
+            record.project_id = project_id
+            # Also update project_name for backward compatibility
+            project = Project.query.get(project_id)
+            if project:
+                record.project_name = project.project_name
+        else:
+            record.project_id = None
+            record.project_name = None
             
         if task_description:
             record.task_description = task_description
@@ -609,8 +657,29 @@ def edit_record(record_id):
         flash('Record updated successfully!', 'success')
         return redirect(url_for('report'))  
 
-    return render_template('edit_record.html', record=record)
+    # Prepare datetime strings for the form (convert UTC to local time)
+    punch_in_formatted = ""
+    punch_out_formatted = ""
+    
+    if record.punch_in_time:
+        if record.punch_in_time.tzinfo is None:
+            punch_in_local = pytz.utc.localize(record.punch_in_time).astimezone(local_tz)
+        else:
+            punch_in_local = record.punch_in_time.astimezone(local_tz)
+        punch_in_formatted = punch_in_local.strftime('%Y-%m-%dT%H:%M')
+    
+    if record.punch_out_time:
+        if record.punch_out_time.tzinfo is None:
+            punch_out_local = pytz.utc.localize(record.punch_out_time).astimezone(local_tz)
+        else:
+            punch_out_local = record.punch_out_time.astimezone(local_tz)
+        punch_out_formatted = punch_out_local.strftime('%Y-%m-%dT%H:%M')
 
+    return render_template('edit_record.html', 
+                         record=record, 
+                         projects=projects,
+                         punch_in_formatted=punch_in_formatted,
+                         punch_out_formatted=punch_out_formatted)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -635,9 +704,11 @@ def add_manual_record():
     
     if request.method == 'POST':
         user_id = request.form.get('user_id')
+        project_id = request.form.get('project_id')
         date_str = request.form.get('date')
         punch_in = request.form.get('punch_in')
         punch_out = request.form.get('punch_out')
+        task_description = request.form.get('task_description', '')
         
         # Validate required fields
         if not all([user_id, date_str, punch_in]):
@@ -647,29 +718,48 @@ def add_manual_record():
         try:
             # Parse and combine date with time
             date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
-            punch_in_time = datetime.strptime(f"{date_str} {punch_in}", "%Y-%m-%d %H:%M")
+            
+            # Create datetime objects in local time first
+            local_tz = pytz.timezone('America/Toronto')
+            punch_in_local = local_tz.localize(datetime.strptime(f"{date_str} {punch_in}", "%Y-%m-%d %H:%M"))
+            
+            # Convert to UTC for storage
+            punch_in_time = punch_in_local.astimezone(pytz.utc)
             
             # Handle punch out if provided
             punch_out_time = None
             hours_worked = None
             if punch_out:
-                punch_out_time = datetime.strptime(f"{date_str} {punch_out}", "%Y-%m-%d %H:%M")
-                if punch_out_time <= punch_in_time:
+                punch_out_local = local_tz.localize(datetime.strptime(f"{date_str} {punch_out}", "%Y-%m-%d %H:%M"))
+                if punch_out_local <= punch_in_local:
                     flash('Punch out time must be after punch in time', 'danger')
                     return redirect(request.url)
                 
+                # Convert to UTC for storage
+                punch_out_time = punch_out_local.astimezone(pytz.utc)
+                
                 # Calculate hours worked
                 delta = punch_out_time - punch_in_time
-                hours_worked = f"{delta.total_seconds() / 3600:.2f}"
+                hours_worked = round(delta.total_seconds() / 3600, 2)
+            
+            # Get project name if project_id is provided
+            project_name = None
+            if project_id:
+                project = Project.query.get(project_id)
+                if project:
+                    project_name = project.project_name
             
             # Create new record
             new_record = PunchRecord(
                 user_id=user_id,
+                project_id=project_id,
+                project_name=project_name,
                 punch_in_time=punch_in_time,
                 punch_out_time=punch_out_time,
                 total_hours_worked=hours_worked,
                 date=date_obj,
-                is_manual=True
+                is_manual=True,
+                task_description=task_description
             )
             
             db.session.add(new_record)
@@ -686,10 +776,13 @@ def add_manual_record():
             flash(f'Error adding manual record: {str(e)}', 'danger')
             app.logger.error(f"Error adding manual record: {str(e)}", exc_info=True)
     
-    # For GET request, show the form
+    # For GET request, show the form with users and projects
     users = User.query.order_by(User.username).all()
-    return render_template('add_manual_record.html', users=users)
+    projects = Project.query.filter_by(status='active').order_by(Project.project_name).all()
+    
+    return render_template('add_manual_record.html', users=users, projects=projects)
 
+        
 @app.route('/download_csv')
 @login_required
 def download_csv():
@@ -930,12 +1023,23 @@ def punch_with_location():
 @login_required
 def punch_out_with_location():
     if request.method == 'GET':
-        return render_template('punch_out_with_location.html', 
-                             google_maps_api_key=GOOGLE_MAPS_API_KEY)
+        # Get the active punch record
+        active_punch = PunchRecord.query.filter_by(
+            user_id=current_user.user_id,
+            punch_out_time=None
+        ).first()
+        
+        if not active_punch:
+            flash('No active punch in record found', 'danger')
+            return redirect(url_for('dashboard'))
+            
+        return render_template(
+            'punch_out_with_location.html', 
+            google_maps_api_key=GOOGLE_MAPS_API_KEY,
+            active_punch=active_punch
+        )
     
     try:
-        print("DEBUG: Punch out route called via POST")
-        
         active_punch = PunchRecord.query.filter_by(
             user_id=current_user.user_id,
             punch_out_time=None
@@ -945,118 +1049,82 @@ def punch_out_with_location():
             flash('No active punch in record found', 'danger')
             return redirect(url_for('dashboard'))
         
-        print(f"DEBUG: Found active punch ID: {active_punch.punch_id}")
-        
-        # Check if form data is being received
-        print(f"DEBUG: Form data: {request.form}")
-        print(f"DEBUG: Files received: {request.files}")
-        
-        # Get location data from form
+        # Get form data with validation
         latitude = request.form.get('latitude')
         longitude = request.form.get('longitude')
         location_address = request.form.get('location_address')
-
-       # FIX: Convert empty strings to None
-        if latitude == '': latitude = None
-        if longitude == '': longitude = None
+        task_description = request.form.get('task_description', '')
+        progress_notes = request.form.get('progress_notes', '')
+        project_id = request.form.get('project_id')  # Get project_id from hidden field
         
-        print(f"DEBUG: Location data - lat: {latitude}, long: {longitude}, address: {location_address}")
+        if not all([latitude, longitude, location_address, task_description]):
+            flash('Please complete all required fields including task description and photo', 'danger')
+            return redirect(url_for('punch_out_with_location'))
         
-        # Get project data from form
-        task_description = request.form.get('task_description')
-        progress_notes = request.form.get('progress_notes')
-        
-        print(f"DEBUG: Task: {task_description}, Notes: {progress_notes}")
-        
-        # Handle file upload for punch out - EXTENSIVE DEBUGGING
+        # Handle file upload for punch out photo (required)
         progress_photo_out = None
         if 'progress_photo_out' in request.files:
             file = request.files['progress_photo_out']
-            print(f"DEBUG: File object found: {file}")
-            print(f"DEBUG: File filename: {file.filename}")
-            print(f"DEBUG: File content type: {file.content_type}")
-            print(f"DEBUG: File content length: {file.content_length}")
-            
             if file and file.filename != '':
-                print("DEBUG: File is not empty")
                 if allowed_file(file.filename):
-                    print("DEBUG: File type is allowed")
                     filename = secure_filename(file.filename)
                     unique_filename = f"punch_out_{current_user.user_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{filename}"
                     file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
                     
-                    print(f"DEBUG: Attempting to save to: {file_path}")
-                    
-                    # Create uploads directory if it doesn't exist
                     os.makedirs(os.path.dirname(file_path), exist_ok=True)
-                    
-                    # Check directory permissions
-                    upload_dir = app.config['UPLOAD_FOLDER']
-                    print(f"DEBUG: Upload directory: {upload_dir}")
-                    print(f"DEBUG: Directory exists: {os.path.exists(upload_dir)}")
-                    print(f"DEBUG: Directory writable: {os.access(upload_dir, os.W_OK)}")
-                    
-                    try:
-                        file.save(file_path)
-                        print(f"DEBUG: File save attempted")
-                        
-                        # Verify file was actually saved
-                        if os.path.exists(file_path):
-                            file_size = os.path.getsize(file_path)
-                            print(f"DEBUG: File successfully saved! Size: {file_size} bytes")
-                            progress_photo_out = unique_filename
-                        else:
-                            print("DEBUG: ERROR: File save failed - file doesn't exist after save")
-                    except Exception as save_error:
-                        print(f"DEBUG: ERROR during file save: {str(save_error)}")
+                    file.save(file_path)
+                    progress_photo_out = unique_filename
                 else:
-                    print(f"DEBUG: File type not allowed: {file.filename}")
+                    flash('Invalid file type for photo', 'danger')
+                    return redirect(url_for('punch_out_with_location'))
             else:
-                print("DEBUG: No file or empty filename received")
-        else:
-            print("DEBUG: No 'progress_photo_out' in request.files")
+                flash('Completion photo is required', 'danger')
+                return redirect(url_for('punch_out_with_location'))
         
-        print(f"DEBUG: Final progress_photo_out value: {progress_photo_out}")
+        # --- Normalize datetimes ---
+        # Always store punch_out as UTC-aware
+        punch_out_time = datetime.now(timezone.utc)
+        active_punch.punch_out_time = punch_out_time
         
-        # Update punch record
-        active_punch.punch_out_time = datetime.utcnow().replace(tzinfo=None)
+        # Ensure punch_in_time is also UTC-aware
+        punch_in_time = active_punch.punch_in_time
+        if punch_in_time and punch_in_time.tzinfo is None:
+            punch_in_time = punch_in_time.replace(tzinfo=timezone.utc)
+        
+        # Save extra fields
         active_punch.latitude_out = latitude
         active_punch.longitude_out = longitude
         active_punch.location_address_out = location_address
         active_punch.task_description = task_description
         active_punch.progress_notes = progress_notes
-        active_punch.progress_photo_out = progress_photo_out  # CRITICAL
+        active_punch.progress_photo_out = progress_photo_out
         
-        print(f"DEBUG: Setting progress_photo_out to: {progress_photo_out}")
+        if project_id:
+            active_punch.project_id = project_id
         
-        # Calculate hours worked
-        if active_punch.punch_in_time and active_punch.punch_out_time:
-            punch_in_naive = active_punch.punch_in_time.replace(tzinfo=None) if active_punch.punch_in_time.tzinfo else active_punch.punch_in_time
-            punch_out_naive = active_punch.punch_out_time.replace(tzinfo=None) if active_punch.punch_out_time.tzinfo else active_punch.punch_out_time
-            
-            time_difference = punch_out_naive - punch_in_naive
+        # Calculate hours worked safely
+        if punch_in_time and punch_out_time:
+            time_difference = punch_out_time - punch_in_time
             active_punch.total_hours_worked = round(time_difference.total_seconds() / 3600, 2)
         
-        # Show what we're about to commit
-        print(f"DEBUG: About to commit - progress_photo_out: {active_punch.progress_photo_out}")
-        
         db.session.commit()
-        print("DEBUG: Database commit successful")
         
-        # Verify the data was actually saved
-        updated_record = PunchRecord.query.get(active_punch.punch_id)
-        print(f"DEBUG: AFTER COMMIT - progress_photo_out in DB: {updated_record.progress_photo_out}")
-        
-        flash('Project Stopped successfully with photo!', 'success')
+        flash('Project stopped successfully!', 'success')
         return redirect(url_for('dashboard'))
         
     except Exception as e:
         db.session.rollback()
         app.logger.error(f"Error during punch out: {str(e)}")
-        print(f"DEBUG: ERROR: {str(e)}")
         flash(f'Error during punch out: {str(e)}', 'danger')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('punch_out_with_location'))
     
+
+
+
+
+
+
+ 
 @app.route('/debug_photos')
 @login_required
 def debug_photos():

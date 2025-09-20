@@ -1,1 +1,19 @@
-.qodo
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Environment files (keep secrets private!)
+.env
+*.env
+key.env
+
+# Uploads
+uploads/
+
+# Logs / backups
+*.backup*
+*.log
+

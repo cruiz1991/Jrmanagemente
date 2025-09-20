@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container mx-auto bg-gray-800 p-6 rounded-lg shadow-lg mt-10">
     <h2 class="text-2xl font-bold text-blue-400 mb-6">
-        Punch {% if is_punched_in %}Out{% else %}In{% endif %} with Location
+        Project {% if is_punched_in %}Out{% else %}In{% endif %} Location
     </h2>
 
     <form id="punchForm" method="POST" enctype="multipart/form-data" 
@@ -48,7 +48,7 @@
         {% endif %}
 
         <button type="submit" id="punchButton" class="btn {% if is_punched_in %}btn-warning{% else %}btn-success{% endif %} w-full py-3">
-            Punch {% if is_punched_in %}Out{% else %}In{% endif %}
+            Project {% if is_punched_in %}Out{% else %}In{% endif %}
         </button>
     </form>
 

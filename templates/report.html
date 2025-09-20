@@ -58,10 +58,45 @@
             </span>
         </div>
         
+        <!-- Payment Calculator Section -->
+        <div class="bg-gray-700 p-3 border-b border-gray-600 flex flex-wrap items-center gap-4">
+            <div class="flex items-center">
+                <input type="checkbox" id="select-all-{{ user_id }}" class="select-all-checkbox mr-2" data-user-id="{{ user_id }}">
+                <label for="select-all-{{ user_id }}" class="text-white text-sm">Select all shifts</label>
+            </div>
+            
+            <div class="ml-auto flex items-center gap-4">
+                <span class="text-white">Selected Hours: <span id="selected-hours-{{ user_id }}" class="font-bold">0.00</span></span>
+                
+                <div class="flex items-center">
+                    <label for="pay-rate-{{ user_id }}" class="text-white mr-2 text-sm">Pay Rate:</label>
+                    <select id="pay-rate-{{ user_id }}" class="pay-rate-select bg-gray-600 text-white px-2 py-1 rounded border border-gray-500 text-sm">
+                        <option value="">Select rate</option>
+                        <option value="10.00">$10.00/HR</option>
+                        <option value="15.00">$15.00/HR</option>
+                        <option value="18.00">$18.00/HR</option>
+                        <option value="20.00">$20.00/HR</option>
+                        <option value="25.00">$25.00/HR</option>
+                        <option value="30.00">$30.00/HR</option>
+                        <option value="35.00">$35.00/HR</option>
+                        <option value="40.00">$40.00/HR</option>
+                        <option value="custom">Custom rate</option>
+                    </select>
+                    <input type="number" id="custom-rate-{{ user_id }}" class="custom-rate-input bg-gray-600 text-white px-2 py-1 rounded border border-gray-500 text-sm ml-2 hidden" placeholder="Custom rate" step="0.01" min="0">
+                </div>
+                
+                <span class="text-white">Amount Due: $<span id="amount-due-{{ user_id }}" class="font-bold">0.00</span></span>
+                
+                <button class="btn btn-sm btn-success calculate-pay-btn" data-user-id="{{ user_id }}">Calculate Pay</button>
+            </div>
+        </div>
+        <!-- End Payment Calculator Section -->
+        
         <div class="overflow-x-auto">
             <table class="w-full bg-gray-800 border border-gray-700">
                 <thead class="bg-gray-700">
                     <tr>
+                        <th class="px-4 py-2 w-12">Select</th>
                         <th class="px-4 py-2">Date</th>
                         <th class="px-4 py-2">Project</th>
                         <th class="px-4 py-2">Task</th>
@@ -75,6 +110,9 @@
                 <tbody>
                     {% for record in user_data.records %}
                     <tr class="border-b border-gray-700 hover:bg-gray-700 record-row" data-project="{{ record.project_name or 'N/A' }}">
+                        <td class="px-4 py-2 text-center">
+                            <input type="checkbox" class="shift-checkbox" data-user-id="{{ user_id }}" data-hours="{{ record.total_hours_worked or 0 }}">
+                        </td>
                         <td class="px-4 py-2">{{ record.date.strftime('%Y-%m-%d') if record.date else '' }}</td>
                         <td class="px-4 py-2">{{ record.project_name or 'N/A' }}</td>
                         <td class="px-4 py-2">{{ record.task_description or 'N/A' }}</td>
@@ -99,71 +137,71 @@
                             {% endif %}
                         </td>
                         <td class="px-4 py-2">
-    <div class="flex flex-col space-y-2">
-        <!-- Punch In Data -->
-        {% if record.latitude or record.progress_photo %}
-        <div class="mb-2 p-2 bg-blue-900 rounded">
-            <span class="text-blue-300 text-sm font-semibold">PUNCH IN:</span>
-            
-            {% if record.latitude and record.longitude %}
-            <a href="https://www.google.com/maps?q={{ record.latitude }},{{ record.longitude }}" 
-               target="_blank" class="text-blue-400 hover:text-blue-300 text-sm block">
-                📍 View Map
-            </a>
-            {% if record.location_address %}
-            <span class="text-xs text-gray-300 block mt-1">{{ record.location_address }}</span>
-            {% endif %}
-            {% endif %}
-            
-            {% if record.progress_photo %}
-            <div class="mt-2">
-                <a href="{{ url_for('static', filename='uploads/' + record.progress_photo) }}" 
-                   target="_blank" class="text-green-400 hover:text-green-300 text-sm">
-                    📸 View Photo
-                </a>
-            </div>
-            {% endif %}
-        </div>
-        {% endif %}
-        
-        <!-- Punch Out Data -->
-        {% if record.latitude_out or record.progress_photo_out %}
-        <div class="mb-2 p-2 bg-green-900 rounded">
-            <span class="text-green-300 text-sm font-semibold">PUNCH OUT:</span>
-            
-            {% if record.latitude_out and record.longitude_out %}
-            <a href="https://www.google.com/maps?q={{ record.latitude_out }},{{ record.longitude_out }}" 
-               target="_blank" class="text-green-400 hover:text-green-300 text-sm block">
-                📍 View Map
-            </a>
-            {% if record.location_address_out %}
-            <span class="text-xs text-gray-300 block mt-1">{{ record.location_address_out }}</span>
-            {% endif %}
-            {% endif %}
-            
-            {% if record.progress_photo_out %}
-            <div class="mt-2">
-                <a href="{{ url_for('static', filename='uploads/' + record.progress_photo_out) }}" 
-                   target="_blank" class="text-green-400 hover:text-green-300 text-sm">
-                    📸 View Photo
-                </a>
-            </div>
-            {% endif %}
-        </div>
-        {% endif %}
-        
-        {% if not record.latitude and not record.latitude_out and not record.progress_photo and not record.progress_photo_out %}
-        <span class="text-gray-400 text-sm">No additional data</span>
-        {% endif %}
-    </div>
-</td>
+                            <div class="flex flex-col space-y-2">
+                                <!-- Punch In Data -->
+                                {% if record.latitude or record.progress_photo %}
+                                <div class="mb-2 p-2 bg-blue-900 rounded">
+                                    <span class="text-blue-300 text-sm font-semibold">PUNCH IN:</span>
+                                    
+                                    {% if record.latitude and record.longitude %}
+                                    <a href="https://www.google.com/maps?q={{ record.latitude }},{{ record.longitude }}" 
+                                       target="_blank" class="text-blue-400 hover:text-blue-300 text-sm block">
+                                        📍 View Map
+                                    </a>
+                                    {% if record.location_address %}
+                                    <span class="text-xs text-gray-300 block mt-1">{{ record.location_address }}</span>
+                                    {% endif %}
+                                    {% endif %}
+                                    
+                                    {% if record.progress_photo %}
+                                    <div class="mt-2">
+                                        <a href="{{ url_for('static', filename='uploads/' + record.progress_photo) }}" 
+                                           target="_blank" class="text-green-400 hover:text-green-300 text-sm">
+                                            📸 View Photo
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                
+                                <!-- Punch Out Data -->
+                                {% if record.latitude_out or record.progress_photo_out %}
+                                <div class="mb-2 p-2 bg-green-900 rounded">
+                                    <span class="text-green-300 text-sm font-semibold">PUNCH OUT:</span>
+                                    
+                                    {% if record.latitude_out and record.longitude_out %}
+                                    <a href="https://www.google.com/maps?q={{ record.latitude_out }},{{ record.longitude_out }}" 
+                                       target="_blank" class="text-green-400 hover:text-green-300 text-sm block">
+                                        📍 View Map
+                                    </a>
+                                    {% if record.location_address_out %}
+                                    <span class="text-xs text-gray-300 block mt-1">{{ record.location_address_out }}</span>
+                                    {% endif %}
+                                    {% endif %}
+                                    
+                                    {% if record.progress_photo_out %}
+                                    <div class="mt-2">
+                                        <a href="{{ url_for('static', filename='uploads/' + record.progress_photo_out) }}" 
+                                           target="_blank" class="text-green-400 hover:text-green-300 text-sm">
+                                            📸 View Photo
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                
+                                {% if not record.latitude and not record.latitude_out and not record.progress_photo and not record.progress_photo_out %}
+                                <span class="text-gray-400 text-sm">No additional data</span>
+                                {% endif %}
+                            </div>
+                        </td>
                         <td class="px-4 py-2 flex gap-2">
                             <a href="{{ url_for('edit_record', record_id=record.punch_id) }}" class="btn btn-sm btn-warning">Edit</a>
                             <form action="{{ url_for('delete_record', record_id=record.punch_id) }}" method="POST">
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
                         </td>
-                    </tr>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -185,6 +223,20 @@
         </div>
     </div>
 </div>
+
+<style>
+.hidden {
+    display: none;
+}
+
+.pay-rate-select, .custom-rate-input {
+    width: 120px;
+}
+
+.calculate-pay-btn {
+    white-space: nowrap;
+}
+</style>
 {% endblock %}
 
 {% block scripts %}
@@ -244,14 +296,14 @@ function exportToCSV() {
         const cells = row.querySelectorAll('td');
         const rowData = [
             row.closest('.employee-section').querySelector('.text-lg.font-bold').textContent.split(' (')[0],
-            cells[0].textContent.trim(),
-            cells[1].textContent.trim(),
+            cells[1].textContent.trim(), // Skip the checkbox column (index 0)
             cells[2].textContent.trim(),
             cells[3].textContent.trim(),
             cells[4].textContent.trim(),
             cells[5].textContent.trim(),
-            cells[6].querySelector('.text-blue-400') ? 'Yes' : 'No',
-            cells[6].querySelector('.text-red-400') ? 'Yes' : 'No'
+            cells[6].textContent.trim(),
+            cells[7].querySelector('.text-blue-400') ? 'Yes' : 'No',
+            cells[7].querySelector('.text-green-400') ? 'Yes' : 'No'
         ];
         rows.push(rowData.join(','));
     });
@@ -266,7 +318,12 @@ function exportToCSV() {
     document.body.removeChild(link);
 }
 
-// Add export button functionality
+// Print report function
+function printReport() {
+    window.print();
+}
+
+// Payment calculation functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Add export button
     const exportBtn = document.createElement('button');
@@ -275,22 +332,109 @@ document.addEventListener('DOMContentLoaded', function() {
     exportBtn.onclick = exportToCSV;
     document.querySelector('.mb-6.flex').appendChild(exportBtn);
     
-    // Initialize filter
-    updateVisibleTotals();
-});
-
-// Print report function
-function printReport() {
-    window.print();
-}
-
-// Add print button
-document.addEventListener('DOMContentLoaded', function() {
+    // Add print button
     const printBtn = document.createElement('button');
     printBtn.textContent = 'Print Report';
     printBtn.className = 'btn btn-secondary ml-2';
     printBtn.onclick = printReport;
     document.querySelector('.mb-6.flex').appendChild(printBtn);
+    
+    // Initialize filter
+    updateVisibleTotals();
+    
+    // Handle pay rate selection change
+    document.querySelectorAll('.pay-rate-select').forEach(select => {
+        select.addEventListener('change', function() {
+            const userId = this.id.split('-')[2];
+            const customInput = document.getElementById(`custom-rate-${userId}`);
+            
+            if (this.value === 'custom') {
+                customInput.classList.remove('hidden');
+                customInput.focus();
+            } else {
+                customInput.classList.add('hidden');
+                calculatePayment(userId);
+            }
+        });
+    });
+    
+    // Handle custom rate input
+    document.querySelectorAll('.custom-rate-input').forEach(input => {
+        input.addEventListener('input', function() {
+            const userId = this.id.split('-')[2];
+            calculatePayment(userId);
+        });
+    });
+    
+    // Handle calculate pay button
+    document.querySelectorAll('.calculate-pay-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const userId = this.getAttribute('data-user-id');
+            calculatePayment(userId);
+        });
+    });
+    
+    // Handle select all checkboxes
+    document.querySelectorAll('.select-all-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const userId = this.getAttribute('data-user-id');
+            const isChecked = this.checked;
+            
+            document.querySelectorAll(`.shift-checkbox[data-user-id="${userId}"]`).forEach(cb => {
+                cb.checked = isChecked;
+            });
+            
+            updateSelectedHours(userId);
+        });
+    });
+    
+    // Handle individual shift checkboxes
+    document.querySelectorAll('.shift-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const userId = this.getAttribute('data-user-id');
+            updateSelectedHours(userId);
+        });
+    });
 });
+
+// Update selected hours for a user - FIXED VERSION
+function updateSelectedHours(userId) {
+    let totalHours = 0;
+    
+    document.querySelectorAll(`.shift-checkbox[data-user-id="${userId}"]:checked`).forEach(checkbox => {
+        // Get the row containing this checkbox
+        const row = checkbox.closest('tr');
+        // Find the hours cell by its class (more reliable than index)
+        const hoursCell = row.querySelector('.hours-cell');
+        if (hoursCell) {
+            const hoursText = hoursCell.textContent.trim();
+            const hours = parseFloat(hoursText) || 0;
+            totalHours += hours;
+            
+            // Update the data-hours attribute for future reference
+            checkbox.setAttribute('data-hours', hours);
+        }
+    });
+    
+    document.getElementById(`selected-hours-${userId}`).textContent = totalHours.toFixed(2);
+    calculatePayment(userId);
+}
+
+// Calculate payment for a user
+function calculatePayment(userId) {
+    const totalHours = parseFloat(document.getElementById(`selected-hours-${userId}`).textContent) || 0;
+    const rateSelect = document.getElementById(`pay-rate-${userId}`);
+    let payRate = 0;
+    
+    if (rateSelect.value === 'custom') {
+        const customInput = document.getElementById(`custom-rate-${userId}`);
+        payRate = parseFloat(customInput.value) || 0;
+    } else {
+        payRate = parseFloat(rateSelect.value) || 0;
+    }
+    
+    const amountDue = totalHours * payRate;
+    document.getElementById(`amount-due-${userId}`).textContent = amountDue.toFixed(2);
+}
 </script>
 {% endblock %}
